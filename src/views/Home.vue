@@ -13,15 +13,17 @@
 			<el-col :span="8" class="userinfo">
 				<el-dropdown trigger="hover">
 					<div class="el-dropdown-link userinfo-inner">
-						<img :src="this.sysUserAvatar" />
+						<el-badge is-dot class="item"><img :src="this.sysUserAvatar" /></el-badge>
 						<div>
 							<span class="_name">{{sysUserName}}</span>
 							<span class="_bsn">{{businessDate}}</span>
 						</div> 
 					</div>
 					<el-dropdown-menu slot="dropdown">
-						<el-dropdown-item @click="$router.push('/customerSelect')">CustomerSelect</el-dropdown-item>
-						<el-dropdown-item>Notifications</el-dropdown-item>
+						<el-dropdown-item>
+							Notifications
+							<el-badge class="mark" :value="12" />
+						</el-dropdown-item>
 						<el-dropdown-item>Settings</el-dropdown-item>
 						<el-dropdown-item divided @click.native="logout">Sign Out</el-dropdown-item>
 					</el-dropdown-menu>
@@ -212,7 +214,8 @@
 						width: 40px;
 						height: 40px;
 						border-radius: 20px;
-						margin: 10px 0px 10px 10px;
+						// margin: 10px 0px 10px 10px;
+						margin-left: 10px;
 						float: right;
 					}
 					div {
@@ -244,6 +247,7 @@
 					//float: left;   
 					float: left;
 					margin: 6px 10px 0px 18px;
+					// margin-left: 10px;
 				}
 				span {
 					font-size: 14px;

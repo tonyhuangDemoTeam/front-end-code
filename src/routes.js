@@ -18,10 +18,6 @@ import Customer from './views/charts/customers.vue'
 import Asset from './views/charts/customersChart.vue'
 import Trade from './views/charts/Trade.vue'
 
-// admin template
-
-
-
 
 // user template
 import DailyEvent from './views/userNav/DailyEvent.vue'
@@ -30,6 +26,8 @@ import CustomerPositionInfo from './views/userNav/CustomerPositionInfo.vue'
 import Transaction from './views/userNav/Transaction.vue'
 import Connectivity from './views/userNav/Connectivity.vue'
 
+// admin template
+import CreateUser from './views/adminNav/CreateUser.vue'
 
 let routes = [
     {
@@ -44,16 +42,19 @@ let routes = [
         name: '',
         hidden: true
     },
+    // =======================
+    // manager nav
+    // =======================
     {
         path: '/',
         component: Home,
         name: 'Management Overview',
-        iconCls: 'fa fa-address-card',
-        // leaf: true,//只有一个节点，
-        meta: "admin",
+        iconCls: 'fa fa-sitemap',
+        leaf: true,//只有一个节点，
+        meta: "manager",
         children: [
             { path: '/', component: Management, name: 'Organization Structure' },
-            { path: '/net-new-money-report', component: Management, name: 'Net New Money Report' }
+            // { path: '/net-new-money-report', component: Management, name: 'Net New Money Report' }
         ]
     },
     {
@@ -62,7 +63,7 @@ let routes = [
         name: 'Customer Overview',
         iconCls: 'el-icon-date',
         // leaf: true,//只有一个节点
-        meta: "admin",
+        meta: "manager",
         children: [
             { path: '/customer-distribution', component: Customer, name: 'Customer Distribution' },
             { path: '/customer-trends-report', component: CustomerTrends, name: 'Customer Trends Report' },
@@ -74,32 +75,21 @@ let routes = [
         name: '',
         iconCls: 'el-icon-news',
         leaf: true,//只有一个节点
-        meta: "admin",
+        meta: "manager",
         children: [
             { path: '/asset-overview', component: Asset, name: 'Asset Overview' }
         ]
     },
     // =======================
-    // user nav
+    // rm nav
     // =======================
-    {
-        path: '/',
-        component: Home,
-        name: '',
-        iconCls: 'fa fa-cubes',//图标样式class
-        leaf: true,//只有一个节点
-        meta: "user",
-        children: [
-            { path: '/daily-event', component: DailyEvent, name: 'Daily Event' }
-        ]
-    },
     {
         path: '/',
         component: Home,
         name: 'Customer Position',
         iconCls: 'fa fa-object-group',//图标样式class
         // leaf: true,//只有一个节点
-        meta: "user",
+        meta: "rm",
         children: [
             { path: '/customer-position', component: CustomerPosition, name: 'Customer Position'},
             { path: '/customer-position-info', component: CustomerPositionInfo, name: 'Customer Position Info'}
@@ -111,12 +101,37 @@ let routes = [
         name: 'Customer Trade',
         iconCls: 'fa fa-flag-checkered',//图标样式class
         // leaf: true,//只有一个节点
-        meta: "user",
+        meta: "rm",
         children: [
             { path: '/share-transaction-input', component: Transaction, name: 'Share Transaction Input'},
             { path: '/connectivity', component: Connectivity, name: 'Connectivity'}
         ]
     },
+    {
+        path: '/',
+        component: Home,
+        name: '',
+        iconCls: 'fa fa-cubes',//图标样式class
+        leaf: true,//只有一个节点
+        meta: "rm",
+        children: [
+            { path: '/daily-event', component: DailyEvent, name: 'Daily Event' }
+        ]
+    },
+    // =======================
+    // admin nav
+    // =======================   
+    {
+        path: '/',
+        component: Home,
+        name: '',
+        iconCls: 'fa fa-cubes',//图标样式class
+        leaf: true,//只有一个节点
+        meta: "admin",
+        children: [
+            { path: '/create-user', component: CreateUser, name: 'Create User' }
+        ]
+    }, 
     {
         path: '*',
         hidden: true,

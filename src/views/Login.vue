@@ -26,7 +26,7 @@
       return {
         logining: false,
         ruleForm2: {
-          account: 'hsbc-admin',
+          account: 'manager',
           checkPass: '123456'
         },
         rules2: {
@@ -65,7 +65,18 @@
                 });
               } else {
                 sessionStorage.setItem('user', JSON.stringify(user));
-                this.$router.push({ path: '/' });
+                let _path = {path: '/'};
+                if (user.meta == 'admin') {
+                    _path = {path: '/create-user'};
+                }
+                if (user.meta == 'manager') {
+                    _path = {path: '/'};
+                }
+                if (user.meta == 'rm') {
+                    _path = {path: '/customer-position'};
+                }
+
+                this.$router.push( _path );
               }
             });
           } else {

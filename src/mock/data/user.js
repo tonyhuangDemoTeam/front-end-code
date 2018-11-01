@@ -2,18 +2,26 @@ import Mock from 'mockjs';
 const LoginUsers = [
   {
     id: 1,
-    username: 'hsbc-admin',
+    username: 'manager',
     password: '123456',
     avatar: '',
-    meta: 'admin',
+    meta: 'manager',
     name: 'katherine pierce'
   },
   {
     id: 2,
-    username: 'hsbc-user',
+    username: 'rm',
     password: '123456',
     avatar: '',
-    meta: 'user',
+    meta: 'rm',
+    name: 'Daniel Gillies'
+  },
+  {
+    id: 2,
+    username: 'admin',
+    password: '123456',
+    avatar: '',
+    meta: 'admin',
     name: 'Daniel Gillies'
   }
 
