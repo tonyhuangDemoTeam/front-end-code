@@ -20,6 +20,7 @@
     "nprogress": "^0.2.0",
     "vue": "^2.2.2",
     "vue-c3": "^1.2.9",
+    "vue-orgchart": "^1.1.7",
     "vue-router": "^2.3.0",
     "vuex": "^2.0.0-rc.6"
   },

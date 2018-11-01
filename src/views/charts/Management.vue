@@ -2,17 +2,20 @@
     <section class="chart-container">
         <el-row> 
             <el-col :span="24">
+                <vo-basic :data="chartData" nodeContent="title"></vo-basic>
+               <!-- // 'data':datascource,'nodeContent':'title' -->
                 <!-- <div class="total-txt">Total GPB Customer : 879 </div> -->
-                <div id="chartPie" style="width:100%; height:400px;"></div>
+                <!-- <div id="chart-container" style="width:100%; height:400px;"></div> -->
             </el-col>
         </el-row>
     </section>
 </template>
 
 <script>
-    import echarts from 'echarts'
+    import { VoBasic } from 'vue-orgchart'
 
     export default {
+        components: { VoBasic },
         data() {
             return {
                 myChart: null,
@@ -30,102 +33,103 @@
                   resource: '',
                   desc: ''
                 },
+                chartData: null,
                 valTotal: 0,
                 pieData: null,
             }
         },
         watch: {
-            sizeForm: {
-              deep: true,
-              handler(curVal, oldVal) {
-                var _region = curVal.region;
-                if (_region.length == 0) {
-                  _region = ['China', 'HongKong', 'Singapore', 'United Kingdom']
-                }
-                
-                let _pieData = [], _total = 0;
-                _region.forEach((item, index)=>{
-                    let max = 666,
-                        min=333,
-                        _val = parseInt(Math.random()*(max-min+1)+min,10);
-                    let tempObj = {value: _val, name: item};
-                    _total+=_val;
-                    _pieData.push(tempObj);
-                })
-                this.valTotal = _total;
-                this.pieData = _pieData;
-              },
-              immediate: true
-            }
-        },
 
+        },
         computed: {
 
         },
         methods: {
             onSubmit() {
-
                 let _seft = this;
                 
             },
-            regionAllbtn(){
-                this.sizeForm.regionAll = !this.sizeForm.regionAll;
-            }, 
             drawPieChart() {
                 let _seft = this;
-
-                let treeData = {
-                   "name": "analytics",
-                   "children": [
-                    {
-                     "name": "cluster",
-                     "children": [
-                      {"name": "AgglomerativeCluster", "value": 3938},
-                      {"name": "CommunityStructure", "value": 3812},
-                      {"name": "HierarchicalCluster", "value": 6714},
-                      {"name": "MergeEdge", "value": 743}
-                     ]
-                    },
-                    {
-                     "name": "graph",
-                     "children": [
-                      {"name": "BetweennessCentrality", "value": 3534},
-                      {"name": "LinkDistance", "value": 5731},
-                      {"name": "MaxFlowMinCut", "value": 7840},
-                      {"name": "ShortestPaths", "value": 5914},
-                      {"name": "SpanningTree", "value": 3416}
-                     ]
-                    },
-                    {
-                     "name": "optimization",
-                     "children": [
-                      {"name": "AspectRatioBanker", "value": 7074}
-                     ]
-                    }
-                   ]
-                  };
-
-                this.myChart = echarts.init(document.getElementById('chartPie'));
-                let option = {};
-
-                this.myChart.setOption(option);
+               
             },
             drawCharts() {
                 this.drawPieChart()
             },
         },
-
+        created () {
+            this.chartData = {
+            'name': 'Lao Lao',
+            'title': 'general manager',
+            'children': [{
+                'name': 'Bo Miao',
+                'title': 'department manager',
+                'className': 'middle-level',
+                'children': [{
+                    'name': 'Li Jing',
+                    'title': 'senior engineer',
+                    'className': 'product-dept'
+                }, {
+                    'name': 'Li Xin',
+                    'title': 'senior engineer',
+                    'className': 'product-dept',
+                    'children': [{
+                        'name': 'To To',
+                        'title': 'engineer',
+                        'className': 'pipeline1'
+                    }, {
+                        'name': 'Fei Fei',
+                        'title': 'engineer',
+                        'className': 'pipeline1'
+                    }, {
+                        'name': 'Xuan Xuan',
+                        'title': 'engineer',
+                        'className': 'pipeline1'
+                    }]
+                }]
+            }, {
+                'name': 'Su Miao',
+                'title': 'department manager',
+                'className': 'middle-level',
+                'children': [{
+                    'name': 'Pang Pang',
+                    'title': 'senior engineer',
+                    'className': 'rd-dept'
+                }, {
+                    'name': 'Hei Hei',
+                    'title': 'senior engineer',
+                    'className': 'rd-dept',
+                    'children': [{
+                        'name': 'Xiang Xiang',
+                        'title': 'UE engineer',
+                        'className': 'frontend1'
+                    }, {
+                        'name': 'Dan Dan',
+                        'title': 'engineer',
+                        'className': 'frontend1'
+                    }, {
+                        'name': 'Zai Zai',
+                        'title': 'engineer',
+                        'className': 'frontend1'
+                    }]
+                }]
+            }]
+        }
+        },
         mounted() {
-            this.drawCharts()
+            this.drawCharts();
+            
         },
         updated() {
             this.drawCharts()
         }
     }
+
+
 </script>
 
 <style  scoped lang="scss">
-    .chart-container {
+   .chart-container {
         width: 100%;
         float: left;
     }
