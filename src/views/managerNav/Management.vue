@@ -3,9 +3,6 @@
         <el-row>
             <el-col :span="24">
                 <vo-basic :data="chartData" nodeContent="title" :toggleCollapse="false"></vo-basic>
-                <!-- // 'data':datascource,'nodeContent':'title' -->
-                <!-- <div class="total-txt">Total GPB Customer : 879 </div> -->
-                <!-- <div id="chart-container" style="width:100%; height:400px;"></div> -->
             </el-col>
         </el-row>
     </section>

@@ -4,10 +4,10 @@
   <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-position="left" label-width="0px" class="demo-ruleForm login-container">
     <h3 class="title">Sign in to HSBC</h3>
     <el-form-item prop="account">
-      <el-input type="text" v-model="ruleForm2.account" auto-complete="off" placeholder="Username"></el-input>
+      <el-input type="text" v-model="ruleForm2.account" @keyup.enter.native="handleSubmit2" auto-complete="off" placeholder="manager||rm||admin"></el-input>
     </el-form-item>
     <el-form-item prop="checkPass">
-      <el-input type="password" v-model="ruleForm2.checkPass" auto-complete="off" placeholder="Password"></el-input>
+      <el-input type="password" v-model="ruleForm2.checkPass" @keyup.enter.native="handleSubmit2" auto-complete="off" placeholder="Password"></el-input>
     </el-form-item>
     <el-checkbox v-model="checked" checked class="remember">Remember password！</el-checkbox>
     <el-form-item style="width:100%;">
@@ -26,16 +26,16 @@
       return {
         logining: false,
         ruleForm2: {
-          account: 'manager',
+          account: '',
           checkPass: '123456'
         },
         rules2: {
           account: [
-            { required: true, message: '请输入账号', trigger: 'blur' },
+            { required: true, message: 'Please input account number.', trigger: 'blur' },
             //{ validator: validaePass }
           ],
           checkPass: [
-            { required: true, message: '请输入密码', trigger: 'blur' },
+            { required: true, message: 'Please input a password.', trigger: 'blur' },
             //{ validator: validaePass2 }
           ]
         },
