@@ -42,14 +42,6 @@ for (let i = 0; i < 60; i++) {
 
 const Customers = [];
 
-// "customerNumber" : 8000123456,
-// "customerName" : "Tony HUANG",
-// "customerType" : "Individual", Entity
-// "homeCountry" : "CN",
-// "bookingCenter" :"HK",
-// "rmCode" : "HKRM01",
-// "dateOfBirth" : "1983-01-01"
-
 for (let i = 0; i < 60; i++) {
   Customers.push(Mock.mock({
     id: Mock.Random.guid(),

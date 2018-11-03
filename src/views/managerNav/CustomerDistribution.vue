@@ -6,7 +6,6 @@
             <el-col :span="20">
                 <el-form ref="form" :model="sizeForm" class="form-box" label-width="120px" size="mini">
                     <el-form-item label="Region:">
-                    	<!-- <el-button @click.native="regionAllbtn" :type="sizeForm.regionAll?'danger':''">All:</el-button> -->
                         <el-checkbox-group v-model="sizeForm.region" :min=0>
                           <el-checkbox-button label="All" name="type"></el-checkbox-button>
                           <el-checkbox-button label="China" name="type"></el-checkbox-button>
@@ -73,6 +72,7 @@
     export default {
         data() {
             return {
+                loading: false,
             	show2: true,
                 chartPie: null,
                 sizeForm: {
@@ -131,8 +131,7 @@
             drawPieChart() {
                 let _seft = this;
 
-                this.chartPie = echarts.init(document.getElementById('chartPie'));
-                this.chartPie.setOption({
+                let option = {
                     title: {
                         text: 'Customer Distribution By Region',
                         subtext: 'Total GPB Customer : ' + _seft.valTotal,
@@ -157,8 +156,7 @@
                             return name + ": " + num;
                          }
                     },
-                    series: [
-                        {
+                    series: [{
                             name: 'distribution of data',
                             type: 'pie',
                             roseType : 'radius',
@@ -182,9 +180,11 @@
                                 } 
                             }
                                                 
-                        }
-                    ]
-                });
+                        }]
+                }
+
+                this.chartPie = echarts.init(document.getElementById('chartPie'));
+                this.chartPie.setOption( option );
             },
             drawCharts() {
                 this.drawPieChart()
@@ -200,7 +200,7 @@
     }
 </script>
 
-<style  scoped lang="scss">
+<style scoped lang="scss">
     .chart-container {
         width: 100%;
         float: left;
@@ -221,17 +221,6 @@
     			color: #DA0010;
     		}
     	}
-    }
-    /*.chart div {
-        height: 400px;
-        float: left;
-    }*/
-
-    .form-box {
-        /*color: #a58683;*/
-        /*border-bottom: 1px solid #a58683;*/
-        // padding-bottom: 15px;
-
     }
     .slider-mark {
         width: 100%;margin-bottom: 10px;

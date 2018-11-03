@@ -16,10 +16,9 @@ import CustomerTrends from './views/managerNav/CustomerTrends.vue'
 import c3 from './views/managerNav/c3.vue'
 import echarts from './views/managerNav/echarts.vue'
 import highcharts from './views/managerNav/highcharts.vue'
-import Customer from './views/managerNav/customers.vue'
+import CustomerDistribution from './views/managerNav/CustomerDistribution.vue'
 import Asset from './views/managerNav/customersChart.vue'
 import Trade from './views/managerNav/Trade.vue'
-
 
 // user(rm) template
 import DailyEvent from './views/userNav/DailyEvent.vue'
@@ -55,8 +54,7 @@ let routes = [
         leaf: true,//只有一个节点，
         meta: "manager",
         children: [
-            { path: '/', component: Management, name: 'Organization Structure' },
-            // { path: '/net-new-money-report', component: Management, name: 'Net New Money Report' }
+            { path: '/', component: Management, name: 'Organization Structure' }
         ]
     },
     {
@@ -67,7 +65,7 @@ let routes = [
         // leaf: true,//只有一个节点
         meta: "manager",
         children: [
-            { path: '/customer-distribution', component: Customer, name: 'Customer Distribution' },
+            { path: '/customer-distribution', component: CustomerDistribution, name: 'Customer Distribution' },
             { path: '/customer-trends-report', component: CustomerTrends, name: 'Customer Trends Report' },
         ]
     },

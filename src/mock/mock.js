@@ -1,6 +1,10 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+
 import { LoginUsers, Users, Customers } from './data/user';
+import { Relationship } from './data/manager';
+
+
 let _Users = Users;
 let _Customers = Customers;
 
@@ -167,6 +171,26 @@ export default {
         }, 500);
       });
     });
+
+    /**
+     *  manager
+     */
+    //获取manager Organization Structure 上的图标数据
+    mock.onGet('/manager/organizationStructure/list').reply(config => {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            list: Relationship
+          }]);
+        }, 1000);
+      });
+    });
+
+
+
+
+
+
 
   }
 };

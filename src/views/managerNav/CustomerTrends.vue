@@ -1,8 +1,7 @@
 <template>
     <section class="chart-container">
         <el-row> 
-            <el-col :span="16">
-                <!-- <div class="total-txt">Total GPB Customer : 879 </div> -->
+            <el-col :span="16" v-laoding="loading">
                 <div id="chartPie" style="width:100%; height:500px;"></div>
             </el-col>
             <el-col :span="8">
@@ -32,6 +31,7 @@
     export default {
         data() {
             return {
+                loading: false,
                 myChart: null,
                 show2: true,
                 chartPie: null,
@@ -50,7 +50,7 @@
                 valTotal: 0,
                 pieData: null,
                 tableData: [{
-                    date: '> 20 Years',
+                    date: '>20 Years',
                     name: '5000',
                   }, {
                     date: '>10 Years && <20 Years',
@@ -83,12 +83,29 @@
                 this.sizeForm.regionAll = !this.sizeForm.regionAll;
             }, 
             drawPieChart() {
-                let _seft = this;
 
-                let _data = ['>20 Years', '>10 Years && <20 Years', '>5 Years && <10 Years', '>1 Years && <5 Years', '<1 Years'];
+                let _seft = this;
+                let _data = []
+                let _series = [];
+
+                _seft.tableData.forEach((item, value) => {
+                    _data.push(item.date);
+                    let temp = {
+                        name: item.date,
+                        type:'bar',
+                        barWidth: '13%', 
+                        data:[ item.name ],
+                        label: {
+                          normal:{
+                            show: true,
+                            position: 'top',
+                          }
+                        }
+                    }
+                    _series.push( temp );
+                });
 
                 let option = {
-    
                     title: {
                         text: "Customer Trends Report",
                         // position: "center",
@@ -110,12 +127,10 @@
                     },
                     xAxis : [
                         {
-                            // type : 'category',
                             data : ['0 ~ 100 Years'],
                             axisTick: {
                                 alignWithLabel: true
-                            },
-                            // nameRotate: 30,
+                            }
                         }
                     ],
                     yAxis : [
@@ -123,69 +138,7 @@
                             type : 'value'
                         }
                     ],
-                    series : [
-                        {
-                            name: _data[0],
-                            type:'bar',
-                            barWidth: '13%', 
-                            data:[5000],
-                            label: {
-                              normal:{
-                                show: true,
-                                position: 'top',
-                              }
-                            }
-                        },
-                        {
-                            name: _data[1],
-                            type:'bar',
-                            barWidth: '13%', 
-                            data:[3600],
-                            label: {
-                              normal:{
-                                show: true,
-                                position: 'top',
-                              }
-                            }
-
-                        },
-                        {
-                            name: _data[2],
-                            type:'bar',
-                            barWidth: '13%', 
-                            data:[1980],
-                            label: {
-                              normal:{
-                                show: true,
-                                position: 'top',
-                              }
-                            }
-                        },
-                        {
-                            name: _data[3],
-                            type:'bar',
-                            barWidth: '13%', 
-                            data:[7720],
-                            label: {
-                              normal:{
-                                show: true,
-                                position: 'top',
-                              }
-                            }
-                        },
-                        {
-                            name: _data[4],
-                            type:'bar',
-                            barWidth: '13%', 
-                            data:[4500],
-                            label: {
-                              normal:{
-                                show: true,
-                                position: 'top',
-                              }
-                            }
-                        }
-                    ],
+                    series : _series,
                    
                 };
 
