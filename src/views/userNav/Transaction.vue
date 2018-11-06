@@ -1,6 +1,6 @@
 <template>
-	<section>
-		<el-col :span="14" style="margin: 35px 0 25px;">
+	<el-row>
+		<el-col :span="16" style="margin: 35px 0 25px;">
 			<el-form ref="form" :model="form" label-width="140px" size="mini">	
 			  <el-form-item label="" inline>
 			    <el-radio-group v-model="form.transactionType">
@@ -12,89 +12,82 @@
 			      <el-radio-button label="Phone"></el-radio-button>
 			    </el-radio-group>
 			  </el-form-item>
-			  <el-form-item label="Customer Number:">
-			    <!-- <el-input v-model="form.customerNumber"></el-input> -->
-			    <el-select v-model="form.customerNumber" placeholder="">
-			      <el-option label="1" value="1"></el-option>
-			      <el-option label="2" value="2"></el-option>
-			      <el-option label="3" value="3"></el-option>
-			    </el-select>
-			   <!--  <el-select v-model="form.customerNumber" placeholder="请选择">
-				    <el-option
-				      v-for="item in options"
-				      :key="item.value"
-				      :label="item.label"
-				      :value="item.value">
-				    </el-option>
-				 </el-select> -->
-			  </el-form-item>
-			  <el-form-item label="Account Number:">
-			    <!-- <el-input v-model="form.accountNumber"></el-input> -->
-			    <el-select v-model="form.accountNumber" placeholder="">
-			      <el-option label="1" value="1"></el-option>
-			      <el-option label="2" value="2"></el-option>
-			      <el-option label="3" value="3"></el-option>
-			    </el-select>
-			  </el-form-item>
-			  <el-form-item label="Share Issue:">
-			    <!-- <el-input @blur="getIssueItem" v-model="form.shareIssueCode"></el-input> -->
-			    <!-- <el-select v-model="form.shareIssueCode" placeholder="">
-			      <el-option label="issue 1" value="issue 1"></el-option>
-			      <el-option label="issue 2" value="issue 2"></el-option>
-			      <el-option label="issue 3" value="issue 3"></el-option>
-			    </el-select> -->
-			    <el-select v-model="form.shareIssueCode" @change="getIssueItem" placeholder="请选择">
-				    <el-option
-				      v-for="item in form.shareIssueCodeoptions"
-				      :key="item.value"
-				      :label="item.label"
-				      :value="item.value">
-				    </el-option>
-				 </el-select>
-			  </el-form-item>
-			  <el-form-item label="Norminal:">
-			    <el-input v-model="form.shareQuantity"></el-input>
-			  </el-form-item>
-			  <el-form-item label="Share Currency:">
-			    <el-input v-model="form.shareCurrency"></el-input>
-			  </el-form-item>
-			  <el-form-item label="Share Price:">
-			    <el-input v-model="form.sharePrice"></el-input>
-			  </el-form-item>
-			  <el-form-item label="Trade Type:">
-			    <el-select v-model="form.tradeType" placeholder="pls select u SC">
-			      <el-option label="Limit" value="shanghai"></el-option>
-			      <el-option label="Limit" value="beijing"></el-option>
-			    </el-select>
-			  </el-form-item>
-				<el-form-item label="Remark:">
-			    <el-input v-model="form.remark"></el-input>
-			  </el-form-item>
-			  </el-form-item>
-				<el-form-item label="TradeDate:">
-			    <el-date-picker
-			      v-model="form.tradeDate"
-			      type="date"
-			      value-format="yyyy-MM-dd"
-			      placeholder="选择日期">
-			    </el-date-picker>
-			  </el-form-item>
-			  </el-form-item>
-				<el-form-item label="ValueDate:">
-			    <el-date-picker
-			      v-model="form.valueDate"
-			      type="date"
-			      value-format="yyyy-MM-dd"
-			      placeholder="选择日期">
-			    </el-date-picker>
-			  </el-form-item>
-			  <el-form-item>
-			    <el-button type="primary" :loding='submiting' @click="onSubmit">Submit</el-button>
-			    <el-button @click="onReset">Reset</el-button>
+			  <el-row>
+			  	 <el-col :span="12">
+			  	 	<el-form-item label="Customer Number:">
+					    <el-select v-model="form.customerNumber" placeholder="">
+					      <el-option label="1" value="1"></el-option>
+					      <el-option label="2" value="2"></el-option>
+					      <el-option label="3" value="3"></el-option>
+					      <el-option label="4" value="4"></el-option>
+					    </el-select>
+					  </el-form-item>
+					  <el-form-item label="Share Issue:">
+					    <el-select v-model="form.shareIssueCode" @change="getIssueItem" placeholder="">
+						    <el-option
+						      v-for="item in form.shareIssueCodeoptions"
+						      :key="item.value"
+						      :label="item.label"
+						      :value="item.value">
+						    </el-option>
+						 </el-select>
+					  </el-form-item>
+					  <el-form-item label="Norminal:">
+					    <el-input v-model="form.shareQuantity"></el-input>
+					  </el-form-item>	
+					  <el-form-item label="Share Price:">
+					    <el-input v-model="form.sharePrice"></el-input>
+					  </el-form-item>
+					  </el-form-item>
+						<el-form-item label="TradeDate:">
+					    <el-date-picker
+					      v-model="form.tradeDate"
+					      type="date"
+					      value-format="yyyy-MM-dd"
+					      placeholder="选择日期">
+					    </el-date-picker>
+					  </el-form-item>					  
+			  	 </el-col>
+			  	 <el-col :span="12">
+			  	 	<el-form-item label="Account Number:">
+					    <el-select v-model="form.accountNumber" placeholder="">
+					      <el-option label="1" value="1"></el-option>
+					      <el-option label="2" value="2"></el-option>
+					      <el-option label="3" value="3"></el-option>
+					      <el-option label="4" value="4"></el-option>
+					    </el-select>
+					 </el-form-item>
+					  <el-form-item label="Share Currency:">
+					    <el-input v-model="form.shareCurrency"></el-input>
+					  </el-form-item>	
+					  <el-form-item label="Trade Type:">
+					    <el-select v-model="form.tradeType" placeholder="pls select u SC">
+					      <el-option label="Limit" value="shanghai"></el-option>
+					      <el-option label="Limit" value="beijing"></el-option>
+					    </el-select>
+					  </el-form-item>	
+					  <el-form-item label="Remark:">
+					    <el-input v-model="form.remark"></el-input>
+					  </el-form-item>
+					  </el-form-item>
+						<el-form-item label="ValueDate:">
+					    <el-date-picker
+					      v-model="form.valueDate"
+					      type="date"
+					      value-format="yyyy-MM-dd"
+					      placeholder="选择日期">
+					    </el-date-picker>
+					  </el-form-item>					  				  				 
+			       </el-col>
+			  </el-row>
+			 
+			  <el-form-item class="el-form-item_submit">
+			    <el-button type="primary" size="small" :loding='submiting' @click="onSubmit">Submit</el-button>
+			    <el-button @click="onReset" size="small">Reset</el-button>
 			  </el-form-item>
 			</el-form> 
+
 			 <!--  -->
-			 
 			 <div class="cp-table-txt">
               	<p>Holding Details:</p>
              </div>
@@ -126,7 +119,7 @@
 		    </el-table>
 		</el-col>
 
-		<el-col :span="10" style="padding: 40px;">
+		<el-col :span="8" style="padding: 40px 10px;">
 			<el-form ref="form" :model="issueInfo" label-width="150px" size="mina">
 			   <el-form-item label="House View:">
 			    	<div>{{issueInfo.houseView}}</div>
@@ -148,7 +141,7 @@
 			    </el-form-item>
 			</el-form>   
 		</el-col>
-	</section>
+	</el-row>
 </template>
 <script>
   import { getDataUrl, requestTransaction } from '@/api/api';
@@ -249,13 +242,14 @@
 				Vm.issueCode = data.data
 				// console.log($vm.issueCode);
 
-
-				for (let key in Vm.issueCode) {
-				    Vm.form.shareIssueCodeoptions.push({
- 						value: key,
-          				label: key
+				var newkey = Object.keys(Vm.issueCode).sort();
+				// console.log(999,newkey)
+				newkey.forEach(item => {
+					Vm.form.shareIssueCodeoptions.push({
+ 						value: item,
+          				label: item
 					})
-				}
+				});
                    
 			}).catch((data) => {
 				console.log(data);
@@ -271,6 +265,16 @@
 </script>
 
 <style scoped lang="scss">
+.el-form-item_submit{
+	    margin: 20px 0;
+    text-align: center;
+}
+.el-select.el-select--mini{
+  width: 100%;
+}
+.el-date-editor.el-input, .el-date-editor.el-input__inner{
+ width: 100%;
+}
 .el-form-item{
 	margin-bottom: 0px;
 }
