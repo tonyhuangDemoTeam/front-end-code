@@ -1,6 +1,8 @@
 import babelpolyfill from 'babel-polyfill'
 import Vue from 'vue'
 import App from './App'
+import lang from 'element-ui/lib/locale/lang/en'
+import locale from 'element-ui/lib/locale'
 import ElementUI from 'element-ui'
 import CollapseTransition from 'element-ui/lib/transitions/collapse-transition';
 //import 'element-ui/lib/theme-default/index.css'
@@ -16,6 +18,9 @@ import Mock from './mock'
 Mock.bootstrap();
 import 'font-awesome/css/font-awesome.min.css'
 import 'vue-orgchart/dist/style.min.css'
+
+// 设置语言
+locale.use(lang)
 
 Vue.use(ElementUI)
 Vue.use(VueRouter)
