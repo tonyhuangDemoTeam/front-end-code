@@ -2,7 +2,7 @@
   <section>
   <div class="logo"><img src="" alt=""></div>
   <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-position="left" label-width="0px" class="demo-ruleForm login-container">
-    <h3 class="title">Sign in to HSBC</h3>
+    <h3 class="title"><img :src="this.sysLogo" alt=""> <span>- {{sysName}}</span></h3>
     <el-form-item prop="account">
       <el-input type="text" v-model="ruleForm2.account" @keyup.enter.native="handleSubmit2" auto-complete="off" placeholder="manager||rm||admin"></el-input>
     </el-form-item>
@@ -24,6 +24,8 @@
   export default {
     data() {
       return {
+        sysLogo: require('../assets/hongkong-hsbc-logo-en.svg'),
+        sysName: 'Private Banking',
         logining: false,
         ruleForm2: {
           account: '',
@@ -97,7 +99,7 @@
     border-radius: 5px;
     -moz-border-radius: 5px;
     background-clip: padding-box;
-    margin: 180px auto;
+    margin: 100px auto;
     width: 350px;
     padding: 35px 35px 15px 35px;
     background: #fff;
@@ -106,7 +108,17 @@
     .title {
       margin: 0px auto 40px auto;
       text-align: center;
-      color: #505458;
+      color: #666;
+      img{
+          display: inline-block;
+          width: 211px;
+      }
+      span{
+             display: inline-block;
+    margin-left: -115px;
+    top: 10px;
+    position: relative;
+      }
     }
     .remember {
       margin: 0px 0px 35px 0px;

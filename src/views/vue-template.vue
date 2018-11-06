@@ -22,6 +22,9 @@
 		methods: {
 			
 		},
+		created() {
+			
+		},
 		mounted() {
 			
 		}

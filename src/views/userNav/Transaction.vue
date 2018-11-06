@@ -1,58 +1,95 @@
 <template>
 	<section>
 		<el-col :span="14" style="margin: 35px 0 25px;">
-			<el-form ref="form" :model="form" label-width="150px" size="mini">
-			 <el-form-item label="Buy or Sell">
-			    <el-radio-group v-model="form.buySell">
-			      <el-radio border label="Buy"></el-radio>
-			      <el-radio border label="Sell"></el-radio>
+			<el-form ref="form" :model="form" label-width="140px" size="mini">	
+			  <el-form-item label="" inline>
+			    <el-radio-group v-model="form.transactionType">
+			      <el-radio-button label="B" value="B">Buy</el-radio-button>
+			      <el-radio-button label="S" value="S">Sell</el-radio-button>
+			    </el-radio-group>
+			    <el-radio-group v-model="form.type2" style='margin-left: 40px;'>
+			      <el-radio-button label="eShare"></el-radio-button>
+			      <el-radio-button label="Phone"></el-radio-button>
 			    </el-radio-group>
 			  </el-form-item>
-			  <el-form-item label="eShare or Phone">
-			    <el-radio-group v-model="form.eSharePhone">
-			      <el-radio border label="eShare"></el-radio>
-			      <el-radio border label="Phone"></el-radio>
-			    </el-radio-group>
-			  </el-form-item>	
-			 <!--  <el-form-item label="活动性质" inline>
-			    <el-checkbox-group v-model="form.type1" max=1>
-			      <el-checkbox-button label="Buy" name="type"></el-checkbox-button>
-			      <el-checkbox-button label="Sell" name="type"></el-checkbox-button>
-			    </el-checkbox-group>
-			    <el-checkbox-group v-model="form.type2" max=1>
-			      <el-checkbox-button label="eShare" name="type"></el-checkbox-button>
-			      <el-checkbox-button label="Phone" name="type"></el-checkbox-button>
-			    </el-checkbox-group>
-			  </el-form-item> -->
-			  <el-form-item label="Customer">
-			    <el-input v-model="form.name"></el-input>
+			  <el-form-item label="Customer Number:">
+			    <!-- <el-input v-model="form.customerNumber"></el-input> -->
+			    <el-select v-model="form.customerNumber" placeholder="">
+			      <el-option label="1" value="1"></el-option>
+			      <el-option label="2" value="2"></el-option>
+			      <el-option label="3" value="3"></el-option>
+			    </el-select>
+			   <!--  <el-select v-model="form.customerNumber" placeholder="请选择">
+				    <el-option
+				      v-for="item in options"
+				      :key="item.value"
+				      :label="item.label"
+				      :value="item.value">
+				    </el-option>
+				 </el-select> -->
 			  </el-form-item>
-			  <el-form-item label="Share Issue">
-			    <el-input v-model="form.shareIssue"></el-input>
-			  </el-form-item>
-			  <el-form-item label="Norminal">
-			    <el-input v-model="form.norminal"></el-input>
-			  </el-form-item>
-			  <el-form-item label="Share Currency">
-			    <el-select v-model="form.shareCurrency" placeholder="pls select u SC">
-			      <el-option label="HKD" value="shanghai"></el-option>
-			      <el-option label="RMB" value="beijing"></el-option>
+			  <el-form-item label="Account Number:">
+			    <!-- <el-input v-model="form.accountNumber"></el-input> -->
+			    <el-select v-model="form.accountNumber" placeholder="">
+			      <el-option label="1" value="1"></el-option>
+			      <el-option label="2" value="2"></el-option>
+			      <el-option label="3" value="3"></el-option>
 			    </el-select>
 			  </el-form-item>
-			  <el-form-item label="Share Price">
+			  <el-form-item label="Share Issue:">
+			    <!-- <el-input @blur="getIssueItem" v-model="form.shareIssueCode"></el-input> -->
+			    <!-- <el-select v-model="form.shareIssueCode" placeholder="">
+			      <el-option label="issue 1" value="issue 1"></el-option>
+			      <el-option label="issue 2" value="issue 2"></el-option>
+			      <el-option label="issue 3" value="issue 3"></el-option>
+			    </el-select> -->
+			    <el-select v-model="form.shareIssueCode" @change="getIssueItem" placeholder="请选择">
+				    <el-option
+				      v-for="item in form.shareIssueCodeoptions"
+				      :key="item.value"
+				      :label="item.label"
+				      :value="item.value">
+				    </el-option>
+				 </el-select>
+			  </el-form-item>
+			  <el-form-item label="Norminal:">
+			    <el-input v-model="form.shareQuantity"></el-input>
+			  </el-form-item>
+			  <el-form-item label="Share Currency:">
+			    <el-input v-model="form.shareCurrency"></el-input>
+			  </el-form-item>
+			  <el-form-item label="Share Price:">
 			    <el-input v-model="form.sharePrice"></el-input>
 			  </el-form-item>
-				<el-form-item label="Trade Type">
+			  <el-form-item label="Trade Type:">
 			    <el-select v-model="form.tradeType" placeholder="pls select u SC">
 			      <el-option label="Limit" value="shanghai"></el-option>
 			      <el-option label="Limit" value="beijing"></el-option>
 			    </el-select>
 			  </el-form-item>
-				<el-form-item label="Remark">
+				<el-form-item label="Remark:">
 			    <el-input v-model="form.remark"></el-input>
 			  </el-form-item>
+			  </el-form-item>
+				<el-form-item label="TradeDate:">
+			    <el-date-picker
+			      v-model="form.tradeDate"
+			      type="date"
+			      value-format="yyyy-MM-dd"
+			      placeholder="选择日期">
+			    </el-date-picker>
+			  </el-form-item>
+			  </el-form-item>
+				<el-form-item label="ValueDate:">
+			    <el-date-picker
+			      v-model="form.valueDate"
+			      type="date"
+			      value-format="yyyy-MM-dd"
+			      placeholder="选择日期">
+			    </el-date-picker>
+			  </el-form-item>
 			  <el-form-item>
-			    <el-button type="primary" @click="onSubmit">Submit</el-button>
+			    <el-button type="primary" :loding='submiting' @click="onSubmit">Submit</el-button>
 			    <el-button @click="onReset">Reset</el-button>
 			  </el-form-item>
 			</el-form> 
@@ -67,80 +104,164 @@
               :header-cell-style="tableHeaderColor"
 		      style="width: 100%">
 		      <el-table-column
-		        prop="issueName"
+		        prop="shareIssueCode"
 		        label="Issue Name">
 		      </el-table-column>
 		      <el-table-column
-		        prop="avgPrice"
+		        prop="averagePrice"
 		        label="Avg Price">
 		      </el-table-column>
 		      <el-table-column
-		        prop="norminal"
+		        prop="considerationAmount"
 		        label="Norminal">
 		      </el-table-column>
 		      <el-table-column
-		        prop="totalValue"
+		        prop="holdingQuantity"
 		        label="Total Value">
 		      </el-table-column>
 		      <el-table-column
-		        prop="CCY"
+		        prop="shareCurrency"
 		        label="CCY">
 		      </el-table-column>
 		    </el-table>
 		</el-col>
 
-		<el-col :span="10" style="padding: 35px;">
-			<el-form ref="form" label-width="100px">
+		<el-col :span="10" style="padding: 40px;">
+			<el-form ref="form" :model="issueInfo" label-width="150px" size="mina">
 			   <el-form-item label="House View:">
-			    	<div>BULL</div>
+			    	<div>{{issueInfo.houseView}}</div>
 			    </el-form-item>
-			</el-form>
-			<el-form ref="form" label-width="100px">
-			   <el-form-item label="Credit Rating:">
-			    	<div>AA+</div>
+			    <el-form-item label="Credit Rating:">
+			    	<div>{{issueInfo.creditRating}}</div>
 			    </el-form-item>
-			</el-form> 
-			<el-form ref="form" label-width="100px">
-			   <el-form-item label="Solicite:">
-			    	<div>N</div>
+			    <el-form-item label="Solicite:">
+			    	<div>{{issueInfo.solicite}}</div>
 			    </el-form-item>
-			</el-form>     
+			    <el-form-item label="Issue Code:">
+			    	<div>{{issueInfo.issueCode}}</div>
+			    </el-form-item>
+			    <el-form-item label="Share Issue Name:">
+			    	<div>{{issueInfo.shareIssueName}}</div>
+			    </el-form-item>
+			    <el-form-item label="SShare Price:">
+			    	<div>{{issueInfo.sharePrice}}</div>
+			    </el-form-item>
+			</el-form>   
 		</el-col>
 	</section>
 </template>
 <script>
+  import { getDataUrl, requestTransaction } from '@/api/api';
+
 	export default {
 		data() {
 			return {
+        			submiting: false,
 				    form: {
-			          name: '',
-			          buySell: [],
-			          eSharePhone: [],
-			          shareIssue: '',
-			          norminal: '',
-			          shareCurrency: [],
+				      transactionType: '',
+				      type2: '',
+			          customerNumber: '',
+				      accountNumber: '',
+			          shareIssueCode: '',
+			          shareIssueCodeoptions: [],
+			          shareQuantity: '',
+			          shareCurrency: '',
 			          sharePrice: '',
 			          tradeType: [],
-			          remark: ''
+			          considerationAmount: 0,
+			          remark: '',
+			          tradeDate:'',
+				      valueDate:'',
 			        },
-			        tableData: [{				
-			        	issueName:'0005.HK',	
-			        	avgPrice:60.5,	
-			        	norminal:80000,	
-			        	totalValue:4840000,
-			        	CCY:'HKD'
-			        }]
+			        tableData: [],
+			        issueInfo:{
+						creditRating: '',
+						houseView: '',
+						issueCode: '',
+						shareCountry: '',
+						shareCurrency: '',
+						shareIssueCode: '',
+						shareIssueName: '',
+						sharePrice: '',
+						solicite: '',
+			        },
+			        issueCode: null,
+			        issueCodeStates: []
 			}
 		},
+		watch: {
+           'form.customerNumber'(val){
+               
+           },
+           'form.accountNumber'(val){
+                this.getSharePosition();
+           },
+		},
 		methods: {
-			onSubmit(){},
+			getSharePosition(){
+
+			    getDataUrl('/fos/share/position/get', {cust: 1,acct: 1}).then(data => {
+					this.tableData = data.data
+	                   
+				}).catch((data) => {
+					console.log(data);
+
+				});
+			},
+			onSubmit(){
+				var Vm = this;
+
+				Vm.submiting = true;
+				requestTransaction('fos/share/deal/save', Vm.form).then(data => {
+				   Vm.submiting = false;
+				   Vm.$message({
+			          showClose: true,
+			          message: 'Submitted successfully.',
+			          type: 'success'
+			        });
+				}).catch((data) => {
+					console.log(data);
+				});
+
+			},
 			onReset(){},
 			tableHeaderColor({ row, column, rowIndex, columnIndex }) {
 			    if (rowIndex === 0) {
 			        return 'background-color: #F7F6Fd;color: #666;font-weight: bold;'
 			    }
 			 },
+			 getIssueItem(event){
+
+			 	let el = event.target, Vm = this;
+
+			 	let val = Vm.issueCode[Vm.form.shareIssueCode]
+			 	Vm.issueInfo = val ? val : {};
+			 	Vm.form.shareCurrency = val ? val.shareCurrency : '';
+
+			 }
 			
+		},
+		created(){
+           
+			var Vm = this;
+
+			getDataUrl('/fos/share/issue/get', {}).then(data => {
+				Vm.issueCode = data.data
+				// console.log($vm.issueCode);
+
+
+				for (let key in Vm.issueCode) {
+				    Vm.form.shareIssueCodeoptions.push({
+ 						value: key,
+          				label: key
+					})
+				}
+                   
+			}).catch((data) => {
+				console.log(data);
+
+			});
+
 		},
 		mounted() {
 			

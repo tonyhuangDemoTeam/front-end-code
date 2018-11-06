@@ -2,7 +2,7 @@ import axios from 'axios';
 
 let base = '';
 
-export const requestLogin = params => { return axios.post(`${base}/login`, params).then(res => res.data); };
+export const requestLogin = params => { return axios.post(`${base}/sa/user/authenticate`, params).then(res => res.data); };
 
 export const getUserList = params => { return axios.get(`${base}/user/list`, { params: params }); };
 
@@ -18,6 +18,14 @@ export const editUser = params => { return axios.get(`${base}/user/edit`, { para
 
 export const addUser = params => { return axios.get(`${base}/user/add`, { params: params }); };
 
-// manager
+export const testUrl = (url, params) => { return axios.get(url, { params: params }); };
 
+export const requestTransaction = (url, params) => { return axios.post(base + url, { params: params }).then(res => res.data); };
+
+export const getDataUrl = (url, params) => { return axios.get(base + url, { params: params }); };
+
+// export const requestTransaction = (url, params) => { return axios.post(url, params).then(res => res.data); };
+// export const getDataUrl = (url, params) => { return axios.get(url, { params: params }); };
+
+// manager
 export const getManagerOSList = params => { return axios.get(`${base}/manager/organizationStructure/list`, { params: params }); };

@@ -82,10 +82,12 @@
 </template>
 
 <script>
+	import { getDataUrl } from '@/api/api';
+
 	export default {
 		data() {
 			return {
-				sysLogo:'https://www.hsbc.com.hk/content/dam/hsbc/hk/images/hongkong-hsbc-logo-en.svg',
+				sysLogo: require('../assets/hongkong-hsbc-logo-en.svg'),
 				sysName:'Private Banking',
 				sysLogoTxt:'HSBC',
 				collapsed:false,
@@ -182,7 +184,17 @@
 				this.sysMeta = user.meta || 'user';
 
 				// this.sysUserAvatar = user.avatar || '../assets/logo.jpeg';
-			}
+			};
+
+
+			//  getDataUrl('/sa/user/get',{id: 'rm1'}).then(data => {
+			// 	console.log('data');
+			// 	console.log(data);
+
+			// }).catch((data) => {
+			// 	console.log(data);
+
+			// })
 
 		}
 	}
@@ -246,7 +258,7 @@
 					//width: 40px;
 					//float: left;   
 					float: left;
-					margin: 6px 10px 0px 18px;
+					margin: 10px 50px 0px 18px;
 					// margin-left: 10px;
 				}
 				span {

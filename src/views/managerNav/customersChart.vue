@@ -131,7 +131,7 @@
                 this.chartPie = echarts.init(document.getElementById('chartPie'));
                 this.chartPie.setOption({
                     title: {
-                        text: 'Customer Distribution By Region',
+                        text: 'Customer Distribution By Asset',
                         subtext: 'Total GPB Customer : ' + _seft.valTotal,
                         x: 'center'
                     },

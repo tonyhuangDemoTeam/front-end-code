@@ -12,7 +12,7 @@
 <script>
 import { VoBasic } from 'vue-orgchart'
 
-import { getManagerOSList } from '../../api/api';
+import { getManagerOSList } from '@/api/api';
 
 export default {
     components: { VoBasic },
@@ -33,16 +33,18 @@ export default {
 
             this.chartLoading = true;
             getManagerOSList().then((res) => {
-                this.chartData = res.data.list;
+                this.chartData = res.data;
+                console.log(this.chartData)
                 this.chartLoading = false;
             });
 
         }
     },
     created() {
-        this.getChartData();
+        // this.getChartData();
     },
     mounted() {
+        this.getChartData();
 
     },
     updated() {

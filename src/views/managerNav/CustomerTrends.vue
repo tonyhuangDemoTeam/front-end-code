@@ -1,7 +1,7 @@
 <template>
     <section class="chart-container">
         <el-row> 
-            <el-col :span="16" v-laoding="loading">
+            <el-col :span="16">
                 <div id="chartPie" style="width:100%; height:500px;"></div>
             </el-col>
             <el-col :span="8">
@@ -12,11 +12,11 @@
                     :show-summary='true'
                     sum-text="Total">
                     <el-table-column
-                      prop="date"
+                      prop="name"
                       width="auto">
                     </el-table-column>
                     <el-table-column
-                      prop="name"
+                      prop="value"
                       width="60">
                     </el-table-column>
                   </el-table>
@@ -27,6 +27,7 @@
 
 <script>
     import echarts from 'echarts'
+    import { getDataUrl } from '@/api/api';
 
     export default {
         data() {
@@ -47,25 +48,11 @@
                   resource: '',
                   desc: ''
                 },
+                allType: [],
+                filterType: [],
                 valTotal: 0,
                 pieData: null,
-                tableData: [{
-                    date: '>20 Years',
-                    name: '5000',
-                  }, {
-                    date: '>10 Years && <20 Years',
-                    name: '4567',
-                  }, {
-                    date: '>5 Years && <10 Years',
-                    name: '1300',
-                  }, {
-                    date: '>1 Years && <5 Years',
-                    name: '1980',
-                  }, {
-                    date: '<1 Years',
-                    name: '3000',
-                  }
-                ]
+                tableData: []
             }
         },
 
@@ -74,14 +61,73 @@
 
         },
         methods: {
-            onSubmit() {
+            initPage(){
 
-                let _seft = this;
-                
+                let Vm = this;
+
+                   console.log(111)
+
+
+                getDataUrl('/fos/cust/get', { type: 'all' }).then(data => {
+
+                    Vm.allType = Vm.filterType = data.data;
+                    //Vm.filter(); // 过滤数据成为页面UI所需要的
+
+                   Vm.getAgeTotal();
+
+                   // console.log(5555, data)
+
+
+                }).catch((data) => {
+                    console.log(data);
+                    return false;
+                });
+
             },
-            regionAllbtn(){
-                this.sizeForm.regionAll = !this.sizeForm.regionAll;
-            }, 
+            getAgeTotal(){
+                let Vm = this;
+
+                let collect5 = Vm.filterType.filter(item => {
+                    return item.age > 20;
+                });
+                let collect4 = Vm.filterType.filter(item => {
+                    return item.age > 10 && item.age <= 20;
+                });
+                let collect3 = Vm.filterType.filter(item => {
+                    return item.age > 5 && item.age <= 10;
+                });
+                let collect2 = Vm.filterType.filter(item => {
+                    return item.age > 1 && item.age <= 5;
+                });
+                let collect1 = Vm.filterType.filter(item => {
+                    return item.age <=1;
+                });
+
+
+                Vm.tableData.push({
+                    name: '>20 Years',
+                    value: collect5.length,
+                });
+                Vm.tableData.push({
+                    name: '>10 Years && <20 Years',
+                    value: collect4.length,
+                });
+                Vm.tableData.push({
+                    name: '>5 Years && <10 Years',
+                    value: collect3.length,
+                });
+                Vm.tableData.push({
+                    name: '>1 Years && <5 Years',
+                    value: collect2.length,
+                });
+                Vm.tableData.push({
+                    name: '<1 Years',
+                    value: collect1.length,
+                });
+
+                Vm.drawPieChart();
+
+            },
             drawPieChart() {
 
                 let _seft = this;
@@ -89,12 +135,12 @@
                 let _series = [];
 
                 _seft.tableData.forEach((item, value) => {
-                    _data.push(item.date);
+                    _data.push(item.name);
                     let temp = {
-                        name: item.date,
+                        name: item.name,
                         type:'bar',
                         barWidth: '13%', 
-                        data:[ item.name ],
+                        data:[ item.value ],
                         label: {
                           normal:{
                             show: true,
@@ -152,10 +198,10 @@
         },
 
         mounted() {
-            this.drawCharts()
+            this.initPage()
         },
         updated() {
-            this.drawCharts()
+            // this.drawCharts()
         }
     }
 </script>

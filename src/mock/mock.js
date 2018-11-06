@@ -1,8 +1,8 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
-import { LoginUsers, Users, Customers } from './data/user';
-import { Relationship } from './data/manager';
+import { LoginUsers, Users, Customers, getShareIssue, getSharePosition } from './data/user';
+import { Relationship, typeAll } from './data/manager';
 
 
 let _Users = Users;
@@ -26,7 +26,7 @@ export default {
     });
 
     //登录
-    mock.onPost('/login').reply(config => {
+    mock.onPost('/sa/user/authenticate').reply(config => {
       let {username, password} = JSON.parse(config.data);
       return new Promise((resolve, reject) => {
         let user = null;
@@ -179,15 +179,48 @@ export default {
     mock.onGet('/manager/organizationStructure/list').reply(config => {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          resolve([200, {
-            list: Relationship
-          }]);
-        }, 1000);
+          resolve([200, Relationship]);
+        }, 200);
       });
     });
 
 
+    /**
+     *  manager
+     */
+    //获取manager Organization Structure 上的图标数据
+    mock.onGet('/fos/cust/get').reply(config => {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, typeAll]);
+        }, 300);
+      });
+    });
 
+/**
+     *  manager
+     */
+    //获取manager Organization Structure 上的图标数据
+    mock.onGet('/fos/share/issue/get').reply(config => {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, getShareIssue]);
+        }, 300);
+      });
+    });
+
+
+/**
+     *  manager
+     */
+    //获取manager Organization Structure 上的图标数据
+    mock.onGet('/fos/share/position/get').reply(config => {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, getSharePosition]);
+        }, 300);
+      });
+    });
 
 
 
