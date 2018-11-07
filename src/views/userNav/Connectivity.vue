@@ -23,21 +23,18 @@
 		</el-row>
 
 		<!-- card list -->
-		<el-row style="padding-top: 30px;" :gutter="10">
-			<el-col :span="6"  v-for="card,index in cards">
+		<el-row style="padding-top: 30px;" :gutter="6">
+			<el-col :span="8"  v-for="card,index in cards">
 				<el-card class="box-card">
 				  <div slot="header" class="clearfix">
 				    <span>{{card.name}}</span>
 				    <el-button style="float: right; padding: 3px 0" :index="index" @click="delCard(index)" type="text">del</el-button>
 				  </div>
-				  <el-form ref="form" :model="card.form" size="small" label-width="50px">
-					  <el-form-item label="name:">
+				  <el-form ref="form" :model="card.form" size="small" label-width="110px">
+					  <el-form-item label="Underlying:">
 					    <el-input v-model="card.form.a"></el-input>
 					  </el-form-item>
-					  <el-form-item label="name:">
-					    <el-input v-model="card.form.b"></el-input>
-					  </el-form-item>
-					  <el-form-item label="name:">
+					  <el-form-item label="Iusse Date:">
 					    <el-select v-model="card.form.value" placeholder="Pls select ...">
 						    <el-option
 						      v-for="item in card.form.options"
@@ -47,7 +44,7 @@
 						    </el-option>
 						  </el-select>
 					  </el-form-item>
-					  <el-form-item label="name:">
+					  <el-form-item label="Maturity Date:">
 					    <el-input v-model="card.form.c"></el-input>
 					  </el-form-item>
 					  <el-form-item>
@@ -61,7 +58,7 @@
 
 		<!--  -->
 		<el-row style="padding-top: 30px;" :gutter="10">
-			<el-col :span='6' v-for="table in tables">
+			<el-col :span='8' v-for="table in tables">
 				<el-card>
 					   <el-table
 					      size="small"
@@ -129,33 +126,39 @@
 				],
 				tables: [{
                     data: [{
-                    	name: "name:",
+                    	name: "JP:",
                     	value: "value",
                     },{
-                    	name: "name:",
+                    	name: "BNP:",
                     	value: "value",
                     },{
-                    	name: "name:",
+                    	name: "CS:",
                     	value: "value",
                     }]
 				},{
                     data: [{
-                    	name: "name:",
+                    	name: "JP:",
                     	value: "value",
                     },{
-                    	name: "name:",
+                    	name: "BNP:",
                     	value: "value",
                     },{
-                    	name: "name:",
+                    	name: "CS:",
                     	value: "value",
                     }]
 				}],
 				options: [{
-		          value: 'Notes',
-		          label: 'Notes'
+		          value: 'FCN',
+		          label: 'FCN'
 		        }, {
-		          value: 'Memo',
-		          label: 'Memo'
+		          value: 'BCN',
+		          label: 'BCN'
+		        }, {
+		          value: 'CDA',
+		          label: 'CDA'
+		        }, {
+		          value: 'ELN',
+		          label: 'ELN'
 		        }],
 		        value: '',
 		        visible2: false

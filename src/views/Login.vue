@@ -2,7 +2,7 @@
   <section>
   <div class="logo"><img src="" alt=""></div>
   <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-position="left" label-width="0px" class="demo-ruleForm login-container">
-    <h3 class="title"><img :src="this.sysLogo" alt=""> <span>- {{sysName}}</span></h3>
+    <h3 class="title"><img :src="this.sysLogo" alt=""> <span>{{sysName}}</span></h3>
     <el-form-item prop="account">
       <el-input type="text" v-model="ruleForm2.account" @keyup.enter.native="handleSubmit2" auto-complete="off" placeholder="manager||rm||admin"></el-input>
     </el-form-item>
@@ -67,7 +67,7 @@
                 });
               } else {
                 sessionStorage.setItem('user', JSON.stringify(user));
-                let _path = {path: '/'};
+                let _path = {path: '/'}; 
                 if (user.meta == 'admin') {
                     _path = {path: '/create-user'};
                 }

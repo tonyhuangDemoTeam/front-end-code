@@ -179,7 +179,7 @@ export default {
     mock.onGet('/fos/team/get').reply(config => {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          resolve([200, dailyJson]);
+          resolve([200, Relationship]);
         }, 200);
       });
     });

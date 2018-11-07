@@ -142,7 +142,7 @@
 			    <el-form-item label="Share Issue Name:">
 			    	<div>{{issueInfo.shareIssueName}}</div>
 			    </el-form-item>
-			    <el-form-item label="SShare Price:">
+			    <el-form-item label="Share Price:">
 			    	<div>{{issueInfo.sharePrice}}</div>
 			    </el-form-item>
 			</el-form>   
@@ -249,11 +249,9 @@
 			var Vm = this;
 
 			getDataUrl('/fos/share/issue/get', {}).then(data => {
-				Vm.issueCode = data.data
-				// console.log($vm.issueCode);
+				Vm.issueCode = data.data;
 
 				var newkey = Object.keys(Vm.issueCode).sort();
-				// console.log(999,newkey)
 				newkey.forEach(item => {
 					Vm.form.shareIssueCodeoptions.push({
  						value: item,

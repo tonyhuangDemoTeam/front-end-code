@@ -20,9 +20,9 @@
 						</div> 
 					</div>
 					<el-dropdown-menu slot="dropdown">
-						<el-dropdown-item>
+						<el-dropdown-item @click.native="$router.push('/daily-event')">
 							Notifications
-							<el-badge class="mark" :value="12" />
+							<!-- <el-badge class="mark" :value="12" /> -->
 						</el-dropdown-item>
 						<el-dropdown-item>Settings</el-dropdown-item>
 						<el-dropdown-item divided @click.native="logout">Sign Out</el-dropdown-item>
@@ -145,9 +145,6 @@
 			},
 			onSubmit() {
 				console.log('submit!');
-			},
-			handleopen() {
-				//console.log('handleopen');
 			},
 			handleclose() {
 				//console.log('handleclose');
