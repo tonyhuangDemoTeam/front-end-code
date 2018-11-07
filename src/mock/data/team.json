@@ -1,0 +1,109 @@
+{
+  "name": "HK",
+  "position": "196311936.10",
+  "clients": 40,
+  "entries": [
+    {
+      "name": "HK",
+      "position": "196311936.10",
+      "clients": 40,
+      "entries": [
+        {
+          "name": "PRIVATE BANK HK",
+          "position": "196311936.10",
+          "clients": 40,
+          "entries": [
+            {
+              "name": "RM ONE",
+              "position": "50098396.30",
+              "clients": 10,
+              "entries": []
+            },
+            {
+              "name": "RM TWO",
+              "position": "48849578.20",
+              "clients": 10,
+              "entries": []
+            },
+            {
+              "name": "RM THREE",
+              "position": "47265565.30",
+              "clients": 10,
+              "entries": []
+            },
+            {
+              "name": "RM FOUR",
+              "position": "50098396.30",
+              "clients": 10,
+              "entries": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "SG",
+      "position": "146213539.80",
+      "clients": 30,
+      "entries": [
+        {
+          "name": "PRIVATE BANK SG",
+          "position": "146213539.80",
+          "clients": 30,
+          "entries": [
+            {
+              "name": "RM FIVE",
+              "position": "48849578.20",
+              "clients": 10,
+              "entries": []
+            },
+            {
+              "name": "RM SIX",
+              "position": "47265565.30",
+              "clients": 10,
+              "entries": []
+            },
+            {
+              "name": "RM SEVEN",
+              "position": "50098396.30",
+              "clients": 10,
+              "entries": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "CN",
+      "position": "146213539.80",
+      "clients": 30,
+      "entries": [
+        {
+          "name": "PRIVATE BANK CN",
+          "position": "146213539.80",
+          "clients": 30,
+          "entries": [
+            {
+              "name": "RM EIGHT",
+              "position": "48849578.20",
+              "clients": 10,
+              "entries": []
+            },
+            {
+              "name": "RM NINE",
+              "position": "47265565.30",
+              "clients": 10,
+              "entries": []
+            },
+            {
+              "name": "RM TEN",
+              "position": "50098396.30",
+              "clients": 10,
+              "entries": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

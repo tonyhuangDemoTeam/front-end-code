@@ -2,9 +2,7 @@
     <section class="chart-container">
         <el-row>
             <el-col :span="24" v-loading="chartLoading">
-                <keep-alive>
-                    <vo-basic :data="chartData" nodeContent="title" :toggleCollapse="false"></vo-basic>
-                </keep-alive>
+                <vo-basic :data="chartData" :pan="true"  nodeContent="content" :toggleCollapse="false"></vo-basic>
             </el-col>
         </el-row>
     </section>
@@ -19,7 +17,8 @@ export default {
     data() {
         return {
             chartData: null,
-            chartLoading: false,
+            tempData: null,
+            chartLoading: true,
         }
     },
     watch: {
@@ -30,18 +29,46 @@ export default {
     },
     methods: {
         getChartData(){
-
             this.chartLoading = true;
-            getManagerOSList().then((res) => {
-                this.chartData = res.data;
-                console.log(this.chartData)
-                this.chartLoading = false;
+            getManagerOSList({type: 'arch'}).then((res) => {
+                this.tempData = res.data;
+                this.mapJson(this.tempData);
             });
+        },
+        mapJson(json){
 
-        }
+            json = JSON.parse(JSON.stringify(json).replaceAll('entries','children'))
+      
+            objForEeach(json);
+
+            function objForEeach(json){
+                curry(json);
+                for (var key in json) {
+                    if (Array.isArray(json[key]) && json[key].length !== 0) {
+                        json[key].forEach(item => {
+                            objForEeach(item);
+                        });
+                    }
+                }
+            }
+
+            // 'AUM: $55bn<br\>Client#: 100,000',
+            function curry(obj){
+                obj['content'] = 'AUM: ' + obj['clients'] +'<br\>Client#:'+ obj['position'];
+            }
+
+          this.chartLoading = false;
+
+          return this.chartData = this.tempData = json;
+        
+        },
+
     },
     created() {
-        // this.getChartData();
+         String.prototype.replaceAll = function (FindText, RepText) {
+              let regExp = new RegExp(FindText,'g');
+              return this.replace(regExp, RepText);
+          };
     },
     mounted() {
         this.getChartData();

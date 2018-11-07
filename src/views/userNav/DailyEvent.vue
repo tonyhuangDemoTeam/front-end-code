@@ -1,92 +1,61 @@
 <template>
-	<section>
-
-
+	<el-row>
 		<el-col :span="20">
-			 <p class="data-txt">Today</p>
+			 <p class="data-txt"></p>
 			 <el-table
 		      :data="tableData"
 		      :show-header='false'
 		      size="small"
 		      style="width: 100%">
 		      <el-table-column
-		        prop="date"
+		        prop="createDate"
+		        :formatter="formatter"
 		        label=""
 		        width="180">
 		      </el-table-column>
 		      <el-table-column
-		        prop="info"
-		        label="">
-		      </el-table-column>
-		    </el-table>
-		    <p class="data-txt">Yesterday</p>
-			 <el-table
-		      :show-header='false'
-		      size="small"
-		      :data="tableData"
-		      style="width: 100%">
-		      <el-table-column
-		        prop="date"
-		        label=""
-		        width="180">
-		      </el-table-column>
-		      <el-table-column
-		        prop="info"
-		        label="">
-		      </el-table-column>
-		    </el-table>
-		    <p class="data-txt">more then</p>
-			 <el-table
-		      :show-header='false'
-		      size="small"
-		      :data="tableData"
-		      style="width: 100%">
-		      <el-table-column
-		        prop="date"
-		        label=""
-		        width="180">
-		      </el-table-column>
-		      <el-table-column
-		        prop="info"
+		        prop="remarks"
 		        label="">
 		      </el-table-column>
 		    </el-table>
 		</el-col>
-
-		<el-col :span="20">
-			
-		</el-col>
-
-
-
-
-	</section>
+	</el-row>
 </template>
 <script>
+    import { getDataUrl } from '@/api/api';
 	export default {
 		data() {
 			return {
-				  tableData: [{
-		            date: '2018-11-01 13:36',
-		            info: 'Share Deal Confirmation #67998'
-		          }, {
-		            date: '2016-05-04 13:36',
-		            info: 'Customer 8000123456 today\'s birthday'
-		          }, {
-		            date: '2016-05-01 13:36',
-		            info: 'Bond Deal #67998 pending settlement'
-		          }, {
-		            date: '2016-05-03 13:36',
-		            info: 'Customer 8000123456 today\'s birthday'
-		          }]
+				tableData: []
 			}
 		},
 		methods: {
-			
+			formatter(row, column) {
+				// console.log(row.createDate)
+				// let time="2018-05-19T08:04:52.000+0000";
+			 	let d = new Date(row.createDate);
+				let times = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes(); 
+		        return times;
+		      },
+			filterHandler(value, row, column) {
+				
+			},
 		},
 		mounted() {
+			// fos/action/get?rm=rm1
+			getDataUrl('/fos/action/get', {rm: 'rm1'}).then(data => {
+				this.tableData = data.data
+			}).catch((data) => {
+				console.log(data);
+			});
 			
-		}
+		},
+		created() {
+
+	    },
+	    updated() {
+
+	    }
 	};
 
 </script>

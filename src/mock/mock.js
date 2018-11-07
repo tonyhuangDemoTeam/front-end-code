@@ -1,7 +1,7 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
-import { LoginUsers, Users, Customers, getShareIssue, getSharePosition } from './data/user';
+import { LoginUsers, Users, Customers, getShareIssue, getSharePosition, dailyJson } from './data/user';
 import { Relationship, typeAll } from './data/manager';
 
 
@@ -176,10 +176,10 @@ export default {
      *  manager
      */
     //获取manager Organization Structure 上的图标数据
-    mock.onGet('/manager/organizationStructure/list').reply(config => {
+    mock.onGet('/fos/team/get').reply(config => {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          resolve([200, Relationship]);
+          resolve([200, dailyJson]);
         }, 200);
       });
     });
@@ -223,7 +223,17 @@ export default {
     });
 
 
-
+/**
+     *  manager
+     */
+    //获取manager Organization Structure 上的图标数据
+    mock.onGet('/fos/action/get').reply(config => {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, dailyJson]);
+        }, 300);
+      });
+    });
 
   }
 };

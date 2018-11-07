@@ -28,4 +28,4 @@ export const getDataUrl = (url, params) => { return axios.get(base + url, { para
 // export const getDataUrl = (url, params) => { return axios.get(url, { params: params }); };
 
 // manager
-export const getManagerOSList = params => { return axios.get(`${base}/manager/organizationStructure/list`, { params: params }); };
+export const getManagerOSList = params => { return axios.get(`${base}/fos/team/get`, { params: params }); };

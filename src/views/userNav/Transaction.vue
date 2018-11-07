@@ -1,20 +1,16 @@
 <template>
 	<el-row>
-		<el-col :span="16" style="margin: 35px 0 25px;">
-			<el-form ref="form" :model="form" label-width="140px" size="mini">	
-			  <el-form-item label="" inline>
-			    <el-radio-group v-model="form.transactionType">
-			      <el-radio-button label="B" value="B">Buy</el-radio-button>
-			      <el-radio-button label="S" value="S">Sell</el-radio-button>
-			    </el-radio-group>
-			    <el-radio-group v-model="form.type2" style='margin-left: 40px;'>
-			      <el-radio-button label="eShare"></el-radio-button>
-			      <el-radio-button label="Phone"></el-radio-button>
-			    </el-radio-group>
-			  </el-form-item>
+		<el-col :span="14" style="margin: 35px 0 25px;">
+			<el-form ref="form" :model="form" label-width="100px" size="mini">	
 			  <el-row>
-			  	 <el-col :span="12">
-			  	 	<el-form-item label="Customer Number:">
+			  	 <el-col :span="11">
+			  	 	<el-form-item label="Buy/Sell:" inline>
+				    <el-radio-group v-model="form.transactionType">
+				      <el-radio-button label="B" value="B">Buy</el-radio-button>
+				      <el-radio-button label="S" value="S">Sell</el-radio-button>
+				    </el-radio-group>
+				  </el-form-item>
+			  	 	<el-form-item label="Customer:">
 					    <el-select v-model="form.customerNumber" placeholder="">
 					      <el-option label="1" value="1"></el-option>
 					      <el-option label="2" value="2"></el-option>
@@ -48,8 +44,16 @@
 					    </el-date-picker>
 					  </el-form-item>					  
 			  	 </el-col>
-			  	 <el-col :span="12">
-			  	 	<el-form-item label="Account Number:">
+			  	 <el-col :span="0" style="  height: 20px;">
+			  	 </el-col>
+			  	 <el-col :span="11">
+			  	 	<el-form-item label="Trans Type:" inline>
+				    <el-radio-group v-model="form.type2" style=''>
+				      <el-radio-button label="eShare"></el-radio-button>
+				      <el-radio-button label="Phone"></el-radio-button>
+				    </el-radio-group>
+				  </el-form-item>
+			  	 	<el-form-item label="Account:">
 					    <el-select v-model="form.accountNumber" placeholder="">
 					      <el-option label="1" value="1"></el-option>
 					      <el-option label="2" value="2"></el-option>
@@ -57,7 +61,7 @@
 					      <el-option label="4" value="4"></el-option>
 					    </el-select>
 					 </el-form-item>
-					  <el-form-item label="Share Currency:">
+					  <el-form-item label="Currency:">
 					    <el-input v-model="form.shareCurrency"></el-input>
 					  </el-form-item>	
 					  <el-form-item label="Trade Type:">
@@ -80,11 +84,13 @@
 					  </el-form-item>					  				  				 
 			       </el-col>
 			  </el-row>
-			 
-			  <el-form-item class="el-form-item_submit">
-			    <el-button type="primary" size="small" :loding='submiting' @click="onSubmit">Submit</el-button>
-			    <el-button @click="onReset" size="small">Reset</el-button>
-			  </el-form-item>
+			  <el-row>
+			  	<el-col :span='24' class="el-form-item_submit">
+			  		<el-button type="primary" size="small" :loding='submiting' @click="onSubmit">Submit</el-button>
+			    	<el-button @click="onReset" size="small">Reset</el-button>
+			  	</el-col>
+			  	
+			  </el-row>
 			</el-form> 
 
 			 <!--  -->
@@ -119,7 +125,7 @@
 		    </el-table>
 		</el-col>
 
-		<el-col :span="8" style="padding: 40px 10px;">
+		<el-col :span="10" style="padding: 40px 10px 0 40px;">
 			<el-form ref="form" :model="issueInfo" label-width="150px" size="mina">
 			   <el-form-item label="House View:">
 			    	<div>{{issueInfo.houseView}}</div>
@@ -184,7 +190,7 @@
 		},
 		watch: {
            'form.customerNumber'(val){
-               
+                this.getSharePosition();
            },
            'form.accountNumber'(val){
                 this.getSharePosition();
@@ -193,9 +199,13 @@
 		methods: {
 			getSharePosition(){
 
-			    getDataUrl('/fos/share/position/get', {cust: 1,acct: 1}).then(data => {
+				let customer = this.form.customerNumber,
+					account = this.form.accountNumber;
+
+				if (!customer || !account) { return false;}	
+
+			    getDataUrl('/fos/share/position/get', {cust: customer, acct: account}).then(data => {
 					this.tableData = data.data
-	                   
 				}).catch((data) => {
 					console.log(data);
 
@@ -247,7 +257,7 @@
 				newkey.forEach(item => {
 					Vm.form.shareIssueCodeoptions.push({
  						value: item,
-          				label: item
+          				label: Vm.issueCode[item].shareIssueName
 					})
 				});
                    
@@ -265,8 +275,13 @@
 </script>
 
 <style scoped lang="scss">
+.el-form{
+    padding: 20px 20px 20px 10px;
+    border: 1px solid #eee;
+    margin-bottom: 20px;	
+}
 .el-form-item_submit{
-	    margin: 20px 0;
+	 margin: 20px 0;
     text-align: center;
 }
 .el-select.el-select--mini{
