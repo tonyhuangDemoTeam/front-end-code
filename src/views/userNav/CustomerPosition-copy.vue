@@ -17,11 +17,10 @@
 			<el-col :span="24">
 				<el-table 
 					:data="users" 
-					@row-click='rowSelect'
 					v-loading="loading" 
 					:show-summary='true'
                     sum-text="Total" 
-                    size="small"
+                    size="medium"
                     :header-cell-style="tableHeaderColor">
 					<el-table-column prop="number" type="number" label="Customer Number" >
 					</el-table-column>
@@ -44,7 +43,7 @@
 </template>
 
 <script>
-	import { getUserList } from '@/api/api';
+	import { getUserList } from '../../api/api';
 	//import NProgress from 'nprogress'
 	export default {
 		data() {
@@ -74,10 +73,7 @@
 			        return 'background-color: #F7F6Fd;color: #666;font-weight: 500;'
 			    }
 			 },
-			 rowSelect(row, event, column){
-                // console.log(row)
-                this.$router.push(`/customer-position/${row.number}`)
-			 },
+    
 			//获取用户列表
 			getUser: function () {
 				// let para = {
@@ -112,6 +108,9 @@
 .toolbar {
 	// background-color: #fff;
 }
+
+
+
 
 </style>
 

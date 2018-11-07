@@ -22,6 +22,7 @@ import Trade from './views/managerNav/Trade.vue'
 
 // user(rm) template
 import DailyEvent from './views/userNav/DailyEvent.vue'
+import CustomerPositionView from './views/userNav/CustomerPositionView.vue'
 import CustomerPosition from './views/userNav/CustomerPosition.vue'
 import CustomerPositionInfo from './views/userNav/CustomerPositionInfo.vue'
 import Transaction from './views/userNav/Transaction.vue'
@@ -91,7 +92,23 @@ let routes = [
         // leaf: true,//只有一个节点
         meta: "rm",
         children: [
-            { path: '/customer-position', component: CustomerPosition, name: 'Customer Position'},
+            { 
+                path: '/customer-position/', 
+                component: CustomerPositionView, 
+                name: 'Customer Position',
+                children: [
+                    {   
+                        path: '/', 
+                        component: CustomerPosition, 
+                        name: 'Customer Position'
+                    },
+                    {   
+                        path: '/customer-position/:id', 
+                        component: CustomerPositionInfo, 
+                        name: 'Customer Position Info'
+                    }
+                ]
+            },
             { path: '/customer-position-info', component: CustomerPositionInfo, name: 'Customer Position Info', hidden: true}
         ]
     },

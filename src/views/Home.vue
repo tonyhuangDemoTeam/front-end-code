@@ -107,16 +107,9 @@
 			}
 		},
 		computed: {
-
 			businessDate(){
-
-				// console.log(this.nowDate("yyyy-MM-dd hh:mm:ss"))
-
 				return this.nowDate("yyyy-MM-dd")
-				// return this.nowDate("yyyy-MM-dd hh:mm:ss")
-
 			}
-
         },
         created(){
          	Date.prototype.format = function(format)
