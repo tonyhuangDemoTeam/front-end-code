@@ -4,7 +4,7 @@
 		<el-col :span="24" class="toolbar" style="padding-bottom: 0px;"> 
 			<el-form :inline="true" :model="filters" size="small">
 				<el-form-item>
-					<el-input v-model="filters.name" style="width: 300px" placeholder="..."></el-input>
+					<el-input v-model="filters.name" style="width: 300px" placeholder="Please input Customer Number!"></el-input>
 				</el-form-item>
 				<el-form-item>
 					<el-button type="primary" v-on:click="getUser">Search</el-button>

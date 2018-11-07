@@ -40,7 +40,7 @@
 					      v-model="form.tradeDate"
 					      type="date"
 					      value-format="yyyy-MM-dd"
-					      placeholder="选择日期">
+					      placeholder="Choose a date">
 					    </el-date-picker>
 					  </el-form-item>					  
 			  	 </el-col>
@@ -79,7 +79,7 @@
 					      v-model="form.valueDate"
 					      type="date"
 					      value-format="yyyy-MM-dd"
-					      placeholder="选择日期">
+					      placeholder="Choose a date">
 					    </el-date-picker>
 					  </el-form-item>					  				  				 
 			       </el-col>
@@ -212,7 +212,7 @@
 				});
 			},
 			onSubmit(){
-				var Vm = this;
+				let Vm = this;
 
 				Vm.submiting = true;
 				requestTransaction('fos/share/deal/save', Vm.form).then(data => {
@@ -246,11 +246,10 @@
 		},
 		created(){
            
-			var Vm = this;
+			let Vm = this;
 
 			getDataUrl('/fos/share/issue/get', {}).then(data => {
 				Vm.issueCode = data.data;
-
 				var newkey = Object.keys(Vm.issueCode).sort();
 				newkey.forEach(item => {
 					Vm.form.shareIssueCodeoptions.push({
@@ -258,10 +257,8 @@
           				label: Vm.issueCode[item].shareIssueName
 					})
 				});
-                   
 			}).catch((data) => {
 				console.log(data);
-
 			});
 
 		},

@@ -146,6 +146,9 @@
 			onSubmit() {
 				console.log('submit!');
 			},
+			handleopen(){
+				//console.log('handleopen');
+			},
 			handleclose() {
 				//console.log('handleclose');
 			},
@@ -178,20 +181,9 @@
 			if (user) {
 				user = JSON.parse(user);
 				this.sysUserName = user.name || '';
-				this.sysMeta = user.meta || 'user';
-
+				this.sysMeta = user.role || 'user';
 				// this.sysUserAvatar = user.avatar || '../assets/logo.jpeg';
 			};
-
-
-			//  getDataUrl('/sa/user/get',{id: 'rm1'}).then(data => {
-			// 	console.log('data');
-			// 	console.log(data);
-
-			// }).catch((data) => {
-			// 	console.log(data);
-
-			// })
 
 		}
 	}

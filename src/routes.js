@@ -92,7 +92,7 @@ let routes = [
         meta: "rm",
         children: [
             { path: '/customer-position', component: CustomerPosition, name: 'Customer Position'},
-            { path: '/customer-position-info', component: CustomerPositionInfo, name: 'Customer Position Info'}
+            { path: '/customer-position-info', component: CustomerPositionInfo, name: 'Customer Position Info', hidden: true}
         ]
     },
     {

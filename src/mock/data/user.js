@@ -8,7 +8,7 @@ const LoginUsers = [
     username: 'manager',
     password: '123456',
     avatar: '',
-    meta: 'manager', 
+    role: 'manager', 
     name: 'katherine pierce'
   },
   {
@@ -16,7 +16,7 @@ const LoginUsers = [
     username: 'rm',
     password: '123456',
     avatar: '',
-    meta: 'rm',
+    role: 'rm',
     name: 'Daniel Gillies'
   },
   {
@@ -24,7 +24,7 @@ const LoginUsers = [
     username: 'admin',
     password: '123456',
     avatar: '',
-    meta: 'admin',
+    role: 'admin',
     name: 'Daniel Gillies'
   }
 

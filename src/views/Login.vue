@@ -68,13 +68,13 @@
               } else {
                 sessionStorage.setItem('user', JSON.stringify(user));
                 let _path = {path: '/'}; 
-                if (user.meta == 'admin') {
+                if (user.role == 'admin') {
                     _path = {path: '/create-user'};
                 }
-                if (user.meta == 'manager') {
+                if (user.role == 'manager') {
                     _path = {path: '/'};
                 }
-                if (user.meta == 'rm') {
+                if (user.role == 'rm') {
                     _path = {path: '/customer-position'};
                 }
 

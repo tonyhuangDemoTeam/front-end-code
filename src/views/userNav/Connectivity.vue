@@ -3,7 +3,7 @@
 		<!-- header input -->
 		<el-row style="padding-top: 35px;">
 			<el-col :span="24">
-			  <el-select v-model="value"style="width: 250px;" placeholder="pls select ..." size="small">
+			  <el-select v-model="selectValue"style="width: 250px;" placeholder="Please select value!" size="small">
 			    <el-option
 			      v-for="item in options"
 			      :key="item.value"
@@ -11,45 +11,48 @@
 			      :value="item.value">
 			    </el-option>
 			  </el-select>
-			  <el-popover
-			    placement="right"
-			    title="limit"
-			    width="200"
-			    v-model="visible2"
-			    content="Add four at most.">
-			  </el-popover>
 			  <el-button type="primary" @click="addItem" size="small">Add</el-button>
 		   </el-col>
 		</el-row>
 
 		<!-- card list -->
 		<el-row style="padding-top: 30px;" :gutter="6">
-			<el-col :span="8"  v-for="card,index in cards">
+			<el-col :span="8"  v-for="card,index in cards" v-loading="card.loading">
 				<el-card class="box-card">
 				  <div slot="header" class="clearfix">
-				    <span>{{card.name}}</span>
+				    <b>{{card.name}}</b>
 				    <el-button style="float: right; padding: 3px 0" :index="index" @click="delCard(index)" type="text">del</el-button>
 				  </div>
-				  <el-form ref="form" :model="card.form" size="small" label-width="110px">
-					  <el-form-item label="Underlying:">
-					    <el-input v-model="card.form.a"></el-input>
-					  </el-form-item>
-					  <el-form-item label="Iusse Date:">
-					    <el-select v-model="card.form.value" placeholder="Pls select ...">
+				  <el-form ref="form" :model="card.form" :rules="cardRules" size="small" label-width="110px">
+					  <el-form-item prop="issueCode" label="Underlying:">
+					    <el-select v-model="card.form.issueCode" placeholder="Please select value!">
 						    <el-option
-						      v-for="item in card.form.options"
+						      v-for="item in card.form.issueCodeoptions"
 						      :key="item.value"
 						      :label="item.label"
 						      :value="item.value">
 						    </el-option>
-						  </el-select>
+						 </el-select>
 					  </el-form-item>
-					  <el-form-item label="Maturity Date:">
-					    <el-input v-model="card.form.c"></el-input>
+					  <el-form-item prop="iusseDate" label="Iusse Date:">
+					    <el-date-picker
+					      v-model="card.form.iusseDate"
+					      type="date"
+					      value-format="yyyy-MM-dd"
+					      placeholder="Please pick a date!">
+					    </el-date-picker>
+					  </el-form-item>
+					  <el-form-item prop="maturityDate" label="Maturity Date:">
+					    <el-date-picker
+					      v-model="card.form.maturityDate"
+					      type="date"
+					      value-format="yyyy-MM-dd"
+					      placeholder="Please pick a date!">
+					    </el-date-picker>
 					  </el-form-item>
 					  <el-form-item>
-					    <el-button type="primary" @click="onSubmit">Submit</el-button>
-					    <el-button>Reset</el-button>
+					    <el-button type="primary" :index="index" @click="onSubmit(index)">Submit</el-button>
+					    <el-button @click="onReset(index)">Reset</el-button>
 					  </el-form-item>
 				  </el-form>
 				</el-card>
@@ -57,12 +60,12 @@
 		</el-row>
 
 		<!--  -->
-		<el-row style="padding-top: 30px;" :gutter="10">
+		<el-row style="padding-top: 20px;" :gutter="10">
 			<el-col :span='8' v-for="table in tables">
 				<el-card>
 					   <el-table
 					      size="small"
-					      :data="table.data"
+					      :data="table.list"
 					      :show-header="false"
 					      style="width: 100%">
 					      <el-table-column
@@ -81,72 +84,30 @@
 	</section>
 </template>
 <script>
+
+    import { getDataUrl } from '@/api/api';
+
+    let issueCodeoptionsModel = [],
+        submitTime = 800,
+        penddingTime = 1500;
+
 	export default {
 		data() {
 			return {
-				cards:[
-				   {    
-				   	    name: "Notes",
-				   	    form: {
-				   	    	value: "",
-							options: [{
-					          value: 'aa',
-					          label: 'aa'
-					        }, {
-					          value: 'bb',
-					          label: 'bb'
-					        }, {
-					          value: 'cc',
-					          label: 'cc'
-					        }],
-					        a: '',
-					        b: '',
-					        c: ''
-				   		},
-					},
-					{    
-				   	    name: "Memo",
-				   	    form: {
-				   	    	value: "",
-							options: [{
-					          value: 'aa',
-					          label: 'aa'
-					        }, {
-					          value: 'bb',
-					          label: 'bb'
-					        }, {
-					          value: 'cc',
-					          label: 'cc'
-					        }],
-					        a: '',
-					        b: '',
-					        c: ''
-				   		},
-					},
-				],
-				tables: [{
-                    data: [{
-                    	name: "JP:",
-                    	value: "value",
-                    },{
-                    	name: "BNP:",
-                    	value: "value",
-                    },{
-                    	name: "CS:",
-                    	value: "value",
-                    }]
-				},{
-                    data: [{
-                    	name: "JP:",
-                    	value: "value",
-                    },{
-                    	name: "BNP:",
-                    	value: "value",
-                    },{
-                    	name: "CS:",
-                    	value: "value",
-                    }]
-				}],
+				loading: true,
+				cards:[],
+				cardRules: {
+					issueCode: [
+			            { required: true, message: 'Please select issue Code!', trigger: 'change' }
+			        ],
+					iusseDate: [
+			            {  required: true, message: 'Please pick a date!', trigger: 'change' }
+			        ],
+			        maturityDate: [
+			            {  required: true, message: 'Please pick a date!', trigger: 'change' }
+			        ],
+				},
+				tables: [],
 				options: [{
 		          value: 'FCN',
 		          label: 'FCN'
@@ -160,54 +121,135 @@
 		          value: 'ELN',
 		          label: 'ELN'
 		        }],
-		        value: '',
+		        selectValue: '',
 		        visible2: false
 			}
 		},
 		methods: {
-			onSubmit(){},
+			onSubmit(index){
+				let Vm = this;
+
+				Vm.$refs.form[index].validate((valid) => {
+			        if (valid) {
+			            Vm.cards[index].loading = true;
+			            setTimeout(() => {
+			            	Vm.cards[index].loading = false;
+			            	Vm.returnitem(index);
+						 }, submitTime);
+			        } else {
+			            console.log('error submit!!');
+			            return false;
+			        }
+			    });
+
+			},
+			onReset(index){
+        		this.$refs.form[index].resetFields();
+			},
+			returnitem(index){
+
+				let Vm = this, item;
+
+				item = {
+                    list: [{
+                    	name: "JP:",
+                    	value: "pendding",
+                    	loading: false
+                    },{
+                    	name: "BNP:",
+                    	value: "pendding",
+                    	loading: false
+                    },{
+                    	name: "CS:",
+                    	value: "pendding",
+                    	loading: false
+                    }]
+				};
+
+			    Vm.tables[index] ? Vm.tables[index] = item : Vm.tables.push(item);
+
+			    setTimeout(() => {
+				    Vm.tables[index].list.forEach((item, index) => {
+				    	item.value = Vm.genRandom(50, 60);
+				    });
+				}, penddingTime);
+
+			},
+			genRandom(min, max) {
+				return Math.floor(Math.random() * (max - min + 1) | 0) + min;		
+			},
 			addItem(){
-				var _temp =  {    
-				   	    name: this.value,
-				   	    form: {
-				   	    	value: "",
-							options: [{
-					          value: 'aa',
-					          label: 'aa'
-					        }, {
-					          value: 'bb',
-					          label: 'bb'
-					        }, {
-					          value: 'cc',
-					          label: 'cc'
-					        }],
-					        a: '',
-					        b: '',
-					        c: ''
-				   		},
-					};
-				if (this.cards.length == 4) {
-					this.visible2 = true;
+				let Vm = this, item;
+
+				if (!Vm.selectValue) {
+					Vm.$message({
+			          message: 'Please select value!',
+			          type: 'warning'
+			        });
 					return false;
-				}else{
-					this.visible2 = false;
+				}
+
+				item =  {    
+			   	    name: Vm.selectValue,
+			   	    form: {
+			   	    	issueCode: '',
+			   	    	issueCodeoptions: issueCodeoptionsModel,
+			   	    	iusseDate: '',
+			   	    	maturityDate: ''
+			   		},
+			   		loading: false
+				};
+
+				if (Vm.cards.length == 3) {
+					Vm.$message({
+			          message: 'Only three can be added.',
+			          type: 'warning'
+			        });
+					return false;
 				}	
-			    this.cards.push(_temp)		
+
+				Vm.cards.push(item);
+				Vm.selectValue = '';	
+
 			},
 			delCard(index){
-               this.cards.splice(index,1)
+               this.cards.splice(index, 1);
+               this.tables.splice(index, 1);
 			},
 			
 		},
 		mounted() {
 			
+		},
+		created(){
+
+			let Vm = this;
+
+			getDataUrl('/fos/share/issue/get', {}).then(data => {
+				let _data = data.data;
+				let newkey = Object.keys(_data).sort();
+				newkey.forEach(item => {
+					issueCodeoptionsModel.push({
+ 						value: item,
+          				label: _data[item].shareIssueName
+					})
+				});
+			}).catch((data) => {
+				console.log(data);
+			});
+
 		}
 	};
 
 </script>
 
 <style scoped lang="scss">
-
+.el-date-editor.el-input, .el-date-editor.el-input__inner {
+	width: 100%;
+}
+.el-select{
+	width: 100%;
+}
 
 
 </style>
