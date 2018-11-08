@@ -2,23 +2,12 @@ import Login from './views/Login.vue'
 import NotFound from './views/404.vue'
 import Home from './views/Home.vue'
 import Main from './views/Main.vue'
-import Table from './views/nav1/Table.vue'
-import Form from './views/nav1/Form.vue'
-import user from './views/nav1/user.vue'
-import Page4 from './views/nav2/Page4.vue'
-import elementSo from './views/nav2/elementSo.vue'
-import Page5 from './views/nav2/Page5.vue'
-
 
 // manager template
 import Management from './views/managerNav/Management.vue'
 import CustomerTrends from './views/managerNav/CustomerTrends.vue'
-import c3 from './views/managerNav/c3.vue'
-import echarts from './views/managerNav/echarts.vue'
-import highcharts from './views/managerNav/highcharts.vue'
 import CustomerDistribution from './views/managerNav/CustomerDistribution.vue'
 import Asset from './views/managerNav/customersChart.vue'
-import Trade from './views/managerNav/Trade.vue'
 
 // user(rm) template
 import DailyEvent from './views/userNav/DailyEvent.vue'

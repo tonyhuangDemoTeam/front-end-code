@@ -242,7 +242,6 @@
 			},
 			onSubmit(){
 				let Vm = this;
-
 				Vm.submiting = true;
 				requestTransaction('fos/share/deal/save', Vm.form).then(data => {
 				   Vm.submiting = false;
@@ -254,7 +253,6 @@
 				}).catch((data) => {
 					console.log(data);
 				});
-
 			},
 			onReset(){},
 			tableHeaderColor({ row, column, rowIndex, columnIndex }) {
