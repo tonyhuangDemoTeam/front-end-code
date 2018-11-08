@@ -1,5 +1,5 @@
 <template>
-	<section>
+	<section id="element-to-print">
 		<el-row>
 		<el-col :span="24">
 			<div class="cp-head-info">
@@ -18,7 +18,7 @@
 					</li>
 				</ul>
 				<div style="width: 30%; float: right;">
-					<el-button size="small" type="primary" style="float: right;margin: 25px;">Save As PDF</el-button>
+					<el-button size="small" type="primary" @click="aveAsPDF" style="float: right;margin: 25px;">Save As PDF</el-button>
 				</div>
 			</div>
 			
@@ -26,7 +26,7 @@
 
 		<el-col :span="24">
               <div class="cp-table-txt">
-              	<p>Equity:</p>
+              	Equity:
               </div>
 			  <el-table 
 			  	:data="equityTable" 
@@ -38,24 +38,24 @@
 			  	style="width: 100%">
 			    <el-table-column prop="name" label="Product Name">
 			    </el-table-column>
-			    <el-table-column prop="quantity" label="Quantity">
+			    <el-table-column fixed="right" prop="quantity" label="Quantity">
 			    </el-table-column>
-			    <el-table-column prop="amount" label="Total Amount(USD)">
+			    <el-table-column fixed="right" prop="amount" label="Total Amount(USD)">
 			    </el-table-column>
-			    <el-table-column prop="marketPrice" label="Market Price">
+			    <el-table-column fixed="right" prop="marketPrice" label="Market Price">
 			    </el-table-column>
-			    <el-table-column prop="cost" label="Average Cost">
+			    <el-table-column fixed="right" prop="cost" label="Average Cost">
 			    </el-table-column>
-			    <el-table-column prop="averagePL" label="P&L(USD)">
+			    <el-table-column fixed="right" prop="averagePL" label="P&L(USD)">
 			    </el-table-column>
-			    <el-table-column prop="yesterdayPL" width='180' label="Last Biz Date P&L(USD)">
+			    <el-table-column fixed="right" prop="yesterdayPL" width='180' label="Last Biz Date P&L(USD)">
 			    </el-table-column>
 			  </el-table>
 		</el-col>
 
 		<el-col :span="24">
               <div class="cp-table-txt">
-              	<p>Fixed Income:</p>
+              	Fixed Income:
               </div>
 			  <el-table 
 			  	:data="fixedTable" 
@@ -67,24 +67,24 @@
 			  	style="width: 100%">
 			    <el-table-column prop="name" label="Product Name">
 			    </el-table-column>
-			    <el-table-column prop="quantity" label="Quantity">
+			    <el-table-column fixed="right" prop="quantity" label="Quantity">
 			    </el-table-column>
-			    <el-table-column prop="amount" label="Total Amount(USD)">
+			    <el-table-column fixed="right" prop="amount" label="Total Amount(USD)">
 			    </el-table-column>
-			    <el-table-column prop="marketPrice" label="Market Price">
+			    <el-table-column fixed="right" prop="marketPrice" label="Market Price">
 			    </el-table-column>
-			    <el-table-column prop="cost" label="Average Cost">
+			    <el-table-column fixed="right" prop="cost" label="Average Cost">
 			    </el-table-column>
-			    <el-table-column prop="averagePL" label="P&L(USD)">
+			    <el-table-column fixed="right" prop="averagePL" label="P&L(USD)">
 			    </el-table-column>
-			    <el-table-column prop="yesterdayPL" width='180' label="Last Biz Date P&L(USD)">
+			    <el-table-column fixed="right" prop="yesterdayPL" width='180' label="Last Biz Date P&L(USD)">
 			    </el-table-column>
 			  </el-table>
 		</el-col>
 
 	    <el-col :span="24">
               <div class="cp-table-txt">
-              	<p>FX:</p>
+              	FX:
               </div>
 			  <el-table 
 			  	:data="fxTable" 
@@ -94,26 +94,26 @@
                 size="small"
                 :header-cell-style="tableHeaderColor"
 			  	style="width: 100%">
-			    <el-table-column prop="name" label="Product Name">
+			    <el-table-column prop="name" fixed="right" label="Product Name">
 			    </el-table-column>
-			    <el-table-column prop="quantity" label="Quantity">
+			    <el-table-column prop="quantity" fixed="right" label="Quantity">
 			    </el-table-column>
-			    <el-table-column prop="amount" label="Total Amount(USD)">
+			    <el-table-column prop="amount" fixed="right" label="Total Amount(USD)">
 			    </el-table-column>
-			    <el-table-column prop="marketPrice" label="Market Price">
+			    <el-table-column prop="marketPrice" fixed="right" label="Market Price">
 			    </el-table-column>
-			    <el-table-column prop="cost" label="Average Cost">
+			    <el-table-column prop="cost" fixed="right" label="Average Cost">
 			    </el-table-column>
-			    <el-table-column prop="averagePL" label="P&L(USD)">
+			    <el-table-column prop="averagePL" fixed="right" label="P&L(USD)">
 			    </el-table-column>
-			    <el-table-column prop="yesterdayPL" width='180' label="Last Biz Date P&L(USD)">
+			    <el-table-column prop="yesterdayPL" width='180' fixed="right" label="Last Biz Date P&L(USD)">
 			    </el-table-column>
 			  </el-table>
 		</el-col>
 
 		<el-col :span="24">
               <div class="cp-table-txt">
-              	<p>Structure Product:</p>
+              	Structure Product:
               </div>
 			  <el-table 
 			  	:data="structureTable" 
@@ -123,56 +123,57 @@
                 size="small"
                 :header-cell-style="tableHeaderColor"
 			  	style="width: 100%">
-			    <el-table-column prop="name" label="Product Name">
+			    <el-table-column  prop="name" label="Product Name">
 			    </el-table-column>
-			    <el-table-column prop="quantity" label="Quantity">
+			    <el-table-column fixed="right" prop="quantity" label="Quantity">
 			    </el-table-column>
-			    <el-table-column prop="amount" label="Total Amount(USD)">
+			    <el-table-column fixed="right" prop="amount" label="Total Amount(USD)">
 			    </el-table-column>
-			    <el-table-column prop="marketPrice" label="Market Price">
+			    <el-table-column fixed="right" prop="marketPrice" label="Market Price">
 			    </el-table-column>
-			    <el-table-column prop="cost" label="Average Cost">
+			    <el-table-column fixed="right" prop="cost" label="Average Cost">
 			    </el-table-column>
-			    <el-table-column prop="averagePL" label="P&L(USD)">
+			    <el-table-column fixed="right" prop="averagePL" label="P&L(USD)">
 			    </el-table-column>
-			    <el-table-column prop="yesterdayPL" width='180' label="Last Biz Date P&L(USD)">
+			    <el-table-column fixed="right" prop="yesterdayPL" width='180' label="Last Biz Date P&L(USD)">
 			    </el-table-column>
 			  </el-table>
 		</el-col>
 
 		<el-col :span="24">
               <div class="cp-table-txt">
-              	<p>Portfolio Summary:</p>
+              	Portfolio Summary:
               </div>
 			  <el-table 
 			  	:data="tableData4" 
+			  	fixed
                 class='cp-table'
                 size="small"
                 :header-cell-style="tableHeaderColor"
 			  	style="width: 100%">
 			    <el-table-column prop="name" label="Equity">
 			    </el-table-column>
-			    <el-table-column prop="quantity" label="Fixed Income">
+			    <el-table-column fixed="right" prop="quantity" label="Fixed Income">
 			    </el-table-column>
-			    <el-table-column prop="totalAmount" label="FX">
+			    <el-table-column fixed="right" prop="totalAmount" label="FX">
 			    </el-table-column>
-			    <el-table-column prop="marketPrice" label="Structure Product">
+			    <el-table-column fixed="right" prop="marketPrice" label="Structure Product">
 			    </el-table-column>
-			    <el-table-column prop="averageCost" label="Total Value">
+			    <el-table-column fixed="right" prop="averageCost" label="Total Value">
 			    </el-table-column>
-			    <el-table-column prop="pl" label="Total P&L">
+			    <el-table-column fixed="right" prop="pl" label="Total P&L">
 			    </el-table-column>
-			    <el-table-column prop="lbdp" width='180' label="Total P&L Last Biz Date">
+			    <el-table-column fixed="right" prop="lbdp" width='180' label="Total P&L Last Biz Date">
 			    </el-table-column>
 			  </el-table>
 		</el-col>
 		</el-row>
 		<el-row>
 			<el-col :span="12">
-                <div id="chartPie1" style="width:80%; height:400px;"></div>
+                <div id="chartPie1" style="width:100%; height:400px;"></div>
 			</el-col>	
 			<el-col :span="12">
-                <div id="chartPie2" style="width:80%; height:400px;"></div>
+                <div id="chartPie2" style="width:100%; height:400px;"></div>
 			</el-col>	
 		</el-row>
 
@@ -180,7 +181,10 @@
 </template>
 <script>
     import echarts from 'echarts'
+    import html2pdf from 'html2pdf.js'
 	import {getDataUrl, getUserList } from '@/api/api';
+
+	let acctlist;
 
 	export default {
 		data() {
@@ -221,16 +225,34 @@
 				};
 			
 				getDataUrl('/fos/acct/get', {type: 'position', cust: customerId, acct: accountId}).then(data => {
-                  let list = data.data;
+                  
+                  acctlist = data.data;
 
-                  Vm.equityTable = list.fund;
-                  Vm.fixedTable = list.share;
-                  Vm.fxTable = list.bond;
-                  Vm.structureTable = list.deposits;
+                  Vm.equityTable = acctlist.positions.share;
+                  Vm.fixedTable = acctlist.positions.bond;
+                  Vm.fxTable = acctlist.positions.deposits;
+                  Vm.structureTable = acctlist.positions.fund;
 
 				}).catch((data) => {
 					console.log(data);
 				});
+
+			},
+
+			aveAsPDF(){
+
+			let element = document.getElementById('element-to-print');
+			let opt = {
+			  margin:       1,
+			  filename:     'accountNumber.pdf',
+			  image:        { type: 'jpeg', quality: 0.98 },
+			  html2canvas:  { scale: 2 },
+			  jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+			};
+			 
+			// New Promise-based usage:
+			html2pdf().set(opt).from(element).save();
+
 
 			},
 
@@ -267,10 +289,9 @@
 			    }
 			 }, 
 			 drawPieChart() {
-                let _seft = this;
+                let Vm = this;
 
-                this.chartPie1 = echarts.init(document.getElementById('chartPie1'));
-                this.chartPie1.setOption({
+                let opt1 = { 
                     title: {
                         text: 'Asset Allocation(USD)',
                         // subtext: 'Total GPB Customer : ' + _seft.valTotal,
@@ -291,15 +312,15 @@
                         {
                             // name: 'distribution of data',
                             type: 'pie',
-                            radius : '40%',
+                            radius : '30%',
                             // roseType : 'radius',
                             // radius: ['10%', '70%'],
                             // center: ['50%', '50%'],
                             data: [
-                             	{name: 'Equity', value: 300},
-                             	{name: 'Fixed Income', value: 400},
-                             	{name: 'FX', value: 700},
-                             	{name: 'Structure Product', value: 300},
+                             	{name: 'Equity', value: acctlist.prodCataInfo.share},
+                             	{name: 'Fixed Income', value: acctlist.prodCataInfo.bond},
+                             	{name: 'FX', value: acctlist.prodCataInfo.deposits},
+                             	{name: 'Structure Product', value: acctlist.prodCataInfo.fund},
                             ],
                             itemStyle: {
                                 emphasis: {
@@ -320,10 +341,23 @@
                                                 
                         }
                     ]
-                });
+                };
 
-                this.chartPie2 = echarts.init(document.getElementById('chartPie2'));
-                this.chartPie2.setOption({
+                // console.log(acctlist)
+				let data2 = [], ccyCataInfo = acctlist.ccyCataInfo;
+				let ccykey = Object.keys(ccyCataInfo).sort();
+
+				for(let key in ccyCataInfo){
+					data2.push({
+						name: key, value: ccyCataInfo[key]
+					})
+				}
+
+
+				console.log(data2)
+
+
+                let opt2 = {
                     title: {
                         text: 'By Currency',
                         // subtext: 'Total GPB Customer : ' + _seft.valTotal,
@@ -338,7 +372,7 @@
                         // orient: 'vertical',//horizontal
                         // left: 'bottom',
                         bottom: '20',
-                        data: ['Equity','Fixed Income','FX','Structure Product'],
+                        data: ccykey,
                     },
                     series: [
                         {
@@ -348,12 +382,7 @@
                             // roseType : 'radius',
                             // radius: ['10%', '70%'],
                             // center: ['50%', '50%'],
-                            data: [
-                             	{name: 'Equity', value: 130},
-                             	{name: 'Fixed Income', value: 250},
-                             	{name: 'FX', value: 560},
-                             	{name: 'Structure Product', value: 300},
-                            ],
+                            data: data2,
                             itemStyle: {
                                 emphasis: {
                                     shadowBlur: 10,
@@ -373,7 +402,14 @@
                                                 
                         }
                     ]
-                });
+                };
+
+
+                this.chartPie1 = echarts.init(document.getElementById('chartPie1'));
+                this.chartPie1.setOption(opt1);
+
+                this.chartPie2 = echarts.init(document.getElementById('chartPie2'));
+                this.chartPie2.setOption(opt2);
             },
             drawCharts() {
                 this.drawPieChart()
@@ -382,6 +418,7 @@
 		},
 		mounted() {
             this.drawCharts();
+
             // this.initPage();
         },
         created(){
@@ -424,12 +461,13 @@
 .cp-table {
 	margin-bottom: 20px;
 }
+
 .cp-table-txt {
 	color: #666;
 	font-weight: bold;
 	background-color: #F7F6Fd;
 	display: inline-block;
-	padding: 0px 20px 0px 10px;
+	padding: 10px 10px 10px;
 }
 
 </style>

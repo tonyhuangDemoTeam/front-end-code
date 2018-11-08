@@ -4,7 +4,7 @@
   <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-position="left" label-width="0px" class="demo-ruleForm login-container">
     <h3 class="title"><img :src="this.sysLogo" alt=""> <span>{{sysName}}</span></h3>
     <el-form-item prop="account">
-      <el-input type="text" v-model="ruleForm2.account" @keyup.enter.native="handleSubmit2" auto-complete="off" placeholder="manager||rm||admin"></el-input>
+      <el-input type="text" v-model="ruleForm2.account" @keyup.enter.native="handleSubmit2" auto-complete="off" placeholder="Username"></el-input>
     </el-form-item>
     <el-form-item prop="checkPass">
       <el-input type="password" v-model="ruleForm2.checkPass" @keyup.enter.native="handleSubmit2" auto-complete="off" placeholder="Password"></el-input>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-  import { requestLogin } from '../api/api';
+  import { requestLogin } from '@/api/api';
   //import NProgress from 'nprogress'
   export default {
     data() {
@@ -29,7 +29,7 @@
         logining: false,
         ruleForm2: {
           account: '',
-          checkPass: '123456'
+          checkPass: ''
         },
         rules2: {
           account: [
@@ -55,26 +55,29 @@
             //_this.$router.replace('/table');
             this.logining = true;
             //NProgress.start();
-            var loginParams = { username: this.ruleForm2.account, password: this.ruleForm2.checkPass };
+            var loginParams = { id: this.ruleForm2.account, password: this.ruleForm2.checkPass };
             requestLogin(loginParams).then(data => {
               this.logining = false;
               //NProgress.done();
-              let { msg, code, user } = data;
-              if (code !== 200) {
+              // let data = data;
+
+              console.log(data)
+
+              if (data.status !== 200) {
                 this.$message({
-                  message: msg,
+                  message: data.statusText,
                   type: 'error'
                 });
               } else {
-                sessionStorage.setItem('user', JSON.stringify(user));
+                sessionStorage.setItem('user', JSON.stringify(data.data));
                 let _path = {path: '/'}; 
-                if (user.role == 'admin') {
+                if (data.data.role == 'admin') {
                     _path = {path: '/create-user'};
                 }
-                if (user.role == 'manager') {
+                if (data.data.role == 'pm') {
                     _path = {path: '/'};
                 }
-                if (user.role == 'rm') {
+                if (data.data.role == 'rm') {
                     _path = {path: '/customer-position'};
                 }
 

@@ -296,7 +296,7 @@
 				console.log(data);
 			});
 
-			getDataUrl('/fos/cust/get', {type: user.role, rm: user.username}).then(data => {
+			getDataUrl('/fos/cust/get', {type: user.role, rm: user.id}).then(data => {
 				customerPositions = data.data;
 				customerPositions.forEach((item,index) => {
 					Vm.form.customerNumberoptions.push({

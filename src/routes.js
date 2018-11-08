@@ -42,7 +42,7 @@ let routes = [
         name: 'Management Overview',
         iconCls: 'fa fa-sitemap',
         leaf: true,//只有一个节点，
-        meta: "manager",
+        meta: "pm",
         children: [
             { path: '/', component: Management, name: 'Organization Structure' }
         ]
@@ -53,7 +53,7 @@ let routes = [
         name: 'Customer Overview',
         iconCls: 'el-icon-date',
         // leaf: true,//只有一个节点
-        meta: "manager",
+        meta: "pm",
         children: [
             { path: '/customer-distribution', component: CustomerDistribution, name: 'Customer Distribution' },
             { path: '/customer-trends-report', component: CustomerTrends, name: 'Customer Trends Report' },
@@ -65,7 +65,7 @@ let routes = [
         name: '',
         iconCls: 'el-icon-news',
         leaf: true,//只有一个节点
-        meta: "manager",
+        meta: "pm",
         children: [
             { path: '/asset-overview', component: Asset, name: 'Asset Overview' }
         ]
