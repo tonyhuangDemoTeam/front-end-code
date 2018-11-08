@@ -11,11 +11,13 @@
 				    </el-radio-group>
 				  </el-form-item>
 			  	 	<el-form-item label="Customer:">
-					    <el-select v-model="form.customerNumber" placeholder="">
-					      <el-option label="1" value="1"></el-option>
-					      <el-option label="2" value="2"></el-option>
-					      <el-option label="3" value="3"></el-option>
-					      <el-option label="4" value="4"></el-option>
+					    <el-select v-model="form.customerNumber" @change="getcustomerNumber" placeholder="Pls select Customer Number!">
+					       <el-option
+						      v-for="item,index in form.customerNumberoptions"
+						      :key="index"
+						      :label="item.label"
+						      :value="item.value">
+						    </el-option>
 					    </el-select>
 					  </el-form-item>
 					  <el-form-item label="Share Issue:">
@@ -54,12 +56,14 @@
 				    </el-radio-group>
 				  </el-form-item>
 			  	 	<el-form-item label="Account:">
-					    <el-select v-model="form.accountNumber" placeholder="">
-					      <el-option label="1" value="1"></el-option>
-					      <el-option label="2" value="2"></el-option>
-					      <el-option label="3" value="3"></el-option>
-					      <el-option label="4" value="4"></el-option>
-					    </el-select>
+					    <el-select v-model="form.accountNumber" placeholder="Pls select Account Number!">
+					        <el-option
+						      v-for="item in form.accountNumberoptions"
+						      :key="item.value"
+						      :label="item.label"
+						      :value="item.value">
+						    </el-option>
+						</el-select>
 					 </el-form-item>
 					  <el-form-item label="Currency:">
 					    <el-input v-model="form.shareCurrency"></el-input>
@@ -152,6 +156,8 @@
 <script>
   import { getDataUrl, requestTransaction } from '@/api/api';
 
+  let customerPositions;
+
 	export default {
 		data() {
 			return {
@@ -160,7 +166,9 @@
 				      transactionType: '',
 				      type2: '',
 			          customerNumber: '',
+			          customerNumberoptions: [],
 				      accountNumber: '',
+				      accountNumberoptions: [],
 			          shareIssueCode: '',
 			          shareIssueCodeoptions: [],
 			          shareQuantity: '',
@@ -197,6 +205,27 @@
            },
 		},
 		methods: {
+			getcustomerNumber(cusNum){
+				let Vm = this, customerList = [];
+
+				customerPositions.forEach((item,index) => {
+					if(item.customerNumber == cusNum){
+						customerList = item.accounts;
+						return false;
+					}
+				});
+
+				Vm.form.accountNumber = '';
+				Vm.form.accountNumberoptions = [];
+
+				customerList.forEach((item,index) => {
+					Vm.form.accountNumberoptions.push({
+ 						value: item.accountNumber,
+          				label: item.accountName
+					})
+				});
+
+			},
 			getSharePosition(){
 
 				let customer = this.form.customerNumber,
@@ -246,8 +275,16 @@
 		},
 		created(){
            
-			let Vm = this;
+			let Vm = this, user;
 
+			user = sessionStorage.getItem('user');
+
+			if (!user) {
+				Vm.$router.push('/');
+                return false;
+			};
+
+			user = JSON.parse(user);
 			getDataUrl('/fos/share/issue/get', {}).then(data => {
 				Vm.issueCode = data.data;
 				var newkey = Object.keys(Vm.issueCode).sort();
@@ -255,6 +292,18 @@
 					Vm.form.shareIssueCodeoptions.push({
  						value: item,
           				label: Vm.issueCode[item].shareIssueName
+					})
+				});
+			}).catch((data) => {
+				console.log(data);
+			});
+
+			getDataUrl('/fos/cust/get', {type: user.role, rm: user.username}).then(data => {
+				customerPositions = data.data;
+				customerPositions.forEach((item,index) => {
+					Vm.form.customerNumberoptions.push({
+ 						value: item.customerNumber,
+          				label: item.customerName
 					})
 				});
 			}).catch((data) => {

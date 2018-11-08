@@ -130,7 +130,7 @@
 
 				user = JSON.parse(user);
 
-				getDataUrl('/fos/cust/get', {type: 'rm', rm: 'rm1'}).then(data => {
+				getDataUrl('/fos/cust/get', {type: user.role, rm: user.username}).then(data => {
 					let cusPos = data.data;
 					cusPos.forEach(item => {
 						let prod = item.positions.prod;

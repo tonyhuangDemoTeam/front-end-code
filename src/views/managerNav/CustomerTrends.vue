@@ -75,7 +75,7 @@
 
                    Vm.getAgeTotal();
 
-                   // console.log(5555, data)
+                   console.log(5555, data.data)
 
 
                 }).catch((data) => {
@@ -88,19 +88,19 @@
                 let Vm = this;
 
                 let collect5 = Vm.filterType.filter(item => {
-                    return item.age > 20;
+                    return item.period > 20;
                 });
                 let collect4 = Vm.filterType.filter(item => {
-                    return item.age > 10 && item.age <= 20;
+                    return item.period > 10 && item.period <= 20;
                 });
                 let collect3 = Vm.filterType.filter(item => {
-                    return item.age > 5 && item.age <= 10;
+                    return item.period > 5 && item.period <= 10;
                 });
                 let collect2 = Vm.filterType.filter(item => {
-                    return item.age > 1 && item.age <= 5;
+                    return item.period > 1 && item.period <= 5;
                 });
                 let collect1 = Vm.filterType.filter(item => {
-                    return item.age <=1;
+                    return item.period <=1;
                 });
 
 

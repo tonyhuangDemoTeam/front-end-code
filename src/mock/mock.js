@@ -190,9 +190,19 @@ export default {
      */
     //获取manager Organization Structure 上的图标数据
     mock.onGet('/fos/cust/get').reply(config => {
+
+      let { type } = config.params;
+      let returnData;
+
+      if (type == 'all') {
+          returnData = typeAll;
+      }else{
+          returnData = cusPosition;
+      }
+
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          resolve([200, typeAll]);
+          resolve([200, returnData]);
         }, 300);
       });
     });
@@ -231,18 +241,6 @@ export default {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve([200, dailyJson]);
-        }, 300);
-      });
-    });
-
-/**
-     *  manager
-     */
-    //获取manager Organization Structure 上的图标数据
-    mock.onGet('/fos/cust/get').reply(config => {
-      return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve([200, cusPosition]);
         }, 300);
       });
     });
