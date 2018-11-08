@@ -7,35 +7,82 @@
 					<el-input v-model="filters.name" style="width: 300px" placeholder="Please input Customer Number!"></el-input>
 				</el-form-item>
 				<el-form-item>
-					<el-button type="primary" v-on:click="getUser">Search</el-button>
+					<el-button type="primary" v-on:click="getCustomerNumber">Search</el-button>
 				</el-form-item>
 			</el-form>
 		</el-col>
 
 		<!--列表-->
 		<template>
-			<el-col :span="24">
-				<el-table 
-					:data="users" 
-					@row-click='rowSelect'
-					v-loading="loading" 
+			<el-col :span="24"><!-- 
 					:show-summary='true'
-                    sum-text="Total" 
+                    sum-text="Total"  -->
+				<el-table 
+					:data="customerPositions" 
+					v-loading="loading" 
                     size="small"
                     :header-cell-style="tableHeaderColor">
-					<el-table-column prop="number" type="number" label="Customer Number" >
+                    <el-table-column type="expand">
+				      <template slot-scope="props">
+<!-- 				        <el-form label-position="left" inline class="demo-table-expand">
+				          <el-form-item label="商品名称">
+				            <span>{{ props.row.customerNumber }}</span>
+				          </el-form-item>
+				          <el-form-item label="所属店铺">
+				            <span>{{ props.row.shop }}</span>
+				          </el-form-item>
+				          <el-form-item label="商品 ID">
+				            <span>{{ props.row.id }}</span>
+				          </el-form-item>
+				          <el-form-item label="店铺 ID">
+				            <span>{{ props.row.shopId }}</span>
+				          </el-form-item>
+				          <el-form-item label="商品分类">
+				            <span>{{ props.row.category }}</span>
+				          </el-form-item>
+				          <el-form-item label="店铺地址">
+				            <span>{{ props.row.address }}</span>
+				          </el-form-item>
+				          <el-form-item label="商品描述">
+				            <span>{{ props.row.desc }}</span>
+				          </el-form-item>
+				        </el-form> -->
+				        <el-table
+					       size="small"
+					       :data="props.row.accounts"
+							@row-click='rowSelect'
+					       :show-header="false"
+					       style="width: 100%">
+					        <el-table-column prop="customerAccount" type="number" label="Customer Number" >
+							</el-table-column>
+							<el-table-column prop="" label="Customer Name" >
+							</el-table-column>
+							<el-table-column prop="positions.prod.bond" label="Equity" sortable>
+							</el-table-column>
+							<el-table-column prop="positions.prod.share" label="Fixed Income" sortable>
+							</el-table-column>
+							<el-table-column prop="positions.prod.deposit" label="FX" sortable>
+							</el-table-column>
+							<el-table-column prop="positions.prod.fund" label="Structure Product" sortable>
+							</el-table-column>
+							<el-table-column prop="positions.prod.total" label="Total Asset Value (USD)"  align='right'sortable>
+							</el-table-column>
+					    </el-table>
+				      </template>
+				    </el-table-column>
+					<el-table-column prop="customerNumber" type="number" label="Customer Number" >
 					</el-table-column>
-					<el-table-column prop="name" label="Customer Name" >
+					<el-table-column prop="customerName" label="Customer Name" >
 					</el-table-column>
-					<el-table-column prop="equity" label="Equity" sortable>
+					<el-table-column prop="positions.prod.bond" label="Equity" sortable>
 					</el-table-column>
-					<el-table-column prop="fixedIncome" label="Fixed Income" sortable>
+					<el-table-column prop="positions.prod.share" label="Fixed Income" sortable>
 					</el-table-column>
-					<el-table-column prop="fx" label="FX" sortable>
+					<el-table-column prop="positions.prod.deposit" label="FX" sortable>
 					</el-table-column>
-					<el-table-column prop="structureProduct" label="Structure Product" sortable>
+					<el-table-column prop="positions.prod.fund" label="Structure Product" sortable>
 					</el-table-column>
-					<el-table-column prop="value" label="Total Asset Value (USD)"  align='right'sortable>
+					<el-table-column prop="positions.prod.total" label="Total Asset Value (USD)"  align='right'sortable>
 					</el-table-column>
 				</el-table>
 			</el-col>
@@ -44,7 +91,8 @@
 </template>
 
 <script>
-	import { getUserList } from '@/api/api';
+	import {getDataUrl, getUserList } from '@/api/api';
+
 	//import NProgress from 'nprogress'
 	export default {
 		data() {
@@ -53,47 +101,62 @@
 					name: ''
 				},
 				loading: false,
-				users: [
-				    {number: '8000-123456', name:'Nikko KITMAN	',equity: 16300508.05	,fixedIncome: 16300508.05	,fx:16300508.05 ,structureProduct:2345232.00, equity:23455.00,value: 16300508.05},
-					{number: '8000-677988', name:'Oliver HUSIN	',equity: 5000300.00	,fixedIncome: 0.00			,fx:0.00,structureProduct:2345232.00,value: 9789644.98},
-					{number: '8000-546700', name:'Ming Group LTD	',equity: 0.00		,fixedIncome: 100000.00		,fx:3004030.00,structureProduct:2345232.00,value: 6788688.05},
-					{number: '8000-544976', name:'Calvin ZUGBERG	',equity: 0.00		,fixedIncome: 300000.00		,fx:400000.00,structureProduct:'2345232.40',value: 6689002.00},
-					{number: '8000-321456', name:'Shawn BLIANCE	',equity: 9789644.98	,fixedIncome: 9789644.98	,fx:9789644.98,structureProduct:2345232.00,value: 5776559.98},
-					{number:' 8000-698929', name:'Kawasaki MIZUKA	',equity: 6788688.05	,fixedIncome: 6788688.05	,fx:6788688.05,structureProduct:'2345232.02',value: 3002993.99}
-				]
+				customerPositions: []
 			}
 		},
 		methods: {
-			//性别显示转换
-			formatSex: function (row, column) {
-				return row.sex == 1 ? '男' : row.sex == 0 ? '女' : '未知';
-			},
 			// 修改table header的背景色
 			tableHeaderColor({ row, column, rowIndex, columnIndex }) {
 			    if (rowIndex === 0) {
 			        return 'background-color: #F7F6Fd;color: #666;font-weight: 500;'
 			    }
 			 },
-			 rowSelect(row, event, column){
-                // console.log(row)
-                this.$router.push(`/customer-position/${row.number}`)
+			rowSelect(row, event, column){
+                this.$router.push(`/customer-position/${row.customerAccount}`)
 			 },
-			//获取用户列表
-			getUser: function () {
-				// let para = {
-				// 	name: this.filters.name
-				// };
-				// this.loading = true;
-				// //NProgress.start();
-				// getUserList(para).then((res) => {
-				// 	this.users = res.data.users;
-				// 	this.loading = false;
-				// 	//NProgress.done();
-				// });
+			getCustomerNumber(){
+
+			},
+			initPage: function () {
+
+				let Vm = this, user;
+
+				user = sessionStorage.getItem('user');
+
+				if (!user) {
+					Vm.$router.push('/');
+                    return false;
+				};
+
+				user = JSON.parse(user);
+
+				getDataUrl('/fos/cust/get', {type: 'rm', rm: 'rm1'}).then(data => {
+					let cusPos = data.data;
+					cusPos.forEach(item => {
+						let prod = item.positions.prod;
+						prod.total = Number(prod.fund) +  Number(prod.deposit) + Number(prod.share) + Number(prod.bond);
+						prod.total= prod.total.toFixed(2);
+						item.accounts.forEach(ac_item => {
+							let ac_prod = ac_item.positions.prod;
+							ac_item.customerAccount = ac_item.customerNumber + '-' + ac_item.accountNumber;
+							ac_prod.total = Number(ac_prod.fund) +  Number(ac_prod.deposit) + Number(ac_prod.share) + Number(ac_prod.bond);
+							ac_prod.total= ac_prod.total.toFixed(2);
+						});
+					});
+
+					Vm.customerPositions = cusPos;
+					
+	
+				}).catch((data) => {
+					console.log(data);
+				});
 			}
 		},
+		created() {
+			this.initPage();
+		},
 		mounted() {
-			this.getUser();
+			//this.initPage();
 		}
 	};
 
@@ -111,6 +174,10 @@
 }
 .toolbar {
 	// background-color: #fff;
+}
+
+.el-table__expanded-cell[class*=cell]{
+	padding: 20px 0px 20px 50px !important;
 }
 
 </style>

@@ -1,6 +1,7 @@
 import Mock from 'mockjs';
 
 import issueJson from './issue.json';
+import cusPositionJson from './customer-position.json';
 
 const LoginUsers = [
   {
@@ -66,4 +67,6 @@ const getSharePosition = [{"id":1,"customerNumber":1,"accountNumber":1,"shareIss
 
 const dailyJson = [{"id":1,"type":"P","rmCode":"rm1","remarks":"TODO: action 1","createDate":"2018-11-11T16:00:00.000+0000"},{"id":2,"type":"P","rmCode":"rm1","remarks":"TODO: action 2","createDate":"2018-11-11T16:00:00.000+0000"},{"id":3,"type":"P","rmCode":"rm1","remarks":"TODO: action 3","createDate":"2018-11-11T16:00:00.000+0000"},{"id":4,"type":"P","rmCode":"rm1","remarks":"TODO: action 3","createDate":"2018-11-11T16:00:00.000+0000"},{"id":5,"type":"P","rmCode":"rm1","remarks":"TODO: action 3","createDate":"2018-11-10T16:00:00.000+0000"},{"id":6,"type":"P","rmCode":"rm1","remarks":"TODO: action 3","createDate":"2018-11-10T16:00:00.000+0000"},{"id":7,"type":"P","rmCode":"rm1","remarks":"TODO: action 3","createDate":"2018-11-10T16:00:00.000+0000"},{"id":8,"type":"P","rmCode":"rm1","remarks":"TODO: action 3","createDate":"2018-11-10T16:00:00.000+0000"},{"id":9,"type":"P","rmCode":"rm1","remarks":"TODO: action 3","createDate":"2018-11-10T16:00:00.000+0000"},{"id":10,"type":"P","rmCode":"rm1","remarks":"TODO: action 3","createDate":"2018-11-09T16:00:00.000+0000"},{"id":11,"type":"P","rmCode":"rm1","remarks":"TODO: action 3","createDate":"2018-11-09T16:00:00.000+0000"},{"id":12,"type":"P","rmCode":"rm1","remarks":"TODO: action 3","createDate":"2018-11-09T16:00:00.000+0000"},{"id":13,"type":"P","rmCode":"rm1","remarks":"TODO: action 3","createDate":"2018-11-09T16:00:00.000+0000"},{"id":14,"type":"P","rmCode":"rm1","remarks":"TODO: action 3","createDate":"2018-11-08T16:00:00.000+0000"},{"id":15,"type":"P","rmCode":"rm1","remarks":"TODO: action 3","createDate":"2018-11-08T16:00:00.000+0000"}];
 
-export { LoginUsers, Users, Customers, getShareIssue, getSharePosition, dailyJson };
+const cusPosition = cusPositionJson;
+
+export { LoginUsers, Users, Customers, getShareIssue, getSharePosition, dailyJson, cusPosition };

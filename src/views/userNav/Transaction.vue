@@ -19,7 +19,7 @@
 					    </el-select>
 					  </el-form-item>
 					  <el-form-item label="Share Issue:">
-					    <el-select v-model="form.shareIssueCode" @change="getIssueItem" placeholder="">
+					    <el-select v-model="form.shareIssueCode" @change="getIssueItem" placeholder="Pls select issue Code!">
 						    <el-option
 						      v-for="item in form.shareIssueCodeoptions"
 						      :key="item.value"
@@ -40,7 +40,7 @@
 					      v-model="form.tradeDate"
 					      type="date"
 					      value-format="yyyy-MM-dd"
-					      placeholder="Choose a date">
+					      placeholder="Please pick a date!">
 					    </el-date-picker>
 					  </el-form-item>					  
 			  	 </el-col>
@@ -65,7 +65,7 @@
 					    <el-input v-model="form.shareCurrency"></el-input>
 					  </el-form-item>	
 					  <el-form-item label="Trade Type:">
-					    <el-select v-model="form.tradeType" placeholder="pls select u SC">
+					    <el-select v-model="form.tradeType" placeholder="Pls select Trade Type">
 					      <el-option label="Limit" value="shanghai"></el-option>
 					      <el-option label="Limit" value="beijing"></el-option>
 					    </el-select>
@@ -79,7 +79,7 @@
 					      v-model="form.valueDate"
 					      type="date"
 					      value-format="yyyy-MM-dd"
-					      placeholder="Choose a date">
+					      placeholder="Please pick a date!">
 					    </el-date-picker>
 					  </el-form-item>					  				  				 
 			       </el-col>

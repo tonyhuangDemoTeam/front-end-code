@@ -149,7 +149,7 @@
 			},
 			//退出登录
 			logout: function () {
-				var _this = this;
+				let _this = this;
 				this.$confirm('Are you sure you want to quit??', 'Tips', {
 					//type: 'warning'
 				}).then(() => {
@@ -170,7 +170,7 @@
 			}
 		},
 		mounted() {
-			var user = sessionStorage.getItem('user');
+			let user = sessionStorage.getItem('user');
 			if (user) {
 				user = JSON.parse(user);
 				this.sysUserName = user.name || '';
@@ -282,12 +282,13 @@
 				// position: absolute;
 				// top: 0px;
 				// bottom: 0px;
-				.el-menu{
+				.el-menu-vertical-demo{
 					height: 100%;
 					width: 100% !important;
+
 				}
 				.collapsed{
-					width:60px;
+					width:60px !important;;
 					.item{
 						position: relative;
 					}
@@ -331,4 +332,8 @@
 			}
 		}
 	}
+
+	.el-menu-item{
+						// background-color: #fff;
+					}
 </style>
