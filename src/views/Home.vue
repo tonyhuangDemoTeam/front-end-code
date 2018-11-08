@@ -93,7 +93,7 @@
 				collapsed:false,
 				sysUserName: '',
 				sysMeta: '',
-				sysUserAvatar: require('../assets/user.png'),
+				sysUserAvatar: '',
 				form: {
 					name: '',
 					region: '',
@@ -171,11 +171,12 @@
 		},
 		mounted() {
 			let user = sessionStorage.getItem('user');
+			let avatarArr = [require('../assets/user1.jpeg'), require('../assets/user.png')]
 			if (user) {
 				user = JSON.parse(user);
 				this.sysUserName = user.name || '';
 				this.sysMeta = user.role || 'user';
-				// this.sysUserAvatar = user.avatar || '../assets/logo.jpeg';
+				this.sysUserAvatar = user.avatar || avatarArr[Math.floor((Math.random()*avatarArr.length))];
 			};
 
 		}

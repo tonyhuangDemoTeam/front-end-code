@@ -92,7 +92,7 @@ let routes = [
                         name: 'Customer Position'
                     },
                     {   
-                        path: '/customer-position/:id', 
+                        path: '/customer-position/:customerId/:accountId', 
                         component: CustomerPositionInfo, 
                         name: 'Customer Position Info'
                     }

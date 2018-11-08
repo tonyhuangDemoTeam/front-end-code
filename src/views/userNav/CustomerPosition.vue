@@ -89,7 +89,13 @@
 			    }
 			 },
 			rowSelect(row, event, column){
-                this.$router.push(`/customer-position/${row.customerAccount}`)
+
+				this.setAccountInfo({
+					customerNumber: row.customerNumber,
+					accountName: row.accountName,
+					accountNumber: row.accountNumber
+				});
+                this.$router.push(`/customer-position/${row.customerNumber}/${row.accountNumber}`)
 			 },
 			getCustomerNumber(){
 

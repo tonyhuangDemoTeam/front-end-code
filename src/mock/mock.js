@@ -2,7 +2,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
 import { LoginUsers, Users, Customers, getShareIssue, getSharePosition, dailyJson, cusPosition } from './data/user';
-import { Relationship, typeAll } from './data/manager';
+import { Relationship, typeAll, positionInfo } from './data/manager';
 
 
 let _Users = Users;
@@ -241,6 +241,18 @@ export default {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve([200, dailyJson]);
+        }, 300);
+      });
+    });
+
+/**
+     *  manager
+     */
+    //获取manager Organization Structure 上的图标数据
+    mock.onGet('/fos/acct/get').reply(config => {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, positionInfo]);
         }, 300);
       });
     });

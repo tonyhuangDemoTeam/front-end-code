@@ -19,6 +19,9 @@ Mock.bootstrap();
 import 'font-awesome/css/font-awesome.min.css'
 import 'vue-orgchart/dist/style.min.css'
 
+import base from './common/js/base'
+
+Vue.use(base);
 // 设置语言
 locale.use(lang)
 

@@ -1,0 +1,46 @@
+{
+  "fund": [
+    {
+      "name": "Fund Issue 1(HKD)",
+      "quantity": "10000.00",
+      "amount": "57420.00",
+      "marketPrice": "45.00",
+      "cost": "0.01",
+      "averagePL": "-392580.00",
+      "yesterdayPL": "-382580.00"
+    }
+  ],
+  "share": [
+    {
+      "name": "Share Issue 1(HKD)",
+      "quantity": "10000.00",
+      "amount": "128876.00",
+      "marketPrice": "101.00",
+      "cost": "0.01",
+      "averagePL": "-881124.00",
+      "yesterdayPL": "-871124.00"
+    }
+  ],
+  "bond": [
+    {
+      "name": "Bond Issue 1(HKD)",
+      "quantity": "10000.00",
+      "amount": "126324.00",
+      "marketPrice": "99.00",
+      "cost": "100.00",
+      "averagePL": "-863676.00",
+      "yesterdayPL": "-913676.00"
+    }
+  ],
+  "deposits": [
+    {
+      "name": "HKD",
+      "quantity": "10000.00",
+      "amount": "1276.00",
+      "marketPrice": "0.13",
+      "cost": "0.13",
+      "averagePL": "0.00",
+      "yesterdayPL": "0.00"
+    }
+  ]
+}

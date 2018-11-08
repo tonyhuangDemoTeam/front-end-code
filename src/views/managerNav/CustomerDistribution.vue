@@ -4,8 +4,16 @@
             <transition name="el-zoom-in-top">
                 <div v-show="show2" class="transition-box">
                     <el-col :span="20">
+                      <el-tabs v-model="activeName2" size="small" type="card" @tab-click="handleClick">
+                        <el-tab-pane label="Region" name="region"></el-tab-pane>
+                        <el-tab-pane label="Type" name="type"></el-tab-pane>
+                        <el-tab-pane label="Booking Entity" name="booking"></el-tab-pane>
+                        <el-tab-pane label="Age" name="age"></el-tab-pane>
+                      </el-tabs>
+                    </el-col>
+                    <el-col :span="20">
                         <el-form ref="form" :model="sizeForm" class="form-box" label-width="120px" size="mini">
-                            <el-form-item label="Region:">
+                            <el-form-item label="Region:" v-show="activeName2 == 'region' ? false : true">
                                 <el-checkbox-group v-model="sizeForm.region" :min=0>
                                     <!-- <el-checkbox-button label="All" name="type"></el-checkbox-button> -->
                                     <el-checkbox-button label="CN" name="type">China</el-checkbox-button>
@@ -14,18 +22,13 @@
                                     <el-checkbox-button label="UK" name="type">United Kingdom</el-checkbox-button>
                                 </el-checkbox-group>
                             </el-form-item>
-                            <el-form-item label="Type:">
-                                <!-- <el-radio-group v-model="sizeForm.type" size="mini">
-                                    <el-radio border label="All"></el-radio> 
-                                    <el-radio border label="I">Individual</el-radio>
-                                    <el-radio border label="E">Entity</el-radio>
-                                </el-radio-group> -->
+                            <el-form-item label="Type:" v-show="activeName2 == 'type' ? false : true">
                                 <el-checkbox-group v-model="sizeForm.type">
-                                  <el-checkbox label="I" border>Individual</el-checkbox>
-                                  <el-checkbox label="E" border>Entity</el-checkbox>
+                                    <el-checkbox label="I" border>Individual</el-checkbox>
+                                    <el-checkbox label="E" border>Entity</el-checkbox>
                                 </el-checkbox-group>
                             </el-form-item>
-                            <el-form-item label="Booking Entity:">
+                            <el-form-item label="Booking Entity:" v-show="activeName2 == 'booking' ? false : true">
                                 <el-checkbox-group v-model="sizeForm.bookingEntity" :min=0>
                                     <!-- <el-checkbox-button label="All" name="type"></el-checkbox-button> -->
                                     <el-checkbox-button label="CN" name="type"></el-checkbox-button>
@@ -34,7 +37,7 @@
                                     <el-checkbox-button label="UK" name="type"></el-checkbox-button>
                                 </el-checkbox-group>
                             </el-form-item>
-                            <el-form-item label="Age:">
+                            <el-form-item label="Age:" v-show="activeName2 == 'age' ? false : true">
                                 <el-slider v-model="sizeForm.ageValue" range :step="10" show-stops>
                                 </el-slider>
                                 <div class="slider-mark">
@@ -69,14 +72,18 @@
 import echarts from 'echarts'
 import { getDataUrl } from '@/api/api';
 
+
+let  tabTxt = ['Region', 'Type', 'Booking Entity', 'Age'],
+     currentTxt = tabTxt[0];
+
 export default {
     data() {
         return {
             loading: false,
             show2: true,
+            activeName2: 'region',
             chartPie: null,
             sizeForm: {
-                regionAll: true,
                 name: '',
                 region: ['CN', 'HK', 'SG', 'UK'],
                 bookingEntity: ['CN', 'HK', 'SG', 'UK'],
@@ -107,12 +114,35 @@ export default {
     },
     methods: {
         onSubmit() {
-
-            let _seft = this;
+            let Vm = this;
 
         },
-        regionAllbtn() {
-            this.sizeForm.regionAll = !this.sizeForm.regionAll;
+        handleClick(tab, event) {
+           // console.log(tab, event);
+           let Vm = this, tabName = tab.name;
+
+           switch(tabName){
+                case 'region':
+                    Vm.sizeForm.region = ['CN', 'HK', 'SG', 'UK'];
+                    currentTxt = tabTxt[0];   
+                    break;
+                case 'type':
+                    Vm.sizeForm.type = ['I', 'E'];
+                    currentTxt = tabTxt[1]; 
+                    break;
+                case 'booking':
+                    Vm.sizeForm.bookingEntity= ['CN', 'HK', 'SG', 'UK'];
+                    currentTxt = tabTxt[2];
+                    break;
+                case 'age':
+                    Vm.sizeForm.ageValue = [0, 100];
+                    currentTxt = tabTxt[3];
+                    break;        
+                default:
+                    break;
+
+           };
+
         },
         initPage() {
 
@@ -123,32 +153,32 @@ export default {
             getDataUrl('/fos/cust/get', { type: 'all' }).then(data => {
 
                 Vm.allType = Vm.filterType = data.data;
-                Vm.filter(); // 过滤数据成为页面UI所需要的
+                Vm.filter(); 
 
             }).catch((data) => {
                 console.log(data);
                 return false;
             });
         },
-        filter(){
+        filter() {
             let Vm = this;
 
             Vm.filterType = Vm.allType.filter(item => {
 
                 let f_region = Vm.sizeForm.region.includes(item.region),
-                    f_type   = Vm.sizeForm.type.includes(item.type),
+                    f_type = Vm.sizeForm.type.includes(item.type),
                     f_bookingEntity = Vm.sizeForm.bookingEntity.includes(item.bookingEntity),
-                    f_age = item.age>=Vm.sizeForm.ageValue[0] && item.age<=Vm.sizeForm.ageValue[1];
+                    f_age = item.age >= Vm.sizeForm.ageValue[0] && item.age <= Vm.sizeForm.ageValue[1];
 
-                return f_region&&f_type&&f_bookingEntity&&f_age;
+                return f_region && f_type && f_bookingEntity && f_age;
 
             });
 
             Vm.changePieDataJSON();
 
-            
+
         },
-        changePieDataJSON(){
+        changePieDataJSON() {
             let Vm = this;
 
             let CN = Vm.filterType.filter(item => item.region == 'CN');
@@ -158,13 +188,11 @@ export default {
 
             // charts data json
             let temp = [
-                {"value":0, "name":"CN"},
-                {"value":0, "name":"HK"},
-                {"value":0, "name":"SG"},
-                {"value":0, "name":"UK"}
+                { "value": 0, "name": "CN" },
+                { "value": 0, "name": "HK" },
+                { "value": 0, "name": "SG" },
+                { "value": 0, "name": "UK" }
             ];
-
-            console.log(CN)
 
             let total = 0;
 
@@ -187,16 +215,16 @@ export default {
                     total += UK.length;
                 }
 
-               return true;
+                return true;
             })
 
             Vm.valTotal = total;
 
-            function filterRegion(val){
+            function filterRegion(val) {
                 return Vm.filterType.filter(item => item.region == val);
             }
 
-            Vm.drawPieChart(); 
+            Vm.drawPieChart();
             Vm.loading = false; // loading start
 
         },
@@ -204,7 +232,7 @@ export default {
             let Vm = this;
             let option = {
                 title: {
-                    text: 'Customer Distribution By Region',
+                    text: 'Customer Distribution By ' + currentTxt,
                     subtext: 'Total GPB Customer : ' + Vm.valTotal,
                     x: 'center'
                 },
@@ -280,9 +308,9 @@ export default {
     width: 100%;
     height: 20px;
     text-align: center;
-    color: #666;
+    color: #999;
     cursor: pointer;
-    border-bottom: 1px solid #999;
+    border-bottom: 1px solid #e4e7ed;
 
     i {}
 

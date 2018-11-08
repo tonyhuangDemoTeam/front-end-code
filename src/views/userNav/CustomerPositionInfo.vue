@@ -6,15 +6,15 @@
 				<ul style="width: 60%; float: left;">
 					<li>
 						<span class="span1">Customer Number:</span>
-						<span class="span2">8000-123456</span>
+						<span class="span2">{{cusAccinfo.customerNumber}}</span>
 					</li>
 					<li>
 						<span class="span1">Account Number:</span>
-						<span class="span2">0001</span>
+						<span class="span2">{{cusAccinfo.accountNumber}}</span>
 					</li>
 					<li>
-						<span class="span1">Customer Name:</span>
-						<span class="span2">Nikko KITMAN</span>
+						<span class="span1">Account Name:</span>
+						<span class="span2">{{cusAccinfo.accountName}}</span>
 					</li>
 				</ul>
 				<div style="width: 30%; float: right;">
@@ -29,7 +29,7 @@
               	<p>Equity:</p>
               </div>
 			  <el-table 
-			  	:data="tableData1" 
+			  	:data="equityTable" 
 			  	show-summary 
                 sum-text="Total" 
                 size="small"
@@ -40,15 +40,15 @@
 			    </el-table-column>
 			    <el-table-column prop="quantity" label="Quantity">
 			    </el-table-column>
-			    <el-table-column prop="totalAmount" label="Total Amount(USD)">
+			    <el-table-column prop="amount" label="Total Amount(USD)">
 			    </el-table-column>
 			    <el-table-column prop="marketPrice" label="Market Price">
 			    </el-table-column>
-			    <el-table-column prop="averageCost" label="Average Cost">
+			    <el-table-column prop="cost" label="Average Cost">
 			    </el-table-column>
-			    <el-table-column prop="pl" label="P&L(USD)">
+			    <el-table-column prop="averagePL" label="P&L(USD)">
 			    </el-table-column>
-			    <el-table-column prop="lbdp" width='180' label="Last Biz Date P&L(USD)">
+			    <el-table-column prop="yesterdayPL" width='180' label="Last Biz Date P&L(USD)">
 			    </el-table-column>
 			  </el-table>
 		</el-col>
@@ -58,7 +58,7 @@
               	<p>Fixed Income:</p>
               </div>
 			  <el-table 
-			  	:data="tableData2" 
+			  	:data="fixedTable" 
 			  	show-summary 
                 sum-text="Total" 
                 class='cp-table'
@@ -69,44 +69,73 @@
 			    </el-table-column>
 			    <el-table-column prop="quantity" label="Quantity">
 			    </el-table-column>
-			    <el-table-column prop="totalAmount" label="Total Amount(USD)">
+			    <el-table-column prop="amount" label="Total Amount(USD)">
 			    </el-table-column>
 			    <el-table-column prop="marketPrice" label="Market Price">
 			    </el-table-column>
-			    <el-table-column prop="averageCost" label="Average Cost">
+			    <el-table-column prop="cost" label="Average Cost">
 			    </el-table-column>
-			    <el-table-column prop="pl" label="P&L(USD)">
+			    <el-table-column prop="averagePL" label="P&L(USD)">
 			    </el-table-column>
-			    <el-table-column prop="lbdp" width='180' label="Last Biz Date P&L(USD)">
+			    <el-table-column prop="yesterdayPL" width='180' label="Last Biz Date P&L(USD)">
 			    </el-table-column>
 			  </el-table>
 		</el-col>
 
-		<el-col :span="24">
+	    <el-col :span="24">
               <div class="cp-table-txt">
               	<p>FX:</p>
               </div>
 			  <el-table 
-			  	:data="tableData3" 
+			  	:data="fxTable" 
 			  	show-summary 
                 sum-text="Total" 
                 class='cp-table'
                 size="small"
                 :header-cell-style="tableHeaderColor"
 			  	style="width: 100%">
-			    <el-table-column prop="name" label="CCY Pair">
+			    <el-table-column prop="name" label="Product Name">
 			    </el-table-column>
-			    <el-table-column prop="quantity" label="Buy Amout">
+			    <el-table-column prop="quantity" label="Quantity">
 			    </el-table-column>
-			    <el-table-column prop="totalAmount" label="Sell Amount">
+			    <el-table-column prop="amount" label="Total Amount(USD)">
 			    </el-table-column>
-			    <el-table-column prop="marketPrice" label="Bid/Offer Rate">
+			    <el-table-column prop="marketPrice" label="Market Price">
 			    </el-table-column>
-			    <el-table-column prop="averageCost" label="Market Rate">
+			    <el-table-column prop="cost" label="Average Cost">
 			    </el-table-column>
-			    <el-table-column prop="pl" label="P&L(USD)">
+			    <el-table-column prop="averagePL" label="P&L(USD)">
 			    </el-table-column>
-			    <el-table-column prop="lbdp" width='180' label="Last Biz Date P&L(USD)">
+			    <el-table-column prop="yesterdayPL" width='180' label="Last Biz Date P&L(USD)">
+			    </el-table-column>
+			  </el-table>
+		</el-col>
+
+		<el-col :span="24">
+              <div class="cp-table-txt">
+              	<p>Structure Product:</p>
+              </div>
+			  <el-table 
+			  	:data="structureTable" 
+			  	show-summary 
+                sum-text="Total" 
+                class='cp-table'
+                size="small"
+                :header-cell-style="tableHeaderColor"
+			  	style="width: 100%">
+			    <el-table-column prop="name" label="Product Name">
+			    </el-table-column>
+			    <el-table-column prop="quantity" label="Quantity">
+			    </el-table-column>
+			    <el-table-column prop="amount" label="Total Amount(USD)">
+			    </el-table-column>
+			    <el-table-column prop="marketPrice" label="Market Price">
+			    </el-table-column>
+			    <el-table-column prop="cost" label="Average Cost">
+			    </el-table-column>
+			    <el-table-column prop="averagePL" label="P&L(USD)">
+			    </el-table-column>
+			    <el-table-column prop="yesterdayPL" width='180' label="Last Biz Date P&L(USD)">
 			    </el-table-column>
 			  </el-table>
 		</el-col>
@@ -125,7 +154,7 @@
 			    </el-table-column>
 			    <el-table-column prop="quantity" label="Fixed Income">
 			    </el-table-column>
-			    <el-table-column prop="totalAmount" label="FXt">
+			    <el-table-column prop="totalAmount" label="FX">
 			    </el-table-column>
 			    <el-table-column prop="marketPrice" label="Structure Product">
 			    </el-table-column>
@@ -151,48 +180,19 @@
 </template>
 <script>
     import echarts from 'echarts'
+	import {getDataUrl, getUserList } from '@/api/api';
 
 	export default {
 		data() {
 			return {
 				chartPie1: null,
 				chartPie2: null,
-				tableData1: [{
-					name:'HSBC Holding',	
-					quantity:80000,	
-					totalAmount:5084000, 
-					marketPrice:63.55,	
-					averageCost:60.05,
-					pl:280000,	
-					lbdp:6000
-				 },{
-				 	name:'Tencent',	
-				 	quantity:10000,	
-				 	totalAmount:2706000, 
-				 	marketPrice:270.6,	
-				 	averageCost:180.05,
-				 	pl:901000,	
-				 	lbdp:3000
-				 }],
-				 tableData2: [{
-					name:'HSBC Bond 5Y',	
-					quantity:80000,	
-					totalAmount:5084000, 
-					marketPrice:63.55,	
-					averageCost:60.05,
-					pl:280000,	
-					lbdp:6000
-				 }],
-				 tableData3: [{
-					name:'HKD/USD',	
-					quantity:80000,	
-					totalAmount:5084000, 
-					marketPrice:63.55,	
-					averageCost:60.05,
-					pl: '-165.5380002',	
-					lbdp: '-165.5380002'
-				 }],
-				 tableData4: [{
+				cusAccinfo: null,
+				equityTable: [],
+				fixedTable: [],
+				fxTable: [],
+				structureTable: [],
+				tableData4: [{
 					name:'50000',	
 					quantity:80000,	
 					totalAmount:5084000, 
@@ -200,17 +200,46 @@
 					averageCost:60.05,
 					pl: '-165.5380002',	
 					lbdp: '-165.5380002'
-				 }],
+				}],
 			}
 		},
 		methods: {
+
+			initPage(){
+
+				let Vm = this;
+
+				let customerId = this.$route.params.customerId, 
+					accountId = this.$route.params.accountId;
+
+				let info = Vm.getAccountInfo();
+				
+				Vm.cusAccinfo = info.customerNumber ? Vm.getAccountInfo() : {
+					customerNumber: customerId,
+					accountName: 'acct ' + accountId,
+					accountNumber: accountId
+				};
+			
+				getDataUrl('/fos/acct/get', {type: 'position', cust: customerId, acct: accountId}).then(data => {
+                  let list = data.data;
+
+                  Vm.equityTable = list.fund;
+                  Vm.fixedTable = list.share;
+                  Vm.fxTable = list.bond;
+                  Vm.structureTable = list.deposits;
+
+				}).catch((data) => {
+					console.log(data);
+				});
+
+			},
 
 			getSummaries(param) {
 		        const { columns, data } = param;
 		        const sums = [];
 		        columns.forEach((column, index) => {
 		          if (index === 0) {
-		            sums[index] = '总价';
+		            sums[index] = 'Total';
 		            return;
 		          }
 		          const values = data.map(item => Number(item[column.property]));
@@ -223,7 +252,7 @@
 		                return prev;
 		              }
 		            }, 0);
-		            sums[index] += ' 元';
+		            sums[index] += ' $';
 		          } else {
 		            sums[index] = 'N/A';
 		          }
@@ -352,7 +381,12 @@
 			
 		},
 		mounted() {
-            this.drawCharts()
+            this.drawCharts();
+            // this.initPage();
+        },
+        created(){
+            this.initPage();
+
         },
         updated() {
             this.drawCharts()
