@@ -52,9 +52,9 @@
                         </el-table-column>
                     </el-table> -->
                     <ul class="con-bank-ul">
-                        <li v-for="item,index in table.list">
+                        <li v-for="item,index in table.list" :class="item.class">
                             <span>{{item.name}}</span>
-                            <span :class="item.class" v-loading="item.loading">{{item.value}}</span>
+                            <span class="v" v-loading="item.loading">{{item.value}}</span>
                         </li>
                     </ul>
                 </el-card>
@@ -274,15 +274,20 @@ export default {
         &:hover{
         	background-color: #f5f7fa;
         }
+        &.light{
+            background-color: #67c23a14;
+            .v {
+                 font-weight: bold;
+                color: #DA0010;               
+            }
+
+        }
 
         span {
             padding-left: 10px;
             display: inline-block;
             width: 49%;
-            &.light{
-            	font-weight: bold;
-            	color: #DA0010;
-            }
+            
         }
     }
 

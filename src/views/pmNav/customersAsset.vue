@@ -162,6 +162,27 @@ export default {
             let fund = Vm.filterType.filter(item => item.product == 'fund');
             let deposits = Vm.filterType.filter(item => item.product == 'deposits');
 
+
+            let shareTotal = 0, bondTotal = 0, fundTotal = 0, depositsTotal = 0;
+
+            share.forEach(item => {
+                shareTotal += Number(item.position);
+            });
+            bond.forEach(item => {
+                bondTotal += Number(item.position);
+            });
+            fund.forEach(item => {
+                fundTotal += Number(item.position);
+            });
+            deposits.forEach(item => {
+                depositsTotal += Number(item.position);
+            });
+
+            shareTotal = shareTotal.toFixed(2);
+            bondTotal = bondTotal.toFixed(2);
+            fundTotal = fundTotal.toFixed(2);
+            depositsTotal = depositsTotal.toFixed(2);
+
             // charts data json
             let temp = [
                 { "value": 0, "name": "Equity", "tag": "share" },
@@ -175,26 +196,26 @@ export default {
             Vm.pieData = temp.filter(item => {
 
                 if (item.tag == 'share' && share) {
-                    item.value = share.length;
-                    total += share.length;
+                    item.value = shareTotal;
+                    total += Number(shareTotal);
                 }
                 if (item.tag == 'bond' && bond) {
-                    item.value = bond.length;
-                    total += bond.length;
+                    item.value = bondTotal;
+                    total += Number(bondTotal);
                 }
                 if (item.tag == 'fund' && fund) {
-                    item.value = fund.length;
-                    total += fund.length;
+                    item.value = fundTotal;
+                    total += Number(fundTotal);
                 }
                 if (item.tag == 'deposits' && deposits) {
-                    item.value = deposits.length
-                    total += deposits.length;
+                    item.value = depositsTotal
+                    total += Number(depositsTotal);
                 }
 
                 return true;
             })
 
-            Vm.valTotal = total;
+            Vm.valTotal = total.toFixed(2);;
 
             function filterRegion(val) {
                 return Vm.filterType.filter(item => item.product == val);
@@ -208,7 +229,7 @@ export default {
             let Vm = this;
             let option = {
                 title: {
-                    text: 'Customer Distribution By ' + currentTxt,
+                    text: 'Asset Distribution By ' + currentTxt,
                     subtext: 'Total GPB Customer : ' + Vm.valTotal,
                     x: 'center'
                 },
