@@ -365,7 +365,6 @@ export default {
                 }]
             };
 
-
             this.chartPie1 = echarts.init(document.getElementById('chartPie1'));
             this.chartPie1.setOption(opt1);
 
@@ -375,15 +374,12 @@ export default {
         drawCharts() {
             let Vm = this;
 
-            setTimeout(() => {
-                Vm.drawPieChart()
-            }, 200);
+            Vm.drawPieChart()
 
         },
 
     },
     mounted() {
-
         this.drawCharts();
     },
     created() {

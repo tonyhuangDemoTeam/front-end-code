@@ -4,18 +4,18 @@ import Home from './views/Home.vue'
 import Main from './views/Main.vue'
 
 // manager template
-import Management from './views/managerNav/Management.vue'
-import CustomerTrends from './views/managerNav/CustomerTrends.vue'
-import CustomerDistribution from './views/managerNav/CustomerDistribution.vue'
-import Asset from './views/managerNav/customersAsset.vue'
+import Management from './views/pmNav/Management.vue'
+import CustomerTrends from './views/pmNav/CustomerTrends.vue'
+import CustomerDistribution from './views/pmNav/CustomerDistribution.vue'
+import Asset from './views/pmNav/customersAsset.vue'
 
 // user(rm) template
-import DailyEvent from './views/userNav/DailyEvent.vue'
-import CustomerPositionView from './views/userNav/CustomerPositionView.vue'
-import CustomerPosition from './views/userNav/CustomerPosition.vue'
-import CustomerPositionInfo from './views/userNav/CustomerPositionInfo.vue'
-import Transaction from './views/userNav/Transaction.vue'
-import Connectivity from './views/userNav/Connectivity.vue'
+import DailyEvent from './views/rmNav/DailyEvent.vue'
+import CustomerPositionView from './views/rmNav/CustomerPositionView.vue'
+import CustomerPosition from './views/rmNav/CustomerPosition.vue'
+import CustomerPositionInfo from './views/rmNav/CustomerPositionInfo.vue'
+import Transaction from './views/rmNav/Transaction.vue'
+import Connectivity from './views/rmNav/Connectivity.vue'
 
 // admin template
 import CreateUser from './views/adminNav/CreateUser.vue'

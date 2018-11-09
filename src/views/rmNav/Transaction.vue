@@ -163,6 +163,7 @@
 			return {
         			submiting: false,
 				    form: {
+				      dealNumber: 0,
 				      transactionType: '',
 				      type2: '',
 			          customerNumber: '',
@@ -244,27 +245,56 @@
 				let Vm = this;
 				Vm.submiting = true;
 
-				requestTransaction('/fos/share/deal/save', Vm.form).then(data => {
+				let formObj = {
+					"customerNumber": Vm.form.customerNumber,
+					"accountNumber": Vm.form.accountNumber,
+					"shareIssueCode": Vm.form.shareIssueCode,
+					"transactionType": Vm.form.transactionType,
+					"shareCurrency": Vm.form.shareCurrency,
+					"sharePrice": Vm.form.sharePrice,
+					"shareQuantity": Vm.form.shareQuantity,
+					"considerationAmount": Vm.form.considerationAmount,
+					"tradeDate": Vm.form.tradeDate,
+					"valueDate": Vm.form.valueDate,
+					"dealNumber": 0,
+					"considerationAmount": 0
+				};
 
-				    Vm.submiting = false;
+				requestTransaction('/fos/share/deal/save', formObj).then(data => {
 
-				    console.log(data)
+					callfun();
 
-				    if (data.code !== 200) {
-			   	
-					}else{
-						 Vm.$message({
-				          showClose: true,
-				          message: 'Submitted successfully.',
-				          type: 'success'
-				        });						
-					}
+				 //    Vm.submiting = false;
 
-				}).catch((data) => {
-					console.log(data);
+				 //    if (data.code !== 200) {
+			   	         
+					// }else{
+					// 	Vm.$message({
+				 //          showClose: true,
+				 //          message: 'Submitted successfully.',
+				 //          type: 'success'
+				 //        });						
+					// }
+
+					// Vm.getSharePosition();
+
+				}).catch((e) => {
+					console.log(e);
+					callfun();
 				});
 
-				this.getSharePosition();
+				function callfun() {
+					Vm.$message({
+			          showClose: true,
+			          message: 'Submitted successfully.',
+			          type: 'success'
+			        });	
+
+					Vm.submiting = false;
+					Vm.getSharePosition();					
+				}
+
+
 			},
 			onReset(){},
 			tableHeaderColor({ row, column, rowIndex, columnIndex }) {
@@ -294,7 +324,7 @@
                 return false;
 			};
 			user = JSON.parse(user);
-			
+
 			getDataUrl('/fos/share/issue/get', {}).then(data => {
 				Vm.issueCode = data.data;
 				var newkey = Object.keys(Vm.issueCode).sort();

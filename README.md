@@ -1,19 +1,21 @@
 
 # To start
 
-This is a project template for [vue-cli](https://github.com/vuejs/vue-cli)
+Install [nodejs](http://nodejs.cn/download/) environment.
 
 ``` bash
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:8081
+# serve with hot reload at localhost:8000
 npm run dev
 
 # build for production with minification
 npm run build
 
 ```
+
+This is a project template for [vue-cli](https://github.com/vuejs/vue-cli)
 
 # Folder structure
 * build - webpack config files
