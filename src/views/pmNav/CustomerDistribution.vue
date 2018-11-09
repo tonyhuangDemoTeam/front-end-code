@@ -4,16 +4,16 @@
             <transition name="el-zoom-in-top">
                 <div v-show="show2" class="transition-box">
                     <el-col :span="20">
-                      <el-tabs v-model="activeName2" size="small" type="card" @tab-click="handleClick">
+                      <el-tabs v-model="activeTab" size="small" type="card" @tab-click="handleClick">
                         <el-tab-pane label="Region" name="region"></el-tab-pane>
                         <el-tab-pane label="Type" name="type"></el-tab-pane>
-                        <el-tab-pane label="Booking Entity" name="booking"></el-tab-pane>
-                        <el-tab-pane label="Age" name="age"></el-tab-pane>
+                        <el-tab-pane label="Booking Entity" name="bookingEntity"></el-tab-pane>
+                        <!-- <el-tab-pane label="Age" name="age"></el-tab-pane> -->
                       </el-tabs>
                     </el-col>
                     <el-col :span="20">
                         <el-form ref="form" :model="sizeForm" class="form-box" label-width="120px" size="mini">
-                            <el-form-item label="Region:" v-show="activeName2 == 'region' ? false : true">
+                            <el-form-item label="Region:" v-show="activeTab == 'region' ? false : true">
                                 <el-checkbox-group v-model="sizeForm.region" :min=0>
                                     <!-- <el-checkbox-button label="All" name="type"></el-checkbox-button> -->
                                     <el-checkbox-button label="CN" name="type">China</el-checkbox-button>
@@ -22,13 +22,13 @@
                                     <el-checkbox-button label="UK" name="type">United Kingdom</el-checkbox-button>
                                 </el-checkbox-group>
                             </el-form-item>
-                            <el-form-item label="Type:" v-show="activeName2 == 'type' ? false : true">
+                            <el-form-item label="Type:" v-show="activeTab == 'type' ? false : true">
                                 <el-checkbox-group v-model="sizeForm.type">
                                     <el-checkbox label="I" border>Individual</el-checkbox>
                                     <el-checkbox label="E" border>Entity</el-checkbox>
                                 </el-checkbox-group>
                             </el-form-item>
-                            <el-form-item label="Booking Entity:" v-show="activeName2 == 'booking' ? false : true">
+                            <el-form-item label="Booking Entity:" v-show="activeTab == 'bookingEntity' ? false : true">
                                 <el-checkbox-group v-model="sizeForm.bookingEntity" :min=0>
                                     <!-- <el-checkbox-button label="All" name="type"></el-checkbox-button> -->
                                     <el-checkbox-button label="CN" name="type"></el-checkbox-button>
@@ -37,7 +37,7 @@
                                     <el-checkbox-button label="UK" name="type"></el-checkbox-button>
                                 </el-checkbox-group>
                             </el-form-item>
-                            <el-form-item label="Age:" v-show="activeName2 == 'age' ? false : true">
+                            <el-form-item label="Age:" v-show="activeTab == 'age' ? false : true">
                                 <el-slider v-model="sizeForm.ageValue" range :step="10" show-stops>
                                 </el-slider>
                                 <div class="slider-mark">
@@ -75,12 +75,21 @@ import { getDataUrl } from '@/api/api';
 let  tabTxt = ['Region', 'Type', 'Booking Entity', 'Age'],
      currentTxt = tabTxt[0];
 
+ let  tabList = {
+        region: ['CN', 'HK', 'SG', 'UK'],
+        regionTxt: ['China', 'HongKong', 'Singapore', 'United Kingdom'],
+        bookingEntity: ['CN', 'HK', 'SG', 'UK'],
+        type: ['I', 'E'], //Individual
+        typeTxt: ['Individual', 'Entity'], //Individual
+    };
+let showTxt;         
+
 export default {
     data() {
         return {
             loading: true,
             show2: true,
-            activeName2: 'region',
+            activeTab: 'region',
             chartPie: null,
             sizeForm: {
                 name: '',
@@ -117,7 +126,7 @@ export default {
                     Vm.sizeForm.type = ['I', 'E'];
                     currentTxt = tabTxt[1]; 
                     break;
-                case 'booking':
+                case 'bookingEntity':
                     Vm.sizeForm.bookingEntity= ['CN', 'HK', 'SG', 'UK'];
                     currentTxt = tabTxt[2];
                     break;
@@ -160,49 +169,117 @@ export default {
 
             });
 
-            Vm.changePieDataJSON();
+            if (Vm.activeTab == 'region' || Vm.activeTab == 'bookingEntity') {
+                Vm.changePieDataJSON( Vm.activeTab );
+            }
+            if (Vm.activeTab == 'type') {
+                Vm.typePieDataJSON( Vm.activeTab );
+            }
 
 
         },
-        changePieDataJSON() {
+        changePieDataJSON( tab ) {
             let Vm = this;
 
-            let CN = Vm.filterType.filter(item => item.region == 'CN');
-            let HK = Vm.filterType.filter(item => item.region == 'HK');
-            let SG = Vm.filterType.filter(item => item.region == 'SG');
-            let UK = Vm.filterType.filter(item => item.region == 'UK');
+            let CN = Vm.filterType.filter(item => item[tab] == tabList[tab][0]);
+            let HK = Vm.filterType.filter(item => item[tab] == tabList[tab][1]);
+            let SG = Vm.filterType.filter(item => item[tab] == tabList[tab][2]);
+            let UK = Vm.filterType.filter(item => item[tab] == tabList[tab][3]);
+
+            //let CNTotal = 0, HKTotal = 0, SGTotal = 0, UKTotal = 0;
 
             // charts data json
             let temp = [
-                { "value": 0, "name": "CN" },
-                { "value": 0, "name": "HK" },
-                { "value": 0, "name": "SG" },
-                { "value": 0, "name": "UK" }
+                { "value": 0, "name": tabList[tab][0] },
+                { "value": 0, "name": tabList[tab][1] },
+                { "value": 0, "name": tabList[tab][2] },
+                { "value": 0, "name": tabList[tab][3] }
             ];
 
             let total = 0;
 
-            Vm.pieData = temp.filter(item => {
+            let _pieData = temp.filter(item => {
 
-                if (item.name == 'CN' && CN) {
+                if (item.name == tabList[tab][0] && CN) {
                     item.value = CN.length;
                     total += CN.length;
                 }
-                if (item.name == 'HK' && HK) {
+                if (item.name == tabList[tab][1] && HK) {
                     item.value = HK.length;
                     total += HK.length;
                 }
-                if (item.name == 'SG' && SG) {
+                if (item.name == tabList[tab][2] && SG) {
                     item.value = SG.length;
                     total += SG.length;
                 }
-                if (item.name == 'UK' && UK) {
+                if (item.name == tabList[tab][3] && UK) {
                     item.value = UK.length
                     total += UK.length;
                 }
 
                 return true;
             })
+            
+            showTxt = tabList[Vm.activeTab];
+
+            if (tab == 'region') {
+                _pieData.forEach((item,index) => {
+                    item.name = tabList.regionTxt[index]
+                })
+                showTxt =  tabList.regionTxt;
+            }
+
+            Vm.pieData = _pieData
+
+            Vm.valTotal = total;
+
+            
+            function filterRegion(val) {
+                return Vm.filterType.filter(item => item.region == val);
+            }
+
+            Vm.drawPieChart();
+            Vm.loading = false; // loading start
+
+        },
+        typePieDataJSON( tab ){
+            let Vm = this;
+
+            let CN = Vm.filterType.filter(item => item[tab] == tabList[tab][0]);
+            let HK = Vm.filterType.filter(item => item[tab] == tabList[tab][1]);
+
+            //let CNTotal = 0, HKTotal = 0, SGTotal = 0, UKTotal = 0;
+
+            // charts data json
+            let temp = [
+                { "value": 0, "name": tabList[tab][0] },
+                { "value": 0, "name": tabList[tab][1] },
+            ];
+
+            let total = 0;
+
+            let _pieData = temp.filter(item => {
+
+                if (item.name == tabList[tab][0] && CN) {
+                    item.value = CN.length;
+                    total += CN.length;
+                }
+                if (item.name == tabList[tab][1] && HK) {
+                    item.value = HK.length;
+                    total += HK.length;
+                }
+
+                return true;
+            })
+
+
+            _pieData.forEach((item,index) => {
+                item.name = tabList.typeTxt[index]
+            })
+            showTxt =  tabList.typeTxt;
+            
+
+            Vm.pieData = _pieData
 
             Vm.valTotal = total;
 
@@ -230,7 +307,7 @@ export default {
                 legend: {
                     orient: 'vertical', //horizontal
                     left: 'right',
-                    data: ['CN', 'HK', 'SG', 'UK'],
+                    data: showTxt,
                     formatter: function(name) {
                         let num = '';
                         Vm.pieData.forEach((item, value) => {

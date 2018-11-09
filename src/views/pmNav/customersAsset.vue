@@ -69,7 +69,7 @@ let  tabTxt = ['Asset Class','Region','Currency','Industry'],
 
  let  tabList = {
         product: ['share','bond','fund','depoist'],
-        productTxt: ['Asset Class','Region','Currency','Industry'],
+        productTxt: ['Equity','Fixed Income','Structure Product','FX'],
         region: ['CN','HK','SG','UK'],
         currency: ['HKD','SGD','USD','GBP'],
         industry: ['Finance','IT','Chemistry','Patrol'],
