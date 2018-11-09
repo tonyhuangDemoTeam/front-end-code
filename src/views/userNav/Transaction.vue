@@ -1,7 +1,7 @@
 <template>
 	<el-row>
 		<el-col :span="14" style="margin: 35px 0 25px;">
-			<el-form ref="form" :model="form" label-width="100px" size="mini">	
+			<el-form ref="form" :model="form" label-width="100px" size="mini" v-loading='submiting'>	
 			  <el-row>
 			  	 <el-col :span="11">
 			  	 	<el-form-item label="Buy/Sell:" inline>
@@ -90,7 +90,7 @@
 			  </el-row>
 			  <el-row>
 			  	<el-col :span='24' class="el-form-item_submit">
-			  		<el-button type="primary" size="small" :loding='submiting' @click="onSubmit">Submit</el-button>
+			  		<el-button type="primary" size="small" @click="onSubmit">Submit</el-button>
 			    	<el-button @click="onReset" size="small">Reset</el-button>
 			  	</el-col>
 			  	
@@ -243,13 +243,20 @@
 			onSubmit(){
 				let Vm = this;
 				Vm.submiting = true;
+
 				requestTransaction('fos/share/deal/save', Vm.form).then(data => {
-				   Vm.submiting = false;
-				   Vm.$message({
-			          showClose: true,
-			          message: 'Submitted successfully.',
-			          type: 'success'
-			        });
+				    Vm.submiting = false;
+
+				    if (data.code !== 200) {
+			   	
+					}else{
+						 Vm.$message({
+				          showClose: true,
+				          message: 'Submitted successfully.',
+				          type: 'success'
+				        });						
+					}
+
 				}).catch((data) => {
 					console.log(data);
 				});

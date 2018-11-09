@@ -1,8 +1,8 @@
 <template>
     <section class="chart-container">
-        <el-row>
+        <el-row v-loading="loading">
             <el-col :span="16">
-                <div id="chartPie" style="width:100%; height:500px;"></div>
+                <div id="trendschartPie" style="width:100%; height:500px;"></div>
             </el-col>
             <el-col :span="8">
                 <el-table size="small" :data="tableData" style="width: 100%; margin-top: 30%" :show-summary='true' sum-text="Total">
@@ -54,6 +54,8 @@ export default {
         initPage() {
 
             let Vm = this;
+
+            Vm.loading = true;
 
             getDataUrl('/fos/cust/get', { type: 'all' }).then(data => {
 
@@ -108,6 +110,8 @@ export default {
             });
 
             Vm.drawPieChart();
+            Vm.loading = false;
+
 
         },
         drawPieChart() {
@@ -166,7 +170,7 @@ export default {
 
             };
 
-            this.myChart = echarts.init(document.getElementById('chartPie'));
+            this.myChart = echarts.init(document.getElementById('trendschartPie'));
 
             this.myChart.setOption(option)
         },

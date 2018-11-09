@@ -1,6 +1,6 @@
 <template>
     <section class="chart-container">
-        <el-row :loading="loading">
+        <el-row v-loading="allloading">
             <transition name="el-zoom-in-top">
                 <div v-show="show2" class="transition-box">
                     <el-col :span="20">
@@ -55,7 +55,7 @@
                 </div>
             </el-col>
             <el-col :span="24">
-                <div id="chartPie" style="width:80%; height:400px;"></div>
+                <div id="assetchartPie"  style="width:80%; height:400px;"></div>
             </el-col>
         </el-row>
     </section>
@@ -72,7 +72,7 @@ let  tabTxt = ['Asset Class','Region','Currency','Industry'],
 export default {
     data() {
         return {
-            loading: false,
+            allloading: true,
             show2: true,
             activeName2: 'product',
             chartPie: null,
@@ -141,7 +141,9 @@ export default {
 
             let Vm = this;
 
-            Vm.loading = true; // loading start
+            Vm.allloading = true; // loading start
+
+            // return false;
 
             getDataUrl('/fos/asset/get',{}).then(data => {
 
@@ -221,7 +223,7 @@ export default {
             }
 
             Vm.drawPieChart();
-            Vm.loading = false; // loading start
+            Vm.allloading = false; // loading start
 
         },
         drawPieChart() {
@@ -278,7 +280,7 @@ export default {
                 }]
             }
 
-            this.chartPie = echarts.init(document.getElementById('chartPie'));
+            this.chartPie = echarts.init(document.getElementById('assetchartPie'));
             this.chartPie.setOption(option);
         },
         drawCharts() {

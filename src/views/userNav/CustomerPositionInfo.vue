@@ -1,6 +1,6 @@
 <template>
 	<section id="element-to-print">
-		<el-row>
+		<el-row v-loading="loading">
 		<el-col :span="24">
 			<div class="cp-head-info">
 				<ul style="width: 60%; float: left;">
@@ -189,6 +189,7 @@
 	export default {
 		data() {
 			return {
+				loading: true,
 				chartPie1: null,
 				chartPie2: null,
 				cusAccinfo: null,
@@ -216,9 +217,10 @@
 				let customerId = this.$route.params.customerId, 
 					accountId = this.$route.params.accountId;
 
-				let info = Vm.getAccountInfo();
+				// let info = Vm.getAccountInfo();
 				
-				Vm.cusAccinfo = info.customerNumber ? Vm.getAccountInfo() : {
+				// Vm.cusAccinfo = info.customerNumber ? Vm.getAccountInfo() : {
+				Vm.cusAccinfo = {
 					customerNumber: customerId,
 					accountName: 'acct ' + accountId,
 					accountNumber: accountId
@@ -237,6 +239,8 @@
 
 				 Object.assign(Vm.SummaryTable[0], acctlist.prodCataInfo);
 
+				 Vm.loading = false;
+
                   
 				}).catch((data) => {
 					console.log(data);
@@ -246,17 +250,23 @@
 
 			aveAsPDF(){
 
+				// this.aveAsPDFBtn = false;
+
 				let element = document.getElementById('element-to-print');
+
 				let opt = {
 				  margin:       1,
 				  filename:     'accountNumber.pdf',
 				  image:        { type: 'jpeg', quality: 0.98 },
-				  html2canvas:  { scale: 2 },
-				  jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+				  html2canvas:  { scale: 3 },
+				  jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
 				};
 				 
 				// New Promise-based usage:
 				html2pdf().set(opt).from(element).save();
+
+				//this.aveAsPDFBtn = true;
+
 
 
 			},

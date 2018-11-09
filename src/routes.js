@@ -20,7 +20,7 @@ import Connectivity from './views/userNav/Connectivity.vue'
 // admin template
 import CreateUser from './views/adminNav/CreateUser.vue'
 
-let routes = [
+var routes = [
     {
         path: '/login',
         component: Login,

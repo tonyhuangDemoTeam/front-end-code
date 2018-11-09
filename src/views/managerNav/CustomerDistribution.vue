@@ -1,6 +1,6 @@
 <template>
     <section class="chart-container">
-        <el-row :loading="loading">
+        <el-row v-loading="loading">
             <transition name="el-zoom-in-top">
                 <div v-show="show2" class="transition-box">
                     <el-col :span="20">
@@ -63,7 +63,7 @@
             </el-col>
             <el-col :span="24">
                 <!-- <div class="total-txt">Total GPB Customer : 879 </div> -->
-                <div id="chartPie" style="width:80%; height:400px;"></div>
+                <div id="cuschartPie" style="width:80%; height:400px;"></div>
             </el-col>
         </el-row>
     </section>
@@ -79,7 +79,7 @@ let  tabTxt = ['Region', 'Type', 'Booking Entity', 'Age'],
 export default {
     data() {
         return {
-            loading: false,
+            loading: true,
             show2: true,
             activeName2: 'region',
             chartPie: null,
@@ -282,7 +282,7 @@ export default {
                 }]
             }
 
-            this.chartPie = echarts.init(document.getElementById('chartPie'));
+            this.chartPie = echarts.init(document.getElementById('cuschartPie'));
             this.chartPie.setOption(option);
         },
         drawCharts() {

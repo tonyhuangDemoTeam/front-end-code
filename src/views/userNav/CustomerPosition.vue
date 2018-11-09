@@ -77,7 +77,7 @@
 				filters: {
 					name: ''
 				},
-				loading: false,
+				loading: true,
 				customerPositions: []
 			}
 		},
@@ -89,12 +89,6 @@
 			    }
 			 },
 			rowSelect(row, event, column){
-
-				this.setAccountInfo({
-					customerNumber: row.customerNumber,
-					accountName: row.accountName,
-					accountNumber: row.accountNumber
-				});
                 this.$router.push(`/customer-position/${row.customerNumber}/${row.accountNumber}`)
 			 },
 			getCustomerNumber(){
@@ -128,6 +122,8 @@
 					});
 
 					Vm.customerPositions = cusPos;
+
+					this.loading = false;
 					
 	
 				}).catch((data) => {
