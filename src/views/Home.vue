@@ -241,7 +241,7 @@
 					//width: 40px;
 					//float: left;   
 					float: left;
-					margin: 10px 50px 0px 18px;
+					margin: 10px 65px 0px 0px;
 					// margin-left: 10px;
 				}
 				span {

@@ -78,6 +78,7 @@
 					name: ''
 				},
 				loading: true,
+				allcusData:[],
 				customerPositions: []
 			}
 		},
@@ -92,6 +93,21 @@
                 this.$router.push(`/customer-position/${row.customerNumber}/${row.accountNumber}`)
 			 },
 			getCustomerNumber(){
+
+				let Vm = this;
+
+				if (!Vm.filters.name) {
+					Vm.customerPositions = Vm.allcusData ;
+					return false;
+				}
+
+				this.loading = true;
+
+				let cusPosfilters = Vm.allcusData.filter(item => item.customerNumber == Vm.filters.name);
+
+				Vm.customerPositions = cusPosfilters;
+
+				this.loading = false;
 
 			},
 			initPage: function () {
@@ -121,7 +137,7 @@
 						});
 					});
 
-					Vm.customerPositions = cusPos;
+					Vm.customerPositions = Vm.allcusData =  cusPos;
 
 					this.loading = false;
 					

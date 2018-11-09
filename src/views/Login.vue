@@ -33,7 +33,7 @@
         },
         rules2: {
           account: [
-            { required: true, message: 'Please input account number.', trigger: 'blur' },
+            { required: true, message: 'Please input username.', trigger: 'blur' },
             //{ validator: validaePass }
           ],
           checkPass: [
@@ -49,41 +49,56 @@
         this.$refs.ruleForm2.resetFields();
       },
       handleSubmit2(ev) {
-        var _this = this;
-        this.$refs.ruleForm2.validate((valid) => {
-          if (valid) {
-            //_this.$router.replace('/table');
-            this.logining = true;
-            //NProgress.start();
-            var loginParams = { id: this.ruleForm2.account, password: this.ruleForm2.checkPass };
-            requestLogin(loginParams).then(data => {
-              this.logining = false;
+        var Vm = this;
+        Vm.$refs.ruleForm2.validate((valid) => {
 
-              if (data.status !== 200) {
-                this.$message({
-                  message: data.statusText,
-                  type: 'error'
-                });
-              } else {
-                sessionStorage.setItem('user', JSON.stringify(data.data));
-                let _path = {path: '/'}; 
-                if (data.data.role == 'admin') {
-                    _path = {path: '/create-user'};
-                }
-                if (data.data.role == 'pm') {
-                    _path = {path: '/'};
-                }
-                if (data.data.role == 'rm') {
-                    _path = {path: '/customer-position'};
-                }
-
-                this.$router.push( _path );
-              }
-            });
-          } else {
+          if (!valid) {
             console.log('error submit!!');
             return false;
           }
+            //_Vm.$router.replace('/table');
+            Vm.logining = true;
+            //NProgress.start();
+            var loginParams = { id: Vm.ruleForm2.account, password: Vm.ruleForm2.checkPass };
+            requestLogin(loginParams).then(data => {
+                  Vm.logining = false;
+
+                  if (data.status !== 200) {
+                    Vm.$message({
+                      message: data.statusText,
+                      type: 'error'
+                    });
+
+                  } else {
+                    sessionStorage.setItem('user', JSON.stringify(data.data));
+                    let _path = {path: '/'}; 
+                    if (data.data.role == 'admin') {
+                        _path = {path: '/create-user'};
+                    }
+                    if (data.data.role == 'pm') {
+                        _path = {path: '/'};
+                    }
+                    if (data.data.role == 'rm') {
+                        _path = {path: '/customer-position'};
+                    }
+
+                    Vm.$router.push( _path );
+                  }
+                }
+             ).then(data => {
+                  Vm.logining = false;
+
+            }).catch((e) => {
+                Vm.logining = false;
+                let rdata = e.response.data;
+                    Vm.$message({
+                      message: 'invalid Username and Password !',
+                      type: 'error'
+                    });
+
+            });
+
+ 
         });
       }
     }

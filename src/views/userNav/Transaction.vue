@@ -245,8 +245,10 @@
 				Vm.submiting = true;
 
 				requestTransaction('fos/share/deal/save', Vm.form).then(data => {
-				    Vm.submiting = false;
+				    // Vm.submiting = false;
 
+				    console.log(data)
+				    
 				    if (data.code !== 200) {
 			   	
 					}else{

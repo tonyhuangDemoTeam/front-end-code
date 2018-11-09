@@ -1,7 +1,7 @@
 <template>
     <section class="chart-container">
         <el-row>
-            <el-col :span="24" v-loading="chartLoading">
+            <el-col :span="24" style="height: 800px" v-loading="chartLoading">
                 <vo-basic :data="chartData" :pan="true"  nodeContent="content" :toggleCollapse="false"></vo-basic>
             </el-col>
         </el-row>
@@ -29,7 +29,7 @@ export default {
     },
     methods: {
         getChartData(){
-            this.chartLoading = true;
+            // this.chartLoading = true;
             getManagerOSList({type: 'arch'}).then((res) => {
                 this.tempData = res.data;
                 this.mapJson(this.tempData);
@@ -54,7 +54,7 @@ export default {
 
             // 'AUM: $55bn<br\>Client#: 100,000',
             function curry(obj){
-                obj['content'] = 'AUM: ' + obj['clients'] +'<br\>Client#:'+ obj['position'];
+                obj['content'] = 'AUM: ' + obj['position'] +'<br\>Client#:'+ obj['clients'] ;
             }
 
           this.chartLoading = false;
@@ -80,6 +80,9 @@ export default {
 }
 </script>
 <style lang="scss">
+#chart-container{
+    height: 100% !important;
+}
 .orgchart .node.focused, .orgchart .node:hover {
     background-color: #da001012 !important;
 }
