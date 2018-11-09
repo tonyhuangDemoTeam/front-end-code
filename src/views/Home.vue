@@ -259,7 +259,14 @@
 				width:230px;
 			}
 			.logo-collapse-width{
-				width:60px
+				width:60px;
+				line-height: 35px;
+    			padding-left: 10px;
+				span {
+					float: none;
+					color: #DA0010;
+					font-weight: bold;
+				}
 			}
 			.tools{
 				padding: 0px 23px;

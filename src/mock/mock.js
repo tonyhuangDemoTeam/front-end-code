@@ -2,7 +2,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
 import { LoginUsers, Users, Customers, getShareIssue, getSharePosition, dailyJson, cusPosition } from './data/user';
-import { Relationship, typeAll, positionInfo } from './data/manager';
+import { Relationship, typeAll, positionInfo, assetInfo } from './data/manager';
 
 
 let _Users = Users;
@@ -26,23 +26,27 @@ export default {
     });
 
     //登录
-    mock.onPost('/sa/user/authenticate').reply(config => {
-      let {username, password} = JSON.parse(config.data);
+    mock.onGet('/sa/user/authenticate').reply(config => {
+      let {id, password} = config.params;
+      // console.log(config.params)
       return new Promise((resolve, reject) => {
-        let user = null;
+        let users = null;
         setTimeout(() => {
           let hasUser = LoginUsers.some(u => {
-            if (u.username === username && u.password === password) {
-              user = JSON.parse(JSON.stringify(u));
-              user.password = undefined;
+            if (u.id === id && u.password === password) {
+              users = JSON.parse(JSON.stringify(u));
+              users.password = undefined;
               return true;
             }
           });
 
+          // console.log(234, users)
+
+
           if (hasUser) {
-            resolve([200, { code: 200, msg: '请求成功', user }]);
+            resolve([200, users]);
           } else {
-            resolve([200, { code: 500, msg: '账号或密码错误' }]);
+            resolve([500, { status: 500, statusText: '账号或密码错误' }]);
           }
         }, 1000);
       });
@@ -257,6 +261,17 @@ export default {
       });
     });
 
+/**
+     *  manager
+     */
+    //获取manager Organization Structure 上的图标数据
+    mock.onGet('/fos/asset/get').reply(config => {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, assetInfo]);
+        }, 300);
+      });
+    });
 
 
   }

@@ -7,7 +7,7 @@ import Main from './views/Main.vue'
 import Management from './views/managerNav/Management.vue'
 import CustomerTrends from './views/managerNav/CustomerTrends.vue'
 import CustomerDistribution from './views/managerNav/CustomerDistribution.vue'
-import Asset from './views/managerNav/customersChart.vue'
+import Asset from './views/managerNav/customersAsset.vue'
 
 // user(rm) template
 import DailyEvent from './views/userNav/DailyEvent.vue'

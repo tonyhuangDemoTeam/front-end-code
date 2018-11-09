@@ -5,23 +5,20 @@ import cusPositionJson from './customer-position.json';
 
 const LoginUsers = [
   {
-    id: 1,
-    username: 'manager',
+    id: 'pm1',
     password: '123456',
     avatar: '',
-    role: 'manager', 
+    role: 'pm', 
     name: 'katherine pierce'
   },
   {
-    id: 2,
-    username: 'rm1',
+    id: 'rm1',
     password: '123456',
     avatar: '',
     role: 'rm',
     name: 'Daniel Gillies'
   },
   {
-    id: 2,
     username: 'admin',
     password: '123456',
     avatar: '',

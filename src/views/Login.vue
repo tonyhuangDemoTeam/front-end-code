@@ -58,10 +58,6 @@
             var loginParams = { id: this.ruleForm2.account, password: this.ruleForm2.checkPass };
             requestLogin(loginParams).then(data => {
               this.logining = false;
-              //NProgress.done();
-              // let data = data;
-
-              console.log(data)
 
               if (data.status !== 200) {
                 this.$message({

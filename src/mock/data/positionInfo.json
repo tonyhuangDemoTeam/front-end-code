@@ -1,46 +1,57 @@
 {
-  "fund": [
-    {
-      "name": "Fund Issue 1(HKD)",
-      "quantity": "10000.00",
-      "amount": "57420.00",
-      "marketPrice": "45.00",
-      "cost": "0.01",
-      "averagePL": "-392580.00",
-      "yesterdayPL": "-382580.00"
-    }
-  ],
-  "share": [
-    {
-      "name": "Share Issue 1(HKD)",
-      "quantity": "10000.00",
-      "amount": "128876.00",
-      "marketPrice": "101.00",
-      "cost": "0.01",
-      "averagePL": "-881124.00",
-      "yesterdayPL": "-871124.00"
-    }
-  ],
-  "bond": [
-    {
-      "name": "Bond Issue 1(HKD)",
-      "quantity": "10000.00",
-      "amount": "126324.00",
-      "marketPrice": "99.00",
-      "cost": "100.00",
-      "averagePL": "-863676.00",
-      "yesterdayPL": "-913676.00"
-    }
-  ],
-  "deposits": [
-    {
-      "name": "HKD",
-      "quantity": "10000.00",
-      "amount": "1276.00",
-      "marketPrice": "0.13",
-      "cost": "0.13",
-      "averagePL": "0.00",
-      "yesterdayPL": "0.00"
-    }
-  ]
+  "positions": {
+    "fund": [
+      {
+        "name": "Fund Issue 18(GBP)",
+        "quantity": "8300.00",
+        "amount": "1069083.99",
+        "marketPrice": "101.00",
+        "cost": "60.00",
+        "averagePL": "433984.59",
+        "yesterdayPL": "423399.60"
+      }
+    ],
+    "share": [
+      {
+        "name": "Share Issue 18(GBP)",
+        "quantity": "8300.00",
+        "amount": "582174.45",
+        "marketPrice": "55.00",
+        "cost": "60.00",
+        "averagePL": "-52924.95",
+        "yesterdayPL": "-42339.96"
+      }
+    ],
+    "bond": [
+      {
+        "name": "Bond Issue 18(GBP)",
+        "quantity": "8300.00",
+        "amount": "688024.35",
+        "marketPrice": "65.00",
+        "cost": "60.00",
+        "averagePL": "52924.95",
+        "yesterdayPL": "63509.94"
+      }
+    ],
+    "deposits": [
+      {
+        "name": "GBP",
+        "quantity": "8300.00",
+        "amount": "10584.99",
+        "marketPrice": "1.28",
+        "cost": "1.28",
+        "averagePL": "0.00",
+        "yesterdayPL": "0.00"
+      }
+    ]
+  },
+  "prodCataInfo": {
+    "fund": 1069083.99,
+    "share": 582174.45,
+    "bond": 688024.35,
+    "deposits": 10584.99
+  },
+  "ccyCataInfo": {
+    "GBP": 2349867.78
+  }
 }

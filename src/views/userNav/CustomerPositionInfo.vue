@@ -145,25 +145,25 @@
               	Portfolio Summary:
               </div>
 			  <el-table 
-			  	:data="tableData4" 
+			  	:data="SummaryTable" 
 			  	fixed
                 class='cp-table'
                 size="small"
                 :header-cell-style="tableHeaderColor"
 			  	style="width: 100%">
-			    <el-table-column prop="name" label="Equity">
+			    <el-table-column prop="share" label="Equity">
 			    </el-table-column>
-			    <el-table-column fixed="right" prop="quantity" label="Fixed Income">
+			    <el-table-column fixed="right" prop="bond" label="Fixed Income">
 			    </el-table-column>
-			    <el-table-column fixed="right" prop="totalAmount" label="FX">
+			    <el-table-column fixed="right" prop="deposits" label="FX">
 			    </el-table-column>
-			    <el-table-column fixed="right" prop="marketPrice" label="Structure Product">
+			    <el-table-column fixed="right" prop="fund" label="Structure Product">
 			    </el-table-column>
-			    <el-table-column fixed="right" prop="averageCost" label="Total Value">
+			    <el-table-column fixed="right" prop="cost" label="Total Value">
 			    </el-table-column>
-			    <el-table-column fixed="right" prop="pl" label="Total P&L">
+			    <el-table-column fixed="right" prop="averagePL" label="Total P&L">
 			    </el-table-column>
-			    <el-table-column fixed="right" prop="lbdp" width='180' label="Total P&L Last Biz Date">
+			    <el-table-column fixed="right" prop="yesterdayPL" width='180' label="Total P&L Last Biz Date">
 			    </el-table-column>
 			  </el-table>
 		</el-col>
@@ -196,14 +196,14 @@
 				fixedTable: [],
 				fxTable: [],
 				structureTable: [],
-				tableData4: [{
-					name:'50000',	
-					quantity:80000,	
-					totalAmount:5084000, 
-					marketPrice:63.55,	
-					averageCost:60.05,
-					pl: '-165.5380002',	
-					lbdp: '-165.5380002'
+				SummaryTable: [{
+					share:'',	
+					bond:'',	
+					deposits:'', 
+					fund: '',	
+					cost: '564567.11',
+					averagePL: '-165.5380002',	
+					yesterdayPL: '-165.5380002'
 				}],
 			}
 		},
@@ -233,6 +233,11 @@
                   Vm.fxTable = acctlist.positions.deposits;
                   Vm.structureTable = acctlist.positions.fund;
 
+                  // console.log(acctlist);
+
+				 Object.assign(Vm.SummaryTable[0], acctlist.prodCataInfo);
+
+                  
 				}).catch((data) => {
 					console.log(data);
 				});
@@ -241,17 +246,17 @@
 
 			aveAsPDF(){
 
-			let element = document.getElementById('element-to-print');
-			let opt = {
-			  margin:       1,
-			  filename:     'accountNumber.pdf',
-			  image:        { type: 'jpeg', quality: 0.98 },
-			  html2canvas:  { scale: 2 },
-			  jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
-			};
-			 
-			// New Promise-based usage:
-			html2pdf().set(opt).from(element).save();
+				let element = document.getElementById('element-to-print');
+				let opt = {
+				  margin:       1,
+				  filename:     'accountNumber.pdf',
+				  image:        { type: 'jpeg', quality: 0.98 },
+				  html2canvas:  { scale: 2 },
+				  jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+				};
+				 
+				// New Promise-based usage:
+				html2pdf().set(opt).from(element).save();
 
 
 			},
@@ -354,7 +359,7 @@
 				}
 
 
-				console.log(data2)
+				// console.log(data2)
 
 
                 let opt2 = {
@@ -412,11 +417,17 @@
                 this.chartPie2.setOption(opt2);
             },
             drawCharts() {
-                this.drawPieChart()
+            	let Vm = this;
+
+            	setTimeout(()=>{
+            		Vm.drawPieChart()
+            	},200);
+
             },
 			
 		},
 		mounted() {
+
             this.drawCharts();
 
             // this.initPage();
