@@ -24,7 +24,7 @@ export const addUser = params => { return axios.get(`${base}/user/add`, { params
 
 export const testUrl = (url, params) => { return axios.get(url, { params: params }); };
 
-export const requestTransaction = (url, params) => { return axios.post(base + url, { params: params }).then(res => res.data); };
+export const requestTransaction = (url, params) => { return axios.post(base + url, params).then(res => res.data); };
 
 export const getDataUrl = (url, params) => { return axios.get(base + url, { params: params }); };
 

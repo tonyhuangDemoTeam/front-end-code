@@ -52,7 +52,6 @@ export default {
                 }
             }
 
-            // 'AUM: $55bn<br\>Client#: 100,000',
             function curry(obj){
                 obj['content'] = 'AUM: ' + obj['position'] +'<br\>Client#:'+ obj['clients'] ;
             }

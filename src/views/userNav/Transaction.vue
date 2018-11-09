@@ -70,8 +70,8 @@
 					  </el-form-item>	
 					  <el-form-item label="Trade Type:">
 					    <el-select v-model="form.tradeType" placeholder="Pls select Trade Type">
-					      <el-option label="Limit" value="shanghai"></el-option>
-					      <el-option label="Limit" value="beijing"></el-option>
+					      <el-option label=" " value=" "></el-option>
+					      <el-option label="Limit" value="Limit"></el-option>
 					    </el-select>
 					  </el-form-item>	
 					  <el-form-item label="Remark:">
@@ -244,11 +244,12 @@
 				let Vm = this;
 				Vm.submiting = true;
 
-				requestTransaction('fos/share/deal/save', Vm.form).then(data => {
-				    // Vm.submiting = false;
+				requestTransaction('/fos/share/deal/save', Vm.form).then(data => {
+
+				    Vm.submiting = false;
 
 				    console.log(data)
-				    
+
 				    if (data.code !== 200) {
 			   	
 					}else{
@@ -262,6 +263,8 @@
 				}).catch((data) => {
 					console.log(data);
 				});
+
+				this.getSharePosition();
 			},
 			onReset(){},
 			tableHeaderColor({ row, column, rowIndex, columnIndex }) {
@@ -276,6 +279,7 @@
 			 	let val = Vm.issueCode[Vm.form.shareIssueCode]
 			 	Vm.issueInfo = val ? val : {};
 			 	Vm.form.shareCurrency = val ? val.shareCurrency : '';
+			 	Vm.form.sharePrice = val ? val.sharePrice : '';
 
 			 }
 			
@@ -285,13 +289,12 @@
 			let Vm = this, user;
 
 			user = sessionStorage.getItem('user');
-
 			if (!user) {
 				Vm.$router.push('/');
                 return false;
 			};
-
 			user = JSON.parse(user);
+			
 			getDataUrl('/fos/share/issue/get', {}).then(data => {
 				Vm.issueCode = data.data;
 				var newkey = Object.keys(Vm.issueCode).sort();
@@ -318,9 +321,7 @@
 			});
 
 		},
-		mounted() {
-			
-		}
+		mounted() {}
 	};
 
 </script>

@@ -64,10 +64,8 @@
 import echarts from 'echarts'
 import { getDataUrl } from '@/api/api';
 
-
 let  tabTxt = ['Asset Class','Region','Currency','Industry'],
      currentTxt = tabTxt[0];
-
 
 export default {
     data() {
@@ -93,25 +91,14 @@ export default {
             pieData: [],
         }
     },
-
-    watch: {
-
-    },
-    computed: {
-
-    },
-    filters: {
-
-
-
-    },
+    watch: {},
+    computed: {},
+    filters: {},
     methods: {
         onSubmit() {
             let Vm = this;
-
         },
         handleClick(tab, event) {
-           // console.log(tab, event);
            let Vm = this, tabName = tab.name;
 
            switch(tabName){
@@ -133,7 +120,6 @@ export default {
                     break;        
                 default:
                     break;
-
            };
 
         },
@@ -143,13 +129,9 @@ export default {
 
             Vm.allloading = true; // loading start
 
-            // return false;
-
             getDataUrl('/fos/asset/get',{}).then(data => {
-
                 Vm.allType = Vm.filterType = data.data;
                 Vm.filter(); 
-
             }).catch((data) => {
                 console.log(data);
                 return false;
@@ -171,13 +153,9 @@ export default {
 
             Vm.changePieDataJSON();
 
-
         },
         changePieDataJSON() {
             let Vm = this;
-
-            // Vm.sizeForm.product = ['share','bond','fund','deposits'];
-
 
             let share = Vm.filterType.filter(item => item.product == 'share');
             let bond = Vm.filterType.filter(item => item.product == 'bond');
@@ -276,10 +254,8 @@ export default {
                             }
                         }
                     }
-
                 }]
             }
-
             this.chartPie = echarts.init(document.getElementById('assetchartPie'));
             this.chartPie.setOption(option);
         },

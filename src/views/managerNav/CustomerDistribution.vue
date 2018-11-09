@@ -72,7 +72,6 @@
 import echarts from 'echarts'
 import { getDataUrl } from '@/api/api';
 
-
 let  tabTxt = ['Region', 'Type', 'Booking Entity', 'Age'],
      currentTxt = tabTxt[0];
 
@@ -100,27 +99,15 @@ export default {
             pieData: [],
         }
     },
-
-    watch: {
-
-    },
-    computed: {
-
-    },
-    filters: {
-
-
-
-    },
+    watch: {},
+    computed: {},
+    filters: {},
     methods: {
         onSubmit() {
             let Vm = this;
-
         },
         handleClick(tab, event) {
-           // console.log(tab, event);
            let Vm = this, tabName = tab.name;
-
            switch(tabName){
                 case 'region':
                     Vm.sizeForm.region = ['CN', 'HK', 'SG', 'UK'];
@@ -142,7 +129,6 @@ export default {
                     break;
 
            };
-
         },
         initPage() {
 

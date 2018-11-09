@@ -31,31 +31,34 @@
 		},
 		methods: {
 			formatter(row, column) {
-				// console.log(row.createDate)
-				// let time="2018-05-19T08:04:52.000+0000";
 			 	let d = new Date(row.createDate);
 				let times = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes(); 
 		        return times;
 		      },
-			filterHandler(value, row, column) {
-				
-			},
+			filterHandler(value, row, column) {},
 		},
-		mounted() {
-			// fos/action/get?rm=rm1
-			getDataUrl('/fos/action/get', {rm: 'rm1'}).then(data => {
-				this.tableData = data.data
+		mounted() {},
+		created() {
+			let Vm = this, user;
+
+			user = sessionStorage.getItem('user');
+
+			if (!user) {
+				Vm.$router.push('/');
+                return false;
+			};
+
+			user = JSON.parse(user);
+
+		    // fos/action/get?rm=rm1
+			getDataUrl('/fos/action/get', {rm: user.id}).then(data => {
+				Vm.tableData = data.data
 			}).catch((data) => {
 				console.log(data);
 			});
-			
-		},
-		created() {
 
 	    },
-	    updated() {
-
-	    }
+	    updated() {}
 	};
 
 </script>
