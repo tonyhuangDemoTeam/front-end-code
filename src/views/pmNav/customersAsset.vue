@@ -4,7 +4,7 @@
             <transition name="el-zoom-in-top">
                 <div v-show="show2" class="transition-box">
                     <el-col :span="20">
-                      <el-tabs v-model="activeName2" size="small" type="card" @tab-click="handleClick">
+                      <el-tabs v-model="activeTab" size="small" type="card" @tab-click="handleClick">
                         <el-tab-pane label="Asset Class" name="product"></el-tab-pane>
                         <el-tab-pane label="Region" name="region"></el-tab-pane>
                         <el-tab-pane label="Currency" name="currency"></el-tab-pane>
@@ -13,15 +13,15 @@
                     </el-col>
                     <el-col :span="20">
                         <el-form ref="form" :model="sizeForm" class="form-box" label-width="120px" size="mini">
-                            <el-form-item label="Asset Cals:" v-show="activeName2 == 'product' ? false : true">
+                            <el-form-item label="Asset Class:" v-show="activeTab == 'product' ? false : true">
                                 <el-checkbox-group v-model="sizeForm.product">
                                     <el-checkbox label="share" border>Equity</el-checkbox>  
                                     <el-checkbox label="bond" border>Fixed Income</el-checkbox>    
                                     <el-checkbox label="fund" border>Structure Product</el-checkbox>       
-                                    <el-checkbox label="deposits" border>FX</el-checkbox>
+                                    <el-checkbox label="depoist" border>FX</el-checkbox>
                                 </el-checkbox-group>
                             </el-form-item>
-                            <el-form-item label="Region:" v-show="activeName2 == 'region' ? false : true">
+                            <el-form-item label="Region:" v-show="activeTab == 'region' ? false : true">
                                 <el-checkbox-group v-model="sizeForm.region" :min=0>
                                     <el-checkbox-button label="CN" name="type">China</el-checkbox-button>
                                     <el-checkbox-button label="HK" name="type">HongKong</el-checkbox-button>
@@ -29,7 +29,7 @@
                                     <el-checkbox-button label="UK" name="type">United Kingdom</el-checkbox-button>
                                 </el-checkbox-group>
                             </el-form-item>
-                            <el-form-item label="currency:" v-show="activeName2 == 'currency' ? false : true">
+                            <el-form-item label="currency:" v-show="activeTab == 'currency' ? false : true">
                                 <el-checkbox-group v-model="sizeForm.currency" :min=0>
                                     <el-checkbox-button label="HKD" name="type"></el-checkbox-button>
                                     <el-checkbox-button label="GBP" name="type"></el-checkbox-button>
@@ -37,7 +37,7 @@
                                     <el-checkbox-button label="SGD" name="type"></el-checkbox-button>
                                 </el-checkbox-group>
                             </el-form-item>
-                            <el-form-item label="Industry:" v-show="activeName2 == 'industry' ? false : true">
+                            <el-form-item label="Industry:" v-show="activeTab == 'industry' ? false : true">
                               <el-checkbox-group v-model="sizeForm.industry">
                                 <el-checkbox label="Finance"></el-checkbox>
                                 <el-checkbox label="IT"></el-checkbox>
@@ -67,16 +67,24 @@ import { getDataUrl } from '@/api/api';
 let  tabTxt = ['Asset Class','Region','Currency','Industry'],
      currentTxt = tabTxt[0];
 
+ let  tabList = {
+        product: ['share','bond','fund','depoist'],
+        productTxt: ['Asset Class','Region','Currency','Industry'],
+        region: ['CN','HK','SG','UK'],
+        currency: ['HKD','SGD','USD','GBP'],
+        industry: ['Finance','IT','Chemistry','Patrol'],
+    };     
+
 export default {
     data() {
         return {
             allloading: true,
             show2: true,
-            activeName2: 'product',
+            activeTab: 'product',
             chartPie: null,
             sizeForm: {
                 name: '',
-                product: ['share','bond','fund','deposits'],
+                product: ['share','bond','fund','depoist'],
                 region: ['CN','HK','SG','UK'],
                 currency: ['HKD','SGD','USD','GBP'],
                 industry: ['Finance','IT','Chemistry','Patrol'],
@@ -103,7 +111,7 @@ export default {
 
            switch(tabName){
                 case 'product':
-                    Vm.sizeForm.product = ['share','bond','fund','deposits'];
+                    Vm.sizeForm.product = ['share','bond','fund','depoist'];
                     currentTxt = tabTxt[0];   
                     break;
                 case 'region':
@@ -151,16 +159,19 @@ export default {
 
             });
 
-            Vm.changePieDataJSON();
+            Vm.changePieDataJSON( Vm.activeTab );
 
         },
-        changePieDataJSON() {
+
+        changePieDataJSON(tab) {
             let Vm = this;
 
-            let share = Vm.filterType.filter(item => item.product == 'share');
-            let bond = Vm.filterType.filter(item => item.product == 'bond');
-            let fund = Vm.filterType.filter(item => item.product == 'fund');
-            let deposits = Vm.filterType.filter(item => item.product == 'deposits');
+            let share = Vm.filterType.filter(item => item[tab] == tabList[tab][0]);
+            let bond = Vm.filterType.filter(item => item[tab] == tabList[tab][1]);
+            let fund = Vm.filterType.filter(item => item[tab] == tabList[tab][2]);
+            let deposits = Vm.filterType.filter(item => item[tab]== tabList[tab][3]);
+
+            // console.log(share,bond)
 
 
             let shareTotal = 0, bondTotal = 0, fundTotal = 0, depositsTotal = 0;
@@ -185,35 +196,43 @@ export default {
 
             // charts data json
             let temp = [
-                { "value": 0, "name": "Equity", "tag": "share" },
-                { "value": 0, "name": "Fixed Income", "tag": "bond" },
-                { "value": 0, "name": "Structure Product", "tag": "fund" },
-                { "value": 0, "name": "FX", "tag": "deposits" }
+                { "value": 0, "name": tabList[tab][0] },
+                { "value": 0, "name": tabList[tab][1] },
+                { "value": 0, "name": tabList[tab][2] },
+                { "value": 0, "name": tabList[tab][3] }
             ];
 
             let total = 0;
 
-            Vm.pieData = temp.filter(item => {
+            let _pieData = temp.filter(item => {
 
-                if (item.tag == 'share' && share) {
+                if (item.name == tabList[tab][0] && share) {
                     item.value = shareTotal;
                     total += Number(shareTotal);
                 }
-                if (item.tag == 'bond' && bond) {
+                if (item.name == tabList[tab][1] && bond) {
                     item.value = bondTotal;
                     total += Number(bondTotal);
                 }
-                if (item.tag == 'fund' && fund) {
+                if (item.name == tabList[tab][2] && fund) {
                     item.value = fundTotal;
                     total += Number(fundTotal);
                 }
-                if (item.tag == 'deposits' && deposits) {
+                if (item.name == tabList[tab][3] && deposits) {
                     item.value = depositsTotal
                     total += Number(depositsTotal);
                 }
 
                 return true;
-            })
+            });
+
+            if (tab == 'product') {
+                _pieData.forEach((item,index) => {
+                    item.name = tabList.productTxt[index]
+                })
+            }
+
+            Vm.pieData =  _pieData;
 
             Vm.valTotal = total.toFixed(2);;
 
@@ -227,6 +246,8 @@ export default {
         },
         drawPieChart() {
             let Vm = this;
+            let showTxt = Vm.activeTab == 'product' ? tabList.productTxt : tabList[Vm.activeTab];
+
             let option = {
                 title: {
                     text: 'Asset Distribution By ' + currentTxt,
@@ -241,7 +262,7 @@ export default {
                 legend: {
                     orient: 'vertical', //horizontal
                     left: 'right',
-                    data:  ['Equity','Fixed Income','Structure Product','FX'],
+                    data: showTxt,
                     formatter: function(name) {
                         let num = '';
                         Vm.pieData.forEach((item, value) => {
@@ -255,7 +276,7 @@ export default {
                 series: [{
                     name: 'distribution of data',
                     type: 'pie',
-                    roseType: 'radius',
+                    // roseType: 'radius',
                     radius: ['10%', '70%'],
                     center: ['50%', '60%'],
                     data: Vm.pieData,
