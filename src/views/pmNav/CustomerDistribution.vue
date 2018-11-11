@@ -169,126 +169,62 @@ export default {
 
             });
 
-            if (Vm.activeTab == 'region' || Vm.activeTab == 'bookingEntity') {
-                Vm.changePieDataJSON( Vm.activeTab );
-            }
-            if (Vm.activeTab == 'type') {
-                Vm.typePieDataJSON( Vm.activeTab );
-            }
-
-
+         
+            return Vm.changePieDataJSON( Vm.activeTab );
+            
         },
         changePieDataJSON( tab ) {
-            let Vm = this;
 
-            let CN = Vm.filterType.filter(item => item[tab] == tabList[tab][0]);
-            let HK = Vm.filterType.filter(item => item[tab] == tabList[tab][1]);
-            let SG = Vm.filterType.filter(item => item[tab] == tabList[tab][2]);
-            let UK = Vm.filterType.filter(item => item[tab] == tabList[tab][3]);
+            let Vm = this, 
+                total = 0,
+                currentTab = {},
+                chartsData = []; 
 
-            //let CNTotal = 0, HKTotal = 0, SGTotal = 0, UKTotal = 0;
+            currentTab = {
+                tag: tabList[tab],
+                allType: [],
+                length: tabList[tab].length
+            }    
 
-            // charts data json
-            let temp = [
-                { "value": 0, "name": tabList[tab][0] },
-                { "value": 0, "name": tabList[tab][1] },
-                { "value": 0, "name": tabList[tab][2] },
-                { "value": 0, "name": tabList[tab][3] }
-            ];
+            for (var i = 0; i < currentTab.length; i++) {
 
-            let total = 0;
+                let _tag = currentTab.tag[i];
 
-            let _pieData = temp.filter(item => {
+                let _filterTab = Vm.filterType.filter(item => item[tab] == _tag);
+                currentTab.allType.push(_filterTab);
 
-                if (item.name == tabList[tab][0] && CN) {
-                    item.value = CN.length;
-                    total += CN.length;
-                }
-                if (item.name == tabList[tab][1] && HK) {
-                    item.value = HK.length;
-                    total += HK.length;
-                }
-                if (item.name == tabList[tab][2] && SG) {
-                    item.value = SG.length;
-                    total += SG.length;
-                }
-                if (item.name == tabList[tab][3] && UK) {
-                    item.value = UK.length
-                    total += UK.length;
+                let cell = {
+                    "value": _filterTab.length, 
+                    "name": _tag
                 }
 
-                return true;
-            })
-            
-            showTxt = tabList[Vm.activeTab];
+                chartsData.push(cell);
+
+                total += _filterTab.length;
+            }
+
+            showTxt = currentTab.tag; // ['','',''] type Array
 
             if (tab == 'region') {
-                _pieData.forEach((item,index) => {
+                chartsData.forEach((item,index) => {
                     item.name = tabList.regionTxt[index]
                 })
-                showTxt =  tabList.regionTxt;
+                showTxt = tabList.regionTxt;
             }
 
-            Vm.pieData = _pieData
+            if (tab == 'type') {
+                chartsData.forEach((item,index) => {
+                    item.name = tabList.typeTxt[index]
+                })
+                showTxt =  tabList.typeTxt;
+            } 
 
-            Vm.valTotal = total;
+            Vm.pieData = chartsData;
+            Vm.valTotal = total.toFixed(2);
 
-            
-            function filterRegion(val) {
-                return Vm.filterType.filter(item => item.region == val);
-            }
+            Vm.loading = false; // loading end
 
-            Vm.drawPieChart();
-            Vm.loading = false; // loading start
-
-        },
-        typePieDataJSON( tab ){
-            let Vm = this;
-
-            let CN = Vm.filterType.filter(item => item[tab] == tabList[tab][0]);
-            let HK = Vm.filterType.filter(item => item[tab] == tabList[tab][1]);
-
-            //let CNTotal = 0, HKTotal = 0, SGTotal = 0, UKTotal = 0;
-
-            // charts data json
-            let temp = [
-                { "value": 0, "name": tabList[tab][0] },
-                { "value": 0, "name": tabList[tab][1] },
-            ];
-
-            let total = 0;
-
-            let _pieData = temp.filter(item => {
-
-                if (item.name == tabList[tab][0] && CN) {
-                    item.value = CN.length;
-                    total += CN.length;
-                }
-                if (item.name == tabList[tab][1] && HK) {
-                    item.value = HK.length;
-                    total += HK.length;
-                }
-
-                return true;
-            })
-
-
-            _pieData.forEach((item,index) => {
-                item.name = tabList.typeTxt[index]
-            })
-            showTxt =  tabList.typeTxt;
-            
-
-            Vm.pieData = _pieData
-
-            Vm.valTotal = total;
-
-            function filterRegion(val) {
-                return Vm.filterType.filter(item => item.region == val);
-            }
-
-            Vm.drawPieChart();
-            Vm.loading = false; // loading start
+            return Vm.drawPieChart();
 
         },
         drawPieChart() {

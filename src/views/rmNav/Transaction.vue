@@ -129,7 +129,7 @@
 		    </el-table>
 		</el-col>
 
-		<el-col :span="10" style="padding: 40px 10px 0 40px;">
+		<el-col :span="10" style="padding: 35px 10px 0 40px;">
 			<el-form ref="form" :model="issueInfo" label-width="150px" size="mina">
 			   <el-form-item label="House View:">
 			    	<div>{{issueInfo.houseView}}</div>
@@ -262,7 +262,7 @@
 
 				requestTransaction('/fos/share/deal/save', formObj).then(data => {
 
-					callfun();
+					callback();
 
 				 //    Vm.submiting = false;
 
@@ -280,10 +280,10 @@
 
 				}).catch((e) => {
 					console.log(e);
-					callfun();
+					callback();
 				});
 
-				function callfun() {
+				function callback() {
 					Vm.$message({
 			          showClose: true,
 			          message: 'Submitted successfully.',

@@ -74,6 +74,7 @@ let  tabTxt = ['Asset Class','Region','Currency','Industry'],
         currency: ['HKD','SGD','USD','GBP'],
         industry: ['Finance','IT','Chemistry','Patrol'],
     };     
+let showTxt;         
 
 export default {
     data() {
@@ -164,90 +165,61 @@ export default {
         },
 
         changePieDataJSON(tab) {
-            let Vm = this;
+            let Vm = this,
+                total = 0,
+                currentTab = {},
+                chartsData = []; 
 
-            let share = Vm.filterType.filter(item => item[tab] == tabList[tab][0]);
-            let bond = Vm.filterType.filter(item => item[tab] == tabList[tab][1]);
-            let fund = Vm.filterType.filter(item => item[tab] == tabList[tab][2]);
-            let deposits = Vm.filterType.filter(item => item[tab]== tabList[tab][3]);
+            currentTab = {
+                tag: tabList[tab],
+                allType: [],
+                length: tabList[tab].length
+            }   
 
-            // console.log(share,bond)
 
+            for (var i = 0; i < currentTab.length; i++) {
 
-            let shareTotal = 0, bondTotal = 0, fundTotal = 0, depositsTotal = 0;
+                let _tag = currentTab.tag[i];
 
-            share.forEach(item => {
-                shareTotal += Number(item.position);
-            });
-            bond.forEach(item => {
-                bondTotal += Number(item.position);
-            });
-            fund.forEach(item => {
-                fundTotal += Number(item.position);
-            });
-            deposits.forEach(item => {
-                depositsTotal += Number(item.position);
-            });
+                let _filterTab = Vm.filterType.filter(item => item[tab] == _tag);
 
-            shareTotal = shareTotal.toFixed(2);
-            bondTotal = bondTotal.toFixed(2);
-            fundTotal = fundTotal.toFixed(2);
-            depositsTotal = depositsTotal.toFixed(2);
+                currentTab.allType.push(_filterTab);
 
-            // charts data json
-            let temp = [
-                { "value": 0, "name": tabList[tab][0] },
-                { "value": 0, "name": tabList[tab][1] },
-                { "value": 0, "name": tabList[tab][2] },
-                { "value": 0, "name": tabList[tab][3] }
-            ];
+                let _total = 0;
 
-            let total = 0;
+                _filterTab.forEach(item => {
+                    _total += Number(item.position);
+                });
 
-            let _pieData = temp.filter(item => {
-
-                if (item.name == tabList[tab][0] && share) {
-                    item.value = shareTotal;
-                    total += Number(shareTotal);
-                }
-                if (item.name == tabList[tab][1] && bond) {
-                    item.value = bondTotal;
-                    total += Number(bondTotal);
-                }
-                if (item.name == tabList[tab][2] && fund) {
-                    item.value = fundTotal;
-                    total += Number(fundTotal);
-                }
-                if (item.name == tabList[tab][3] && deposits) {
-                    item.value = depositsTotal
-                    total += Number(depositsTotal);
+                let cell = {
+                    "value": _total.toFixed(2), 
+                    "name": _tag
                 }
 
-                return true;
-            });
+                chartsData.push(cell);
+
+                total += _filterTab.length;
+            } 
+
+            showTxt = currentTab.tag; // ['','',''] type Array
 
             if (tab == 'product') {
-                _pieData.forEach((item,index) => {
+                chartsData.forEach((item,index) => {
                     item.name = tabList.productTxt[index]
-                })
+                });
+                showTxt = tabList.productTxt;
             }
 
-            Vm.pieData =  _pieData;
+            Vm.pieData =  chartsData;
+            Vm.valTotal = total.toFixed(2);
 
-            Vm.valTotal = total.toFixed(2);;
+            Vm.allloading = false; // loading end
 
-            function filterRegion(val) {
-                return Vm.filterType.filter(item => item.product == val);
-            }
-
-            Vm.drawPieChart();
-            Vm.allloading = false; // loading start
+            return  Vm.drawPieChart();
 
         },
         drawPieChart() {
             let Vm = this;
-            let showTxt = Vm.activeTab == 'product' ? tabList.productTxt : tabList[Vm.activeTab];
-
             let option = {
                 title: {
                     text: 'Asset Distribution By ' + currentTxt,
