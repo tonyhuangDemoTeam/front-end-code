@@ -1,8 +1,5 @@
 import axios from 'axios';
 
-// let base = 'http://134.175.84.92:18000';
-// let base = 'http://219.136.164.215:8000';
-let base = 'http://tonyhuang-dojo.xyz:18000';
 // let base = '';
  
 export const requestLogin = params => { return axios.get(`${base}/sa/user/authenticate`, { params: params }); };
