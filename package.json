@@ -14,7 +14,7 @@
     "echarts": "^3.3.2",
     "element-ui": "^2.4.8",
     "font-awesome": "^4.7.0",
-    "html2pdf.js": "^0.9.1",
+    "html2pdf.js": "^0.10.1",
     "nprogress": "^0.2.0",
     "vue": "^2.2.2",
     "vue-orgchart": "^1.1.7",
